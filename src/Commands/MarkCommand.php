@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Larazeus\Mark\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class MarkCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'mark';
 
     public $description = 'My command';
 
