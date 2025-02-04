@@ -50,6 +50,12 @@ Mark::make(Like::class)
     // Or ->isBookmark() or ->isRating()
 ```
 
+Then, setup a filament [custom theme](https://filamentphp.com/docs/3.x/panels/themes#creating-a-custom-theme) and add the following path to the tailwind paths:
+
+```
+'./vendor/lara-zeus/mark/resources/**/*.blade.php',
+```
+
 Optionally, you can list all automatically generated relations using:
 
 ```bash
