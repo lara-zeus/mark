@@ -1,0 +1,11 @@
+<?php
+
+namespace {{ namespace }};
+
+use Larazeus\Mark\Mark;
+
+class {{ class }} extends Mark
+{
+    //
+}
+

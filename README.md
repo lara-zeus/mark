@@ -16,18 +16,44 @@ You can install the package via composer:
 ```bash
 composer require lara-zeus/mark
 ```
-
-You can publish and run the migrations with:
+Create marks using the command:
 
 ```bash
-php artisan vendor:publish --tag="mark-migrations"
-php artisan migrate
+ php artisan mark:make Like
 ```
 
-You can publish the config file with:
+In AppServiceProvider set the following:
+
+```PHP
+use Larazeus\Mark\Facades\Mark as MarkFacade;
+use App\Models\Comment;
+use App\Models\Post;
+
+MarkFacade::markerModel(User::class)
+    ->addRelations(Comment::class, [
+        Like::class
+    ])
+    // you can chain more types of relations
+    ->addRelations(Post::class, [
+        Like::class,
+    ]);
+```
+
+Then, in your filament resource use it as the following:
+
+```PHP
+use Larazeus\Mark\Forms\Components\Mark;
+use App\Models\Like;
+
+Mark::make(Like::class)
+    ->isLike()
+    // Or ->isBookmark() or ->isRating()
+```
+
+Optionally, you can list all automatically generated relations using:
 
 ```bash
-php artisan vendor:publish --tag="mark-config"
+php artisan mark:list
 ```
 
 Optionally, you can publish the views using
@@ -36,19 +62,10 @@ Optionally, you can publish the views using
 php artisan vendor:publish --tag="mark-views"
 ```
 
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
 
 ## Usage
 
-```php
-$mark = new Larazeus\Mark();
-echo $mark->echoPhrase('Hello, Larazeus!');
-```
+
 
 ## Testing
 
