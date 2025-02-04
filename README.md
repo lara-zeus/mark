@@ -26,16 +26,17 @@ In AppServiceProvider set the following:
 
 ```PHP
 use Larazeus\Mark\Facades\Mark as MarkFacade;
+use App\Models\Like as GeneratedMarkModel;
 use App\Models\Comment;
 use App\Models\Post;
 
 MarkFacade::markerModel(User::class)
     ->addRelations(Comment::class, [
-        Like::class
+        GeneratedMarkModel::class
     ])
     // you can chain more types of relations
     ->addRelations(Post::class, [
-        Like::class,
+        GeneratedMarkModel::class,
     ]);
 ```
 
