@@ -33,8 +33,8 @@ class MarkServiceProvider extends PackageServiceProvider
         if (app()->runningInConsole()) {
             foreach (app(Filesystem::class)->files(__DIR__ . '/../stubs/') as $file) {
                 $this->publishes([
-                    $file->getRealPath() => base_path("stubs/mark/{$file->getFilename()}"),
-                ], 'mark-stubs');
+                    $file->getRealPath() => base_path("stubs/zeus-mark/{$file->getFilename()}"),
+                ], 'zeus-mark-stubs');
             }
         }
     }

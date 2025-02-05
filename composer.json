@@ -1,6 +1,6 @@
 {
     "name": "lara-zeus/mark",
-    "description": "This is my package mark",
+    "description": "Ready to use application marks feature.",
     "keywords": [
         "lara-zeus",
         "laravel",
@@ -70,7 +70,7 @@
                 "LaraZeus\\Mark\\MarkServiceProvider"
             ],
             "aliases": {
-                "Mark": "LaraZeus\\Mark\\Facades\\Mark"
+                "Mark": "LaraZeus\\Mark\\Mark"
             }
         }
     },
