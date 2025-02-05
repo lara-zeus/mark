@@ -1,6 +1,6 @@
 <?php
 
-namespace Larazeus\Mark\Commands;
+namespace LaraZeus\Mark\Commands;
 
 use Illuminate\Console\MigrationGeneratorCommand;
 
@@ -30,6 +30,6 @@ class MarkMakeMigrationCommand extends MigrationGeneratorCommand
 
     protected function migrationStubFile()
     {
-        return __DIR__ . '/../../stubs/migration.create.stub';
+        return __DIR__ . '/../../stubs/mark.migration.create.stub';
     }
 }

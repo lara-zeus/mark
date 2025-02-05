@@ -1,22 +1,19 @@
 <?php
 
-namespace Larazeus\Mark;
+namespace LaraZeus\Mark;
 
 use Illuminate\Filesystem\Filesystem;
-use Larazeus\Mark\Commands\MarkListRelationsCommand;
-use Larazeus\Mark\Commands\MarkMakeMigrationCommand;
-use Larazeus\Mark\Commands\MarkMakeModelCommand;
-use Larazeus\Mark\Testing\TestsMark;
-use Livewire\Features\SupportTesting\Testable;
-use Spatie\LaravelPackageTools\Commands\InstallCommand;
+use LaraZeus\Mark\Commands\MarkListRelationsCommand;
+use LaraZeus\Mark\Commands\MarkMakeMigrationCommand;
+use LaraZeus\Mark\Commands\MarkMakeModelCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class MarkServiceProvider extends PackageServiceProvider
 {
-    public static string $name = 'mark';
+    public static string $name = 'zeus-mark';
 
-    public static string $viewNamespace = 'mark';
+    public static string $viewNamespace = 'zeus-mark';
 
     public function configurePackage(Package $package): void
     {
@@ -27,17 +24,8 @@ class MarkServiceProvider extends PackageServiceProvider
          */
         $package->name(static::$name)
             ->hasCommands($this->getCommands())
-            ->hasInstallCommand(function (InstallCommand $command) {
-                $command
-                    ->askToStarRepoOnGitHub('lara-zeus/mark');
-            });
-
-        if (file_exists($package->basePath('/../resources/views'))) {
-            $package->hasViews(static::$viewNamespace);
-        }
+            ->hasViews(static::$viewNamespace);
     }
-
-    public function packageRegistered(): void {}
 
     public function packageBooted(): void
     {
@@ -49,14 +37,6 @@ class MarkServiceProvider extends PackageServiceProvider
                 ], 'mark-stubs');
             }
         }
-
-        // Testing
-        Testable::mixin(new TestsMark);
-    }
-
-    protected function getAssetPackageName(): ?string
-    {
-        return 'lara-zeus/mark';
     }
 
     /**

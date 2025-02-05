@@ -1,6 +1,6 @@
 <?php
 
-namespace Larazeus\Mark\Tests;
+namespace LaraZeus\Mark\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
@@ -13,7 +13,7 @@ use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Larazeus\Mark\MarkServiceProvider;
+use LaraZeus\Mark\MarkServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
@@ -25,7 +25,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Larazeus\\Mark\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'LaraZeus\\Mark\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
     }
 

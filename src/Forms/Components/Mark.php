@@ -1,19 +1,19 @@
 <?php
 
-namespace Larazeus\Mark\Forms\Components;
+namespace LaraZeus\Mark\Forms\Components;
 
 use Filament\Facades\Filament;
 use Filament\Forms\Components\Field;
 use Illuminate\Database\Eloquent\Model;
-use Larazeus\Mark\Facades\Mark as MarkFacade;
-use Larazeus\Mark\Forms\Concerns\HasSelectableIcons;
-use Larazeus\Mark\Mark as MarkModel;
+use LaraZeus\Mark\Forms\Concerns\HasSelectableIcons;
+use LaraZeus\Mark\Mark as MarkFacade;
+use LaraZeus\Mark\Models\Mark as MarkModel;
 
 class Mark extends Field
 {
     use HasSelectableIcons;
 
-    protected string $view = 'mark::forms.components.mark';
+    protected string $view = 'zeus-mark::forms.components.mark';
 
     public static function make(string $name): static
     {
@@ -69,7 +69,7 @@ class Mark extends Field
         return $this
             ->icons(array_fill(1, 5, 'heroicon-o-star'))
             ->selectedIcons(array_fill(1, 5, 'heroicon-s-star'))
-            ->isSequenceSelection()
+            ->sequential()
             ->in(array_keys($this->getIcons()));
     }
 }

@@ -2,7 +2,7 @@
 
 namespace {{ namespace }};
 
-use Larazeus\Mark\Mark;
+use LaraZeus\Mark\Models\Mark;
 
 class {{ class }} extends Mark
 {

@@ -1,16 +1,20 @@
 <?php
 
-namespace Larazeus\Mark;
+namespace LaraZeus\Mark\Models\Traits;
 
 use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
-use Larazeus\Mark\Facades\Mark as MarkFacade;
+use LaraZeus\Mark\Mark as MarkFacade;
+use LaraZeus\Mark\Models\Mark;
 
 trait MarkConfigs
 {
     protected static ?string $markerModel = null;
 
+    /**
+     * @var array<class-string<Model>, array<Mark>>
+     */
     protected static array $markablesWithMarks = [];
 
     /**
@@ -61,6 +65,9 @@ trait MarkConfigs
         return $this;
     }
 
+    /**
+     * @return array<class-string<Model>, array<Mark>>
+     */
     public function getMarkablesWithMarks(): array
     {
         return static::$markablesWithMarks;

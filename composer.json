@@ -38,13 +38,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Larazeus\\Mark\\": "src/",
-            "Larazeus\\Mark\\Database\\Factories\\": "database/factories/"
+            "LaraZeus\\Mark\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Larazeus\\Mark\\Tests\\": "tests/"
+            "LaraZeus\\Mark\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -68,10 +67,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Larazeus\\Mark\\MarkServiceProvider"
+                "LaraZeus\\Mark\\MarkServiceProvider"
             ],
             "aliases": {
-                "Mark": "Larazeus\\Mark\\Facades\\Mark"
+                "Mark": "LaraZeus\\Mark\\Facades\\Mark"
             }
         }
     },

@@ -25,10 +25,7 @@ Create marks using the command:
 In AppServiceProvider set the following:
 
 ```PHP
-use Larazeus\Mark\Facades\Mark as MarkFacade;
-use App\Models\Like as GeneratedMarkModel;
-use App\Models\Comment;
-use App\Models\Post;
+use App\Models\Comment;use App\Models\Like as GeneratedMarkModel;use App\Models\Post;use LaraZeus\Mark\Mark as MarkFacade;
 
 MarkFacade::markerModel(User::class)
     ->addRelations(Comment::class, [
@@ -43,7 +40,7 @@ MarkFacade::markerModel(User::class)
 Then, in your filament resource use it as the following:
 
 ```PHP
-use Larazeus\Mark\Forms\Components\Mark;
+use LaraZeus\Mark\Forms\Components\Mark;
 use App\Models\Like;
 
 Mark::make(Like::class)

@@ -1,9 +1,9 @@
 <?php
 
-namespace Larazeus\Mark\Commands;
+namespace LaraZeus\Mark\Commands;
 
 use Illuminate\Console\Command;
-use Larazeus\Mark\Facades\Mark as MarkFacade;
+use LaraZeus\Mark\Mark as MarkFacade;
 
 class MarkListRelationsCommand extends Command
 {
@@ -24,7 +24,7 @@ class MarkListRelationsCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $marker = MarkFacade::getMarkerModel();
         $rows = [];

@@ -1,6 +1,6 @@
 <?php
 
-namespace Larazeus\Mark\Commands;
+namespace LaraZeus\Mark\Commands;
 
 use Illuminate\Foundation\Console\ModelMakeCommand;
 use Illuminate\Support\Str;
@@ -31,7 +31,7 @@ class MarkMakeModelCommand extends ModelMakeCommand
 
     protected function getStub()
     {
-        return $this->resolveStubPath('/model.pivot.stub');
+        return $this->resolveStubPath('/mark.model.pivot.stub');
     }
 
     /**

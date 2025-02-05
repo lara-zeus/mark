@@ -6,10 +6,10 @@
         $statePath = $getStatePath();
         $icons = $getIcons();
         $selectedIcons = $getSelectedIcons();
-        $isSequenceSelection = $getIsSequenceSelection();
+        $isSequential = $isSequential();
         $keys = array_keys($icons);
-        $showSelectedValues = function($key) use ($isSequenceSelection, $keys) {
-            if(!$isSequenceSelection){
+        $showSelectedValues = function($key) use ($isSequential, $keys) {
+            if(!$isSequential){
                 return [(string)$key];
             }
             $keyIndex = array_search($key, $keys);

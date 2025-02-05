@@ -1,29 +1,13 @@
 <?php
 
-namespace Larazeus\Mark;
+namespace LaraZeus\Mark;
 
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphPivot;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Larazeus\Mark\Facades\Mark as MarkFacade;
+use Illuminate\Support\Facades\Facade;
 
-class Mark extends MorphPivot
+class Mark extends Facade
 {
-    use MarkConfigs;
-
-    public $incrementing = true;
-
-    protected $casts = [
-        'metadata' => 'array',
-    ];
-
-    public function markable(): MorphTo
+    protected static function getFacadeAccessor()
     {
-        return $this->morphTo();
-    }
-
-    public function marker(): BelongsTo
-    {
-        return $this->belongsTo(MarkFacade::getMarkerModel(), 'user_id');
+        return \LaraZeus\Mark\Models\Mark::class;
     }
 }
