@@ -2,6 +2,7 @@
 
 namespace LaraZeus\Mark\Forms\Components;
 
+use Closure;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\Field;
 use Illuminate\Database\Eloquent\Model;
@@ -15,27 +16,32 @@ class Mark extends Field
 
     protected string $view = 'zeus-mark::forms.components.mark';
 
-    public static function make(string $name): static
+    public function relationship(string | Closure | null $name = null): static
     {
+        $name = $name === null ? $this->getName() : $this->evaluate($name);
+
         if (is_subclass_of($name, MarkModel::class)) {
             $name = MarkFacade::getMarkRelationName($name);
         }
 
-        return parent::make($name)
-            ->loadStateFromRelationshipsUsing(function (Model $record, Field $component) use ($name) {
-                $component->state(
-                    $record->{$name}()->where('user_id', Filament::auth()->id())->value('value')
-                );
-            })
-            ->saveRelationshipsUsing(function (Model $record, $state) use ($name) {
-                if ($state === null) {
-                    $record->{$name}()->where('user_id', Filament::auth()->id())?->delete();
+        $this->loadStateFromRelationshipsUsing(function (Model $record, Field $component) use ($name) {
+            $component->state(
+                $record->{$name}()->where('user_id', Filament::auth()->id())->value('value')
+            );
+        });
 
-                    return;
-                }
-                $record->{$name}()->updateOrCreate(['user_id' => Filament::auth()->id()], ['value' => $state]);
-            })
-            ->dehydrated(false);
+        $this->saveRelationshipsUsing(function (Model $record, $state) use ($name) {
+            if ($state === null) {
+                $record->{$name}()->where('user_id', Filament::auth()->id())->delete();
+
+                return;
+            }
+            $record->{$name}()->updateOrCreate(['user_id' => Filament::auth()->id()], ['value' => $state]);
+        });
+
+        $this->dehydrated(false);
+
+        return $this;
     }
 
     public function isLike(): static

@@ -43,7 +43,8 @@ Then, in your filament resource use it as the following:
 use LaraZeus\Mark\Forms\Components\Mark;
 use App\Models\Like;
 
-Mark::make(Like::class)
+Mark::make('like')
+    ->relationship() // by default, it will use the name of the component to fetch and set the relation. to override pass the singular relation name or the mark model
     ->isLike()
     // Or ->isBookmark() or ->isRating()
 ```
