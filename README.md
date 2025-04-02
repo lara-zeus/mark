@@ -1,11 +1,35 @@
-# Mark
+<p align="center">
+<a href="https://larazeus.com"><img src="https://larazeus.com/images/lara-zeus-mark.webp?v=3" /></a>
+</p>
+
+## A ready-to-use [marking](#Glossary) feature for Laravel, with built-in addons for Filament.
+
+<p align="center">
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/lara-zeus/mark.svg?style=flat-square)](https://packagist.org/packages/lara-zeus/mark)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/lara-zeus/mark/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/lara-zeus/mark/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/lara-zeus/mark/fix-php-code-styling.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/lara-zeus/mark/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/lara-zeus/mark.svg?style=flat-square)](https://packagist.org/packages/lara-zeus/mark)
 
-A ready-to-use [marking](#Glossary) feature for Laravel, with built-in addons for Filament.
+</p>
+
+## Support Filament
+
+<a href="https://github.com/sponsors/danharrin">
+<img alt="filament-logo" src="https://larazeus.com/images/filament-sponsor-banner.webp">
+</a>
+
+## Features
+- todo
+
+## Demo
+
+> Visit our demo site: https://demo.larazeus.com/admin/components-demo/mark
+
+
+## Full Documentation
+
+> Visit our website to get the complete documentation: https://larazeus.com/docs/mark
 
 ## Installation
 
