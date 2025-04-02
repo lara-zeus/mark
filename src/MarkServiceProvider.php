@@ -3,9 +3,9 @@
 namespace LaraZeus\Mark;
 
 use Illuminate\Filesystem\Filesystem;
+use LaraZeus\Mark\Commands\MakeMarkMigrationCommand;
+use LaraZeus\Mark\Commands\MakeMarkModelCommand;
 use LaraZeus\Mark\Commands\MarkListRelationsCommand;
-use LaraZeus\Mark\Commands\MarkMakeMigrationCommand;
-use LaraZeus\Mark\Commands\MarkMakeModelCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -46,8 +46,8 @@ class MarkServiceProvider extends PackageServiceProvider
     {
         return [
             MarkListRelationsCommand::class,
-            MarkMakeMigrationCommand::class,
-            MarkMakeModelCommand::class,
+            MakeMarkMigrationCommand::class,
+            MakeMarkModelCommand::class,
         ];
     }
 }

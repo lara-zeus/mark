@@ -3,7 +3,7 @@
 namespace LaraZeus\Mark\Commands;
 
 use Illuminate\Console\Command;
-use LaraZeus\Mark\Mark as MarkFacade;
+use LaraZeus\Mark\Facades\Mark;
 
 class MarkListRelationsCommand extends Command
 {
@@ -26,25 +26,25 @@ class MarkListRelationsCommand extends Command
      */
     public function handle(): void
     {
-        $marker = MarkFacade::getMarkerModel();
+        $marker = Mark::getMarkerModel();
         $rows = [];
         $markerRelations = [];
-        foreach (MarkFacade::getMarkablesWithMarks() as $markable => $marks) {
+        foreach (Mark::getMarkablesWithMarks() as $markable => $marks) {
             $markableRelations = [];
             foreach ($marks as $mark) {
-                $markableRelations[] = MarkFacade::getMarksRelationName($mark);
-                $markableRelations[] = MarkFacade::getMarkRelationName($mark);
-                $markableRelations[] = MarkFacade::getMarkersFromMarkableRelationName($markable, $mark);
+                $markableRelations[] = '(' . Mark::getMarksRelationName($mark) . ', type: morphMany)';
+                $markableRelations[] = '(' . Mark::getMarkRelationName($mark) . ', type: morphOne)';
+                $markableRelations[] = '(' . Mark::getMarkersFromMarkableRelationName($markable, $mark) . ', type: morphedToMany)';
 
-                $markerRelations[] = MarkFacade::getMarksRelationName($mark);
-                $markerRelations[] = MarkFacade::getMarkRelationName($mark);
-                $markerRelations[] = MarkFacade::getMarkableFromMarkerRelationName($markable, $mark);
+                $markerRelations[] = '(' . Mark::getMarksRelationName($mark) . ', type: hasMany)';
+                $markerRelations[] = '(' . Mark::getMarkRelationName($mark) . ', type: hasOne)';
+                $markerRelations[] = '(' . Mark::getMarkableFromMarkerRelationName($markable, $mark) . ', type: morphedByMany)';
             }
-            $rows[] = [$markable, implode(', ', $markableRelations)];
+            $rows[] = [$markable, implode(PHP_EOL, $markableRelations)];
         }
 
-        $rows[] = [$marker, implode(', ', array_unique($markerRelations))];
+        $rows[] = [$marker, implode(PHP_EOL, array_unique($markerRelations))];
 
-        $this->table(['Model', 'Relations'], $rows);
+        $this->table(['Model', 'Relations'], $rows, 'box');
     }
 }
