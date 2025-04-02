@@ -1,64 +1,105 @@
-# This is my package mark
+# Mark
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/lara-zeus/mark.svg?style=flat-square)](https://packagist.org/packages/lara-zeus/mark)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/lara-zeus/mark/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/lara-zeus/mark/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/lara-zeus/mark/fix-php-code-styling.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/lara-zeus/mark/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/lara-zeus/mark.svg?style=flat-square)](https://packagist.org/packages/lara-zeus/mark)
 
-
-
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+A ready-to-use [marking](#Glossary) feature for Laravel, with built-in addons for Filament.
 
 ## Installation
-
-You can install the package via composer:
 
 ```bash
 composer require lara-zeus/mark
 ```
-Create marks using the command:
 
-```bash
- php artisan mark:make Like
+Then, set up a Filament [custom theme](https://filamentphp.com/docs/3.x/panels/themes#creating-a-custom-theme) and add the following path to the Tailwind configuration:
+
+```JS
+'./vendor/lara-zeus/mark/resources/**/*.blade.php'
 ```
 
-In AppServiceProvider set the following:
+In your `AppServiceProvider`, add the following:
 
 ```PHP
-use App\Models\Comment;use App\Models\Like as GeneratedMarkModel;use App\Models\Post;use LaraZeus\Mark\Mark as MarkFacade;
+use App\Models\User;
+use LaraZeus\Mark\Facades\Mark;
 
-MarkFacade::markerModel(User::class)
-    ->addRelations(Comment::class, [
-        GeneratedMarkModel::class
-    ])
-    // you can chain more types of relations
-    ->addRelations(Post::class, [
-        GeneratedMarkModel::class,
-    ]);
+Mark::markerModel(User::class)
 ```
 
-Then, in your filament resource use it as the following:
+## Usage
+
+### Creating a Mark
+
+Create a new [Mark](#Glossary) using the following command:
+
+```bash
+php artisan mark:make Like
+```
+
+### Relations Registration
+
+#### Automatic
+
+In your `AppServiceProvider` add the following:
+
+```PHP
+use App\Models\Post;
+use App\Models\Comment;
+use App\Models\Like;
+use App\Models\Bookmark;
+use LaraZeus\Mark\Facades\Mark;
+
+Mark::addRelations(
+    markable: Post::class,
+    marks: [
+        Like::class,
+        Bookmark::class
+    ]
+)->addRelations(
+    markable: Comment::class,
+    marks: [
+        Like::class,
+    ]
+)
+```
+
+Then you can list the relations using the command:
+
+```bash
+php artisan mark:list
+```
+
+#### Manual
+
+You need to manually create relationship methods using [laravel polymorphic relationships](https://laravel.com/docs/12.x/eloquent-relationships#polymorphic-relationships) for the [Marker](#Glossary) and the [Markable](#Glossary).
+
+### Filament
+
+In your Filament resource, you can use it as follows:
 
 ```PHP
 use LaraZeus\Mark\Forms\Components\Mark;
 use App\Models\Like;
 
-Mark::make('like')
-    ->relationship() // by default, it will use the name of the component to fetch and set the relation. to override pass the singular relation name or the mark model
-    ->isLike()
-    // Or ->isBookmark() or ->isRating()
-```
-
-Then, setup a filament [custom theme](https://filamentphp.com/docs/3.x/panels/themes#creating-a-custom-theme) and add the following path to the tailwind paths:
-
-```
-'./vendor/lara-zeus/mark/resources/**/*.blade.php',
-```
-
-Optionally, you can list all automatically generated relations using:
-
-```bash
-php artisan mark:list
+public static function form(Form $form): Form
+{
+    return $form
+        ->schema([
+            Mark::make('like')
+                ->relationship() // By default, it will use the name of the component as the Mark relation name.
+                ->like(),
+                
+            Mark::make('anyName')
+                ->relationship('like') // Optional pass the Mark relation name
+                ->like(),
+                
+            Mark::make('anyName')
+                ->relationship(Like::class) // Optional pass the Mark model (works only with automatic relation registration)
+                ->like()
+        ]);
+}
 ```
 
 Optionally, you can publish the views using
@@ -66,11 +107,15 @@ Optionally, you can publish the views using
 ```bash
 php artisan vendor:publish --tag="mark-views"
 ```
+---
 
+## Glossary
 
-## Usage
+- **Mark**: The mark itself, e.g., like, bookmark, or rating.
+- **Marker**: The entity that created the mark, e.g., a User.
+- **Markable**: The entity that can be marked, e.g., a Post or Comment.
 
-
+---
 
 ## Testing
 

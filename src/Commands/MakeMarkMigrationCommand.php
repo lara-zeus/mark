@@ -6,7 +6,7 @@ use Illuminate\Console\MigrationGeneratorCommand;
 
 use function Laravel\Prompts\text;
 
-class MarkMakeMigrationCommand extends MigrationGeneratorCommand
+class MakeMarkMigrationCommand extends MigrationGeneratorCommand
 {
     /**
      * The name and signature of the console command.

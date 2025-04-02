@@ -2,10 +2,14 @@
 
 namespace {{ namespace }};
 
-use LaraZeus\Mark\Models\Mark;
+use Illuminate\Database\Eloquent\Relations\MorphPivot;
+use LaraZeus\Mark\Traits\Mark;
 
-class {{ class }} extends Mark
+class {{ class }} extends MorphPivot
 {
-    //
-}
+    use Mark;
 
+    protected $casts = [
+        'metadata' => 'array',
+    ];
+}

@@ -70,7 +70,7 @@
                 "LaraZeus\\Mark\\MarkServiceProvider"
             ],
             "aliases": {
-                "Mark": "LaraZeus\\Mark\\Mark"
+                "Mark": "LaraZeus\\Mark\\Facades\\Mark"
             }
         }
     },

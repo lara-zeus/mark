@@ -1,23 +1,26 @@
 <?php
 
-namespace LaraZeus\Mark\Models;
+namespace LaraZeus\Mark\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use LaraZeus\Mark\Mark as MarkFacade;
-use LaraZeus\Mark\Models\Traits\MarkConfigs;
+use LaraZeus\Mark\Facades\Mark as MarkFacade;
+use RuntimeException;
 
-class Mark extends MorphPivot
+/**
+ * @mixin Model
+ */
+trait Mark
 {
-    use MarkConfigs;
-
-    public $incrementing = true;
-
-    protected $casts = [
-        'metadata' => 'array',
-    ];
+    /**
+     * @throws \Throwable
+     */
+    protected static function bootMark(): void
+    {
+        throw_unless(is_subclass_of(static::class, MorphPivot::class), new RuntimeException('"' . static::class . '" must be instance of "' . MorphPivot::class . '"'));
+    }
 
     /**
      * @return MorphTo<Model, $this>

@@ -5,7 +5,7 @@ namespace LaraZeus\Mark\Commands;
 use Illuminate\Foundation\Console\ModelMakeCommand;
 use Illuminate\Support\Str;
 
-class MarkMakeModelCommand extends ModelMakeCommand
+class MakeMarkModelCommand extends ModelMakeCommand
 {
     /**
      * The name and signature of the console command.

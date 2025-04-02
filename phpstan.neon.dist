@@ -5,6 +5,7 @@ parameters:
     level: 6
     paths:
         - src
-
+    ignoreErrors:
+        - identifier: trait.unused
     checkOctaneCompatibility: true
     checkModelProperties: true

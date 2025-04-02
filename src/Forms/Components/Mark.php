@@ -4,23 +4,25 @@ namespace LaraZeus\Mark\Forms\Components;
 
 use Closure;
 use Filament\Facades\Filament;
+use Filament\Forms\Components\Concerns\EntanglesStateWithSingularRelationship;
 use Filament\Forms\Components\Field;
 use Illuminate\Database\Eloquent\Model;
+use LaraZeus\Mark\Facades\Mark as MarkFacade;
 use LaraZeus\Mark\Forms\Concerns\HasSelectableIcons;
-use LaraZeus\Mark\Mark as MarkFacade;
-use LaraZeus\Mark\Models\Mark as MarkModel;
+use LaraZeus\Mark\Traits\Mark as MarkTrait;
 
 class Mark extends Field
 {
+    use EntanglesStateWithSingularRelationship;
     use HasSelectableIcons;
 
     protected string $view = 'zeus-mark::forms.components.mark';
 
     public function relationship(string | Closure | null $name = null): static
     {
-        $name = $name === null ? $this->getName() : $this->evaluate($name);
+        $name = $this->evaluate($name) ?? $this->getName();
 
-        if (is_subclass_of($name, MarkModel::class)) {
+        if (class_exists($name) && in_array(MarkTrait::class, class_uses_recursive($name))) {
             $name = MarkFacade::getMarkRelationName($name);
         }
 
@@ -44,7 +46,7 @@ class Mark extends Field
         return $this;
     }
 
-    public function isLike(): static
+    public function like(): static
     {
         return $this
             ->icons([
@@ -58,7 +60,7 @@ class Mark extends Field
             ->in(array_keys($this->getIcons()));
     }
 
-    public function isBookMark(): static
+    public function bookMark(): static
     {
         return $this
             ->icons([
@@ -70,7 +72,7 @@ class Mark extends Field
             ->in(array_keys($this->getIcons()));
     }
 
-    public function isRating(): static
+    public function rating(): static
     {
         return $this
             ->icons(array_fill(1, 5, 'heroicon-o-star'))
