@@ -17,7 +17,7 @@ class Mark extends Field
     use HasSelectableIcons;
 
     /**
-     * @var view-string
+     * @phpstan-var view-string
      */
     protected string $view = 'zeus-mark::forms.components.mark';
 
