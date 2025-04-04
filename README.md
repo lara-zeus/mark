@@ -2,7 +2,7 @@
 <a href="https://larazeus.com"><img src="https://larazeus.com/images/lara-zeus-mark.webp?v=3" /></a>
 </p>
 
-## A ready-to-use [marking](#Glossary) feature for Laravel, with built-in addons for Filament.
+## A ready-to-use [Marking](#Glossary) feature for Laravel, with built-in addons for Filament.
 
 <p align="center">
 
@@ -20,7 +20,10 @@
 </a>
 
 ## Features
-- todo
+- Easily create a mark with a single command.
+- Automatically register relationships.
+- Ready-to-use Filament form components.
+- Fully customizable and extensible.
 
 ## Demo
 
