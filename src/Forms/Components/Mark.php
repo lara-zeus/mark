@@ -16,6 +16,9 @@ class Mark extends Field
     use EntanglesStateWithSingularRelationship;
     use HasSelectableIcons;
 
+    /**
+     * @var view-string
+     */
     protected string $view = 'zeus-mark::forms.components.mark';
 
     public function relationship(string | Closure | null $name = null): static

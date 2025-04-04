@@ -8,8 +8,4 @@ use LaraZeus\Mark\Traits\Mark;
 class {{ class }} extends MorphPivot
 {
     use Mark;
-
-    protected $casts = [
-        'metadata' => 'array',
-    ];
 }
