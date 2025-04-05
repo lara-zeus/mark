@@ -16,7 +16,9 @@ trait Mark
 {
     protected function casts(): array
     {
-        return ['metadata' => 'array'];
+        return [
+            'metadata' => 'array',
+        ];
     }
 
     /**
