@@ -42,7 +42,7 @@ trait Mark
     public static function add(
         Model $markable,
         Authenticatable $user,
-        ?string $value = null,
+        string $value,
         array $metadata = []
     ): self {
         $attributes = [
@@ -59,7 +59,7 @@ trait Mark
         return static::firstOrCreate($attributes, $values);
     }
 
-    public static function remove(Model $markable, Authenticatable $user, ?string $value = null)
+    public static function remove(Model $markable, Authenticatable $user, string $value)
     {
         return static::where([
             'user_id' => $user->getKey(),
@@ -69,7 +69,7 @@ trait Mark
         ])->get()->each->delete();
     }
 
-    public static function count(Model $markable, ?string $value = null): int
+    public static function count(Model $markable, string $value): int
     {
         return static::where([
             'markable_id' => $markable->getKey(),
@@ -78,7 +78,7 @@ trait Mark
         ])->count();
     }
 
-    public static function has(Model $markable, Authenticatable $user, ?string $value = null): bool
+    public static function has(Model $markable, Authenticatable $user, string $value): bool
     {
         return static::where([
             'user_id' => $user->getKey(),
@@ -88,7 +88,7 @@ trait Mark
         ])->exists();
     }
 
-    public static function toggle(Model $markable, Authenticatable $user, ?string $value = null, array $metadata = [])
+    public static function toggle(Model $markable, Authenticatable $user, string $value, array $metadata = [])
     {
         return static::has($markable, $user, $value)
             ? static::remove($markable, $user, $value)
