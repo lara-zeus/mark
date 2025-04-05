@@ -16,13 +16,16 @@ class Mark extends Field
     use EntanglesStateWithSingularRelationship;
     use HasSelectableIcons;
 
+    /**
+     * @var view-string
+     */
     protected string $view = 'zeus-mark::forms.components.mark';
 
     public function relationship(string | Closure | null $name = null): static
     {
         $name = $this->evaluate($name) ?? $this->getName();
 
-        if (class_exists($name) && in_array(MarkTrait::class, class_uses_recursive($name))) {
+        if (class_exists($name) && in_array(MarkTrait::class, class_uses_recursive($name), true)) {
             $name = MarkFacade::getMarkRelationName($name);
         }
 

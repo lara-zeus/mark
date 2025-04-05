@@ -8,5 +8,6 @@ parameters:
         - src
     ignoreErrors:
         - identifier: trait.unused
+        - identifier: property.defaultValue
     checkOctaneCompatibility: true
     checkModelProperties: true
