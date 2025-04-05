@@ -22,7 +22,7 @@ class Mark extends Field
     {
         $name = $this->evaluate($name) ?? $this->getName();
 
-        if (class_exists($name) && in_array(MarkTrait::class, class_uses_recursive($name))) {
+        if (class_exists($name) && in_array(MarkTrait::class, class_uses_recursive($name), true)) {
             $name = MarkFacade::getMarkRelationName($name);
         }
 

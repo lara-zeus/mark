@@ -14,12 +14,22 @@ use RuntimeException;
  */
 trait Mark
 {
+    protected function casts(): array
+    {
+        return [
+            'metadata' => 'array',
+        ];
+    }
+
     /**
      * @throws \Throwable
      */
     protected static function bootMark(): void
     {
-        throw_unless(is_subclass_of(static::class, MorphPivot::class), new RuntimeException('"' . static::class . '" must be instance of "' . MorphPivot::class . '"'));
+        throw_unless(
+            is_subclass_of(static::class, MorphPivot::class),
+            new RuntimeException('"' . static::class . '" must be instance of "' . MorphPivot::class . '"')
+        );
     }
 
     /**
