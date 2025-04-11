@@ -4,8 +4,6 @@ namespace LaraZeus\Mark;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
-use Illuminate\Support\Arr;
-use LaraZeus\Mark\Traits\Mark as MarkTrait;
 use Throwable;
 
 class Mark
@@ -15,7 +13,6 @@ class Mark
     protected static string $likesMarkModel;
 
     protected static array $likesMarkablesModels;
-
 
     public function markerModel(string $marker): static
     {

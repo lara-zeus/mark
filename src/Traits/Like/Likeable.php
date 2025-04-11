@@ -4,7 +4,6 @@ namespace LaraZeus\Mark\Traits\Like;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\MorphPivot;
 use LaraZeus\Mark\Facades\Mark;
 
 /**
