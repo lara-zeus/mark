@@ -5,7 +5,6 @@ namespace LaraZeus\Mark;
 use Illuminate\Filesystem\Filesystem;
 use LaraZeus\Mark\Commands\MakeMarkMigrationCommand;
 use LaraZeus\Mark\Commands\MakeMarkModelCommand;
-use LaraZeus\Mark\Commands\MarkListRelationsCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -45,7 +44,6 @@ class MarkServiceProvider extends PackageServiceProvider
     protected function getCommands(): array
     {
         return [
-            MarkListRelationsCommand::class,
             MakeMarkMigrationCommand::class,
             MakeMarkModelCommand::class,
         ];
