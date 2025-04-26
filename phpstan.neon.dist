@@ -4,10 +4,10 @@ includes:
 parameters:
     level: 6
     paths:
+        - database
         - resources
         - src
     ignoreErrors:
         - identifier: trait.unused
-        - identifier: property.defaultValue
     checkOctaneCompatibility: true
     checkModelProperties: true

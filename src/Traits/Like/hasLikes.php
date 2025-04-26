@@ -10,31 +10,17 @@ use LaraZeus\Mark\Facades\Mark;
  */
 trait hasLikes
 {
-    protected static function bootHasLikes(): void
-    {
-        foreach (Mark::getLikeMarkables() as $relationName => $markable) {
-            $mark ??= Mark::getLikesMarkModel();
-
-            static::resolveRelationUsing($relationName, function (Model $marker) use ($mark, $markable) {
-                return $marker->morphedByMany($markable, 'markable', (new $mark)->getTable())
-                    ->using($mark)
-                    ->withPivot(['value', 'metadata'])
-                    ->withTimestamps();
-            });
-        }
-    }
-
     public function likes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Mark::getLikesMarkModel());
+        return $this->hasMany(Mark::getLikeMorphPivotModel());
     }
 
     public function hasLiked(Model $model): bool
     {
-        return $this->likes()->whereBelongsTo($model)->exists();
+        return $this->likes()->whereBelongsTo($model, 'markable')->exists();
     }
 
-    protected function markLike(Model $markable, $value, ?array $metaData = null)
+    public function markLike(Model $markable, $value, ?array $metaData = null)
     {
         return $this->likes()
             ->updateOrCreate(
@@ -49,7 +35,7 @@ trait hasLikes
             );
     }
 
-    public function unmarkLike(Model $markable)
+    public function unMarkLike(Model $markable)
     {
         return $this->likes()
             ->whereBelongsTo($markable, 'markable')

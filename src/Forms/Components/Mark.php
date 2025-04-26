@@ -2,49 +2,16 @@
 
 namespace LaraZeus\Mark\Forms\Components;
 
-use Closure;
-use Filament\Facades\Filament;
-use Filament\Forms\Components\Concerns\EntanglesStateWithSingularRelationship;
 use Filament\Forms\Components\Field;
-use Illuminate\Database\Eloquent\Model;
-use LaraZeus\Mark\Facades\Mark as MarkFacade;
+use LaraZeus\Mark\Forms\Concerns\HasMarkRelations;
 use LaraZeus\Mark\Forms\Concerns\HasSelectableIcons;
-use LaraZeus\Mark\Traits\Mark as MarkTrait;
 
 class Mark extends Field
 {
-    use EntanglesStateWithSingularRelationship;
+    use HasMarkRelations;
     use HasSelectableIcons;
 
     protected string $view = 'zeus-mark::forms.components.mark';
-
-    public function relationship(string | Closure | null $name = null): static
-    {
-        $name = $this->evaluate($name) ?? $this->getName();
-
-        if (class_exists($name) && in_array(MarkTrait::class, class_uses_recursive($name), true)) {
-            $name = MarkFacade::getMarkRelationName($name);
-        }
-
-        $this->loadStateFromRelationshipsUsing(function (Model $record, Field $component) use ($name) {
-            $component->state(
-                $record->{$name}()->where('user_id', Filament::auth()->id())->value('value')
-            );
-        });
-
-        $this->saveRelationshipsUsing(function (Model $record, $state) use ($name) {
-            if ($state === null) {
-                $record->{$name}()->where('user_id', Filament::auth()->id())->delete();
-
-                return;
-            }
-            $record->{$name}()->updateOrCreate(['user_id' => Filament::auth()->id()], ['value' => $state]);
-        });
-
-        $this->dehydrated(false);
-
-        return $this;
-    }
 
     public function like(): static
     {
@@ -60,7 +27,7 @@ class Mark extends Field
             ->in(array_keys($this->getIcons()));
     }
 
-    public function bookMark(): static
+    public function bookmark(): static
     {
         return $this
             ->icons([

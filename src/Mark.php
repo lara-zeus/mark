@@ -10,9 +10,7 @@ class Mark
 {
     protected static ?string $markerModel = null;
 
-    protected static string $likesMarkModel;
-
-    protected static array $likesMarkablesModels;
+    protected static string $likeMorphPivotModel;
 
     public function markerModel(string $marker): static
     {
@@ -34,13 +32,11 @@ class Mark
     }
 
     /**
-     * @param  class-string<MorphPivot>  $markModel
-     * @param  array<string, class-string<Model>>  $markablesModels
+     * @param  class-string<MorphPivot>  $model
      */
-    public function configureLikes(string $markModel, array $markablesModels): static
+    public function likeMorphPivotModel(string $model): static
     {
-        static::$likesMarkModel = $markModel;
-        static::$likesMarkablesModels = $markablesModels;
+        static::$likeMorphPivotModel = $model;
 
         return $this;
     }
@@ -48,13 +44,8 @@ class Mark
     /**
      * @return class-string<MorphPivot>
      */
-    public function getLikesMarkModel(): string
+    public function getLikeMorphPivotModel(): string
     {
-        return static::$likesMarkModel;
-    }
-
-    public function getLikeMarkables(): array
-    {
-        return static::$likesMarkablesModels;
+        return static::$likeMorphPivotModel;
     }
 }

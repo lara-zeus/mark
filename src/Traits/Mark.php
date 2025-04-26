@@ -9,9 +9,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use LaraZeus\Mark\Facades\Mark as MarkFacade;
 use RuntimeException;
 
-/**
- * @mixin Model
- */
 trait Mark
 {
     protected function casts(): array
@@ -26,8 +23,10 @@ trait Mark
      */
     protected static function bootMark(): void
     {
+        /** @phpstan-ignore-next-line */
+        $isSubclass = is_subclass_of(static::class, MorphPivot::class);
         throw_unless(
-            is_subclass_of(static::class, MorphPivot::class),
+            $isSubclass,
             new RuntimeException('"' . static::class . '" must be instance of "' . MorphPivot::class . '"')
         );
     }
@@ -45,6 +44,6 @@ trait Mark
      */
     public function marker(): BelongsTo
     {
-        return $this->belongsTo(MarkFacade::getMarkerModel(), 'user_id');
+        return $this->belongsTo(MarkFacade::getMarkerModel());
     }
 }

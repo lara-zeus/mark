@@ -4,6 +4,7 @@ namespace LaraZeus\Mark\Traits\Like;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use LaraZeus\Mark\Facades\Mark;
 
 /**
@@ -13,15 +14,20 @@ trait Likeable
 {
     public function likedBy()
     {
-        return $this->morphToMany(Mark::getMarkerModel(), 'markable', (new (Mark::getLikesMarkModel()))->getTable())
-            ->using(Mark::getLikesMarkModel())
+        return $this->morphToMany(Mark::getMarkerModel(), 'markable', (new (Mark::getLikeMorphPivotModel()))->getTable())
+            ->using(Mark::getLikeMorphPivotModel())
             ->withPivot(['value', 'metadata'])
             ->withTimestamps();
     }
 
     public function likes(): MorphMany
     {
-        return $this->morphMany(Mark::getLikesMarkModel(), 'markable');
+        return $this->morphMany(Mark::getLikeMorphPivotModel(), 'markable');
+    }
+
+    public function like(): MorphOne
+    {
+        return $this->morphOne(Mark::getLikeMorphPivotModel(), 'markable');
     }
 
     public function isLikedBy(Model $marker): bool
