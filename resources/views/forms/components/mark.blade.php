@@ -1,24 +1,24 @@
-@php
-    $statePath = $getStatePath();
-    $icons = $getIcons();
-    $selectedIcons = $getSelectedIcons();
-    $isSequential = $isSequential();
-    $iconsKeys = array_keys($icons);
-    // todo move to the component or on the facade
-    $showSelectedValues = function($key) use ($isSequential, $iconsKeys) {
-        if(!$isSequential){
-            return [(string)$key];
-        }
-        $keyIndex = array_search($key, $iconsKeys);
-        $iconsKeys =  array_filter($iconsKeys, fn($key) => $key >= $keyIndex, ARRAY_FILTER_USE_KEY);
-
-        return array_values(array_map(fn($value) => (string) $value, $iconsKeys));
-    };
-@endphp
 <x-dynamic-component
     :component="$getFieldWrapperView()"
     :field="$field"
 >
+    @php
+        $statePath = $getStatePath();
+        $icons = $getIcons();
+        $selectedIcons = $getSelectedIcons();
+        $isSequential = $isSequential();
+        $iconsKeys = array_keys($icons);
+        // todo move to the component or on the facade
+        $showSelectedValues = function($key) use ($isSequential, $iconsKeys) {
+            if(!$isSequential){
+                return [(string)$key];
+            }
+            $keyIndex = array_search($key, $iconsKeys);
+            $iconsKeys =  array_filter($iconsKeys, fn($key) => $key >= $keyIndex, ARRAY_FILTER_USE_KEY);
+
+            return array_values(array_map(fn($value) => (string) $value, $iconsKeys));
+        };
+    @endphp
     <div
         x-data="{
             state: $wire.{{ $applyStateBindingModifiers("\$entangle('{$statePath}')") }}
