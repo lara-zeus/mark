@@ -2,7 +2,7 @@
 <a href="https://larazeus.com"><img src="https://larazeus.com/images/lara-zeus-mark.webp?v=3" /></a>
 </p>
 
-## A ready-to-use [Marking](#Glossary) feature for Laravel, with built-in addons for Filament.
+## A ready-to-use Marking feature for Laravel, with built-in addons for Filament.
 
 <p align="center">
 
@@ -20,8 +20,7 @@
 </a>
 
 ## Features
-- Easily create a mark with a single command.
-- Automatically register relationships.
+- Ready-to-use Database and Application structure.
 - Ready-to-use Filament form components.
 - Fully customizable and extensible.
 
@@ -34,19 +33,27 @@
 
 > Visit our website to get the complete documentation: https://larazeus.com/docs/mark
 
+## Glossary
+
+- **Mark**: The mark itself, e.g., like, bookmark, or rating.
+- **Marker**: The entity that created the mark, e.g., a User.
+- **Markable**: The entity that can be marked, e.g., a Post or Comment.
+
+---
+
 ## Installation
 
 ```bash
 composer require lara-zeus/mark
 ```
 
-Then, set up a Filament [custom theme](https://filamentphp.com/docs/3.x/panels/themes#creating-a-custom-theme) and add the following path to the Tailwind configuration:
+Then, set up a [Filament Custom Theme](https://filamentphp.com/docs/3.x/panels/themes#creating-a-custom-theme) and add the following path to the Tailwind configuration:
 
 ```JS
 './vendor/lara-zeus/mark/resources/**/*.blade.php'
 ```
 
-In your `AppServiceProvider`, add the following:
+Then in your `AppServiceProvider`, add the following:
 
 ```PHP
 use App\Models\User;
@@ -55,94 +62,104 @@ use LaraZeus\Mark\Facades\Mark;
 Mark::markerModel(User::class)
 ```
 
+Then, publish the migrations:
+
+```bash
+php artisan vendor:publish --tag=zeus-mark-migrations
+```
+
+Keep the migrations of the marks you want to use, also check the [customization](#customization) section in case you need it, then run:
+
+```bash
+php artisan migrate
+```
+
+Then add the related traits to the marker and markable models, the following table lists the available traits for each mark you want to use:
+
+| Mark     | Marker       | Markable     |
+|----------|--------------|--------------|
+| Like     | HasLikes     | Likeable     |
+| Rating   | HasRatings   | Ratable      |
+| Bookmark | HasBookMarks | Bookmarkable |
+
+---
+
 ## Usage
-
-### Creating a Mark
-
-Create a new [Mark](#Glossary) using the following command:
-
-```bash
-php artisan mark:make Like
-```
-
-### Relations Registration
-
-#### Automatic
-
-In your `AppServiceProvider` add the following:
-
-```PHP
-use App\Models\Post;
-use App\Models\Comment;
-use App\Models\Like;
-use App\Models\Bookmark;
-use LaraZeus\Mark\Facades\Mark;
-
-Mark::addRelations(
-    markable: Post::class,
-    marks: [
-        Like::class,
-        Bookmark::class
-    ]
-)->addRelations(
-    markable: Comment::class,
-    marks: [
-        Like::class,
-    ]
-)
-```
-
-Then you can list the relations using the command:
-
-```bash
-php artisan mark:list
-```
-
-#### Manual
-
-You need to manually create relationship methods using [laravel polymorphic relationships](https://laravel.com/docs/12.x/eloquent-relationships#polymorphic-relationships) for the [Marker](#Glossary) and the [Markable](#Glossary).
 
 ### Filament
 
-In your Filament resource, you can use it as follows:
+#### Form Field
 
 ```PHP
 use LaraZeus\Mark\Forms\Components\Mark;
 use App\Models\Like;
 
-public static function form(Form $form): Form
-{
-    return $form
-        ->schema([
-            Mark::make('like')
-                ->relationship() // By default, it will use the name of the component as the Mark relation name.
-                ->like(),
-                
-            Mark::make('anyName')
-                ->relationship('like') // Optional pass the Mark relation name
-                ->like(),
-                
-            Mark::make('anyName')
-                ->relationship(Like::class) // Optional pass the Mark model (works only with automatic relation registration)
-                ->like()
-        ]);
-}
+Mark::make('like')
+
+    // ready to use marks
+    ->like()
+    ->bookmark()
+    ->rating()
+    
+    // custom marks
+    ->icons([
+        true => 'heroicon-o-hand-thumb-up',
+        false => 'heroicon-o-hand-thumb-down',
+    ])
+    ->selectedIcons([
+        true => 'heroicon-s-hand-thumb-up',
+        false => 'heroicon-s-hand-thumb-down',
+    ])
+    
+    // relationships
+    ->relationship() // default uses component name
+    ->relationship(name: 'like')
+    ->relationship(metadata: fn($record) => ['name' => $record->name])
 ```
 
-Optionally, you can publish the views using
+### Laravel
 
-```bash
-php artisan vendor:publish --tag="mark-views"
+Check each Marker and markables traits for full list of available usages, the following is a sample:
+
+```PHP
+use LaraZeus\Mark\Forms\Components\Mark;
+use App\Models\Like;
+
+// Marker samples
+
+// Note: metadata parameter is optional
+$post = Post::first();
+
+auth()->user()->like($post, metadata: []);
+auth()->user()->dislike($post, metadata: []);
+auth()->user()->hasLiked($post);
+auth()->user()->markLike($post, value: true, metadata: []);
+auth()->user()->unmarkLike($post);
+
+// Markable samples
+
+// Note: metadata parameter is optional
+$user = auth()->user();
+$post->likeBy($user, metadata: []);
+$post->dislikeBy($user, metadata: []);
+$post->isLikedBy($user);
+$post->markLike($user, value: true, metadata: []);
+$post->unmarkLike($user);
 ```
----
-
-## Glossary
-
-- **Mark**: The mark itself, e.g., like, bookmark, or rating.
-- **Marker**: The entity that created the mark, e.g., a User.
-- **Markable**: The entity that can be marked, e.g., a Post or Comment.
 
 ---
+
+## Customization
+
+In your `AppServiceProvider`, you can do the following:
+
+```PHP
+use App\Models\User;
+use LaraZeus\Mark\Facades\Mark;
+
+// in case you want to have your own pivot model, (must use the Mark trait)
+Mark::likeMorphPivotModel(YourOwnLikeMorphPivotClass::class)
+```
 
 ## Testing
 
