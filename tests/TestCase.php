@@ -41,10 +41,7 @@ class TestCase extends Orchestra
             InfolistsServiceProvider::class,
             LivewireServiceProvider::class,
             NotificationsServiceProvider::class,
-            // SupportServiceProvider::class,
-            // todo to baypass fking gh
-            // FUCK YOU GITHUB
-            // SupportServiceProvider::class,
+            SupportServiceProvider::class,
             TablesServiceProvider::class,
             WidgetsServiceProvider::class,
             MarkServiceProvider::class,
