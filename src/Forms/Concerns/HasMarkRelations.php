@@ -3,7 +3,6 @@
 namespace LaraZeus\Mark\Forms\Concerns;
 
 use Closure;
-use Filament\Facades\Filament;
 use Filament\Forms\Components\Concerns\EntanglesStateWithSingularRelationship;
 use Filament\Forms\Components\Field;
 use Illuminate\Database\Eloquent\Model;
@@ -26,7 +25,7 @@ trait HasMarkRelations
         $this->loadStateFromRelationshipsUsing(function (Model $record, Field $component) use ($name) {
             $relation = $this->getMarkRelation($record, $name);
             $component->state(
-                $relation->whereBelongsTo($this->getAuthUser(), 'marker')->value('value')
+                $relation->whereBelongsTo($this->getMarker(), 'marker')->value('value')
             );
         });
 
@@ -34,7 +33,7 @@ trait HasMarkRelations
             $relation = $this->getMarkRelation($record, $name);
 
             if ($state === null) {
-                $relation->whereBelongsTo($this->getAuthUser(), 'marker')->delete();
+                $relation->whereBelongsTo($this->getMarker(), 'marker')->delete();
 
                 return;
             }
@@ -45,7 +44,7 @@ trait HasMarkRelations
                 $values += ['metadata' => $this->evaluate($metadata)];
             }
 
-            $relation->updateOrCreate(['marker_id' => Filament::auth()->id()], $values);
+            $relation->updateOrCreate(['marker_id' => $this->getMarker()->getKey()], $values);
         });
 
         $this->dehydrated(false);
@@ -69,9 +68,9 @@ trait HasMarkRelations
         throw new RuntimeException('Relation "' . $name . '" must be instance of ("' . MorphOne::class . '" || "' . MorphOne::class . '").');
     }
 
-    protected function getAuthUser(): Model
+    protected function getMarker(): Model
     {
-        $user = Filament::auth()->user();
+        $user = auth()->user();
 
         if ($user instanceof Model) {
             return $user;

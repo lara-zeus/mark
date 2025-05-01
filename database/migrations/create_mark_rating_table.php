@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create((new (Mark::getLikeMorphPivotModel()))->getTable(), function (Blueprint $table) {
+        Schema::create((new (Mark::getRatingMorphPivotModel()))->getTable(), function (Blueprint $table) {
             $table->id();
             $table->foreignId('marker_id')
                 ->constrained((new (Mark::getMarkerModel()))->getTable())
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists((new (Mark::getLikeMorphPivotModel()))->getTable());
+        Schema::dropIfExists((new (Mark::getRatingMorphPivotModel()))->getTable());
     }
 };

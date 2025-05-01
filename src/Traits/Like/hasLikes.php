@@ -35,7 +35,7 @@ trait hasLikes
             );
     }
 
-    public function unMarkLike(Model $markable)
+    public function unmarkLike(Model $markable)
     {
         return $this->likes()
             ->whereBelongsTo($markable, 'markable')

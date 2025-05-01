@@ -3,7 +3,9 @@
 namespace LaraZeus\Mark;
 
 use LaraZeus\Mark\Facades\Mark;
+use LaraZeus\Mark\Models\MarkBookmark;
 use LaraZeus\Mark\Models\MarkLike;
+use LaraZeus\Mark\Models\MarkRate;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -11,18 +13,17 @@ class MarkServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'zeus-mark';
 
-    public static string $viewNamespace = 'zeus-mark';
-
     public function configurePackage(Package $package): void
     {
         $package->name(static::$name)
-            ->hasViews(static::$viewNamespace)
+            ->hasViews(static::$name)
             ->discoversMigrations();
     }
 
     public function packageBooted(): void
     {
-        Mark::markerModel(config('auth.providers.users.model'))
-            ->likeMorphPivotModel(MarkLike::class);
+        Mark::likeMorphPivotModel(MarkLike::class)
+            ->bookmarkMorphPivotModel(MarkBookmark::class)
+            ->ratingMorphPivotModel(MarkRate::class);
     }
 }

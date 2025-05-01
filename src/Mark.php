@@ -12,6 +12,10 @@ class Mark
 
     protected static string $likeMorphPivotModel;
 
+    protected static string $bookmarkMorphPivotModel;
+
+    protected static string $ratingMorphPivotModel;
+
     public function markerModel(string $marker): static
     {
         static::$markerModel = $marker;
@@ -47,5 +51,41 @@ class Mark
     public function getLikeMorphPivotModel(): string
     {
         return static::$likeMorphPivotModel;
+    }
+
+    /**
+     * @param  class-string<MorphPivot>  $model
+     */
+    public function bookmarkMorphPivotModel(string $model): static
+    {
+        static::$bookmarkMorphPivotModel = $model;
+
+        return $this;
+    }
+
+    /**
+     * @return class-string<MorphPivot>
+     */
+    public function getBookmarkMorphPivotModel(): string
+    {
+        return static::$bookmarkMorphPivotModel;
+    }
+
+    /**
+     * @param  class-string<MorphPivot>  $model
+     */
+    public function ratingMorphPivotModel(string $model): static
+    {
+        static::$ratingMorphPivotModel = $model;
+
+        return $this;
+    }
+
+    /**
+     * @return class-string<MorphPivot>
+     */
+    public function getRatingMorphPivotModel(): string
+    {
+        return static::$ratingMorphPivotModel;
     }
 }
