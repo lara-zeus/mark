@@ -41,7 +41,7 @@ class TestCase extends Orchestra
             InfolistsServiceProvider::class,
             LivewireServiceProvider::class,
             NotificationsServiceProvider::class,
-            SupportServiceProvider::class,
+            //SupportServiceProvider::class,
             TablesServiceProvider::class,
             WidgetsServiceProvider::class,
             MarkServiceProvider::class,
