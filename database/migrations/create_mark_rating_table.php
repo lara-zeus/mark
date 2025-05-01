@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use LaraZeus\Mark\Facades\Mark;
 
 return new class extends Migration
 {
@@ -11,14 +12,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('{{table}}', function (Blueprint $table) {
+        Schema::create((new (Mark::getRatingMorphPivotModel()))->getTable(), function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnUpdate();
+            $table->foreignId('marker_id')
+                ->constrained((new (Mark::getMarkerModel()))->getTable())
+                ->cascadeOnUpdate();
             $table->morphs('markable');
             $table->string('value');
             $table->json('metadata')->nullable();
             $table->timestamps();
-            $table->unique(['user_id', 'markable_type', 'markable_id']);
+            $table->unique(['marker_id', 'markable_type', 'markable_id']);
         });
     }
 
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('{{table}}');
+        Schema::dropIfExists((new (Mark::getRatingMorphPivotModel()))->getTable());
     }
 };
