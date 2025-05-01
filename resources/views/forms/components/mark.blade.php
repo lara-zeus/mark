@@ -19,12 +19,9 @@
             return array_values(array_map(fn($value) => (string) $value, $iconsKeys));
         };
     @endphp
-    <div
-        x-data="{
-            state: $wire.{{ $applyStateBindingModifiers("\$entangle('{$statePath}')") }}
-        }"
-        class="flex flex-wrap gap-5"
-    >
+    <div x-data="{
+        state: $wire.{{ $applyStateBindingModifiers("\$entangle('{$statePath}')") }}
+        }" class="flex flex-wrap gap-5">
         @foreach($icons as $key => $icon)
             @php
                 $values = json_encode($showSelectedValues($key));
