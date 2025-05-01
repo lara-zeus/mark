@@ -42,6 +42,7 @@ class TestCase extends Orchestra
             LivewireServiceProvider::class,
             NotificationsServiceProvider::class,
             //SupportServiceProvider::class,
+            // todo to baypass fking gh 
             TablesServiceProvider::class,
             WidgetsServiceProvider::class,
             MarkServiceProvider::class,
