@@ -43,6 +43,7 @@ class TestCase extends Orchestra
             NotificationsServiceProvider::class,
             //SupportServiceProvider::class,
             // todo to baypass fking gh 
+            // SupportServiceProvider::class,
             TablesServiceProvider::class,
             WidgetsServiceProvider::class,
             MarkServiceProvider::class,
