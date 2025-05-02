@@ -6,7 +6,6 @@
 composer.lock
 build
 coverage
-docs
 node_modules
 phpunit.xml
 phpstan.neon
