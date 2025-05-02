@@ -9,9 +9,9 @@ use LaraZeus\Mark\Forms\Concerns\HasSelectableIcons;
 
 class Mark extends Field
 {
+    use HasColors;
     use HasMarkRelations;
     use HasSelectableIcons;
-    use HasColors;
 
     protected string $view = 'zeus-mark::forms.components.mark';
 
