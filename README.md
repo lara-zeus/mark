@@ -7,8 +7,11 @@
 <p align="center">
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/lara-zeus/mark.svg?style=flat-square)](https://packagist.org/packages/lara-zeus/mark)
+
 [![Code Style](https://img.shields.io/github/actions/workflow/status/lara-zeus/mark/fix-php-code-style-issues.yml?label=code-style&flat-square)](https://github.com/lara-zeus/mark/actions?query=workflow%3Afix-php-code-style-issues+branch%3A1.x)
+
 [![Total Downloads](https://img.shields.io/packagist/dt/lara-zeus/mark.svg?style=flat-square)](https://packagist.org/packages/lara-zeus/mark)
+
 [![Total Downloads](https://img.shields.io/github/stars/lara-zeus/mark?style=flat-square)](https://github.com/lara-zeus/mark)
 
 </p>
