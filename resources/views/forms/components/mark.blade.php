@@ -2,6 +2,7 @@
     $statePath = $getStatePath();
     $icons = $getIcons();
     $selectedIcons = $getSelectedIcons();
+    $colors = $getColors();
     $isSequential = $isSequential();
     $iconsKeys = array_keys($icons);
     // todo move to the component or on the facade?
@@ -38,6 +39,7 @@
                     class="hidden"
                 >
                 <x-filament::icon-button
+                    :color="$getColor($key)"
                     :icon="$selectedIcons[$key]"
                     :class="__('filament-panels::layout.direction') === 'rtl' ? '-scale-x-100' : ''"
                     x-on:click="state = state === '{{ $key }}' ? null : '{{ $key }}'"
@@ -45,6 +47,7 @@
                     size="xl"
                 />
                 <x-filament::icon-button
+                    :color="$getColor($key)"
                     :class="__('filament-panels::layout.direction') === 'rtl' ? '-scale-x-100' : ''"
                     :icon="$icon"
                     x-on:click="state = state === '{{ $key }}' ? null : '{{ $key }}'"
