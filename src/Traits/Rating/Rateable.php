@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraZeus\Mark\Traits\Like;
+namespace LaraZeus\Mark\Traits\Rating;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;

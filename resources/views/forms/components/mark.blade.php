@@ -1,29 +1,29 @@
 @php
+    $colors = $getColors();
     $statePath = $getStatePath();
     $icons = $getIcons();
     $selectedIcons = $getSelectedIcons();
     $isSequential = $isSequential();
-    $iconsKeys = array_keys($icons);
-    // todo move to the component or on the facade?
-    $showSelectedValues = function($key) use ($isSequential, $iconsKeys) {
+    $keys = array_keys($icons);
+    $showSelectedValues = function($key) use ($isSequential, $keys) {
         if(!$isSequential){
             return [(string)$key];
         }
-        $keyIndex = array_search($key, $iconsKeys, true);
-        $iconsKeys =  array_filter($iconsKeys, fn($key) => $key >= $keyIndex, ARRAY_FILTER_USE_KEY);
+        $keyIndex = array_search($key, $keys);
+        $keys =  array_filter($keys, fn($key) => $key >= $keyIndex, ARRAY_FILTER_USE_KEY);
 
-        return array_values(array_map(fn($value) => (string) $value, $iconsKeys));
+        return array_values(array_map(fn($value) => (string) $value, $keys));
     };
 @endphp
 <x-dynamic-component
-        :component="$getFieldWrapperView()"
-        :field="$field"
+    :component="$getFieldWrapperView()"
+    :field="$field"
 >
     <div
-            x-data="{
+        x-data="{
             state: $wire.{{ $applyStateBindingModifiers("\$entangle('{$statePath}')") }}
         }"
-            class="flex flex-wrap gap-5"
+        class="flex flex-wrap gap-5"
     >
         @foreach($icons as $key => $icon)
             @php
@@ -31,25 +31,27 @@
             @endphp
             <div>
                 <input
-                    name="{{ $statePath }}"
                     type="{{ count($icons) > 1 ? 'radio' : 'checkbox' }}"
+                    name="{{ $statePath }}"
                     x-model="state"
-                    value="{{ $key }}"
+                   :value="'{{ $key }}'"
                     class="hidden"
                 >
                 <x-filament::icon-button
-                    :icon="$selectedIcons[$key]"
-                    :class="__('filament-panels::layout.direction') === 'rtl' ? '-scale-x-100' : ''"
+                    :color="$getColor($key) ?? 'primary'"
                     x-on:click="state = state === '{{ $key }}' ? null : '{{ $key }}'"
                     x-show="{{ $values }}.includes(state)"
+                    icon="{{ $selectedIcons[$key] }}"
                     size="xl"
+                    :class="__('filament-panels::layout.direction') === 'rtl' ? '-scale-x-100' : ''"
                 />
                 <x-filament::icon-button
-                    :class="__('filament-panels::layout.direction') === 'rtl' ? '-scale-x-100' : ''"
-                    :icon="$icon"
+                    :color="$getColor($key) ?? 'primary'"
                     x-on:click="state = state === '{{ $key }}' ? null : '{{ $key }}'"
                     x-show="!{{ $values }}.includes(state)"
+                    icon="{{ $icon }}"
                     size="xl"
+                    :class="__('filament-panels::layout.direction') === 'rtl' ? '-scale-x-100' : ''"
                 />
             </div>
         @endforeach

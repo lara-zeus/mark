@@ -3,11 +3,13 @@
 namespace LaraZeus\Mark\Forms\Components;
 
 use Filament\Forms\Components\Field;
+use LaraZeus\Mark\Forms\Concerns\HasColors;
 use LaraZeus\Mark\Forms\Concerns\HasMarkRelations;
 use LaraZeus\Mark\Forms\Concerns\HasSelectableIcons;
 
 class Mark extends Field
 {
+    use HasColors;
     use HasMarkRelations;
     use HasSelectableIcons;
 

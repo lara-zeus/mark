@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraZeus\Mark\Traits\Like;
+namespace LaraZeus\Mark\Traits\Bookmark;
 
 use Illuminate\Database\Eloquent\Model;
 use LaraZeus\Mark\Facades\Mark;
