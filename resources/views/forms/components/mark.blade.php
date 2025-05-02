@@ -3,6 +3,7 @@
     :field="$field"
 >
     @php
+        $colors = $getColors();
         $statePath = $getStatePath();
         $icons = $getIcons();
         $selectedIcons = $getSelectedIcons();
@@ -29,6 +30,7 @@
                 <input type="{{ count($icons) > 1 ? 'radio' : 'checkbox' }}" name="{{ $statePath }}" x-model="state"
                        :value="'{{ $key }}'" class="hidden">
                 <x-filament::icon-button
+                    :color="$getColor($key) ?? 'primary'"
                     x-on:click="state = state === '{{ $key }}' ? null : '{{ $key }}'"
                     x-show="{{ $values }}.includes(state)"
                     icon="{{ $selectedIcons[$key] }}"
@@ -36,6 +38,7 @@
                     :class="__('filament-panels::layout.direction') === 'rtl' ? '-scale-x-100' : ''"
                 />
                 <x-filament::icon-button
+                    :color="$getColor($key) ?? 'primary'"
                     x-on:click="state = state === '{{ $key }}' ? null : '{{ $key }}'"
                     x-show="!{{ $values }}.includes(state)"
                     icon="{{ $icon }}"
