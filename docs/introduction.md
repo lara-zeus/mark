@@ -8,7 +8,7 @@ Ready-to-use Marking feature for Laravel, with built-in components for Filament
 
 Integrate likes, bookmarks, favorites, reactions and custom made marks into your application
 
-**[Demo](https://demo.larazeus.com/admin/components-demo/mark) · [Github](https://github.com/lara-zeus/mark) · [Discord](#)**
+**[Demo](https://demo.larazeus.com/admin/components-demo/mark) · [Github](https://github.com/lara-zeus/mark) · [Discord](https://discord.com/channels/883083792112300104/1367982388747173888/1367982388747173888)**
 
 ## Features
 
@@ -34,6 +34,6 @@ Integrate likes, bookmarks, favorites, reactions and custom made marks into your
 
 Available support channels:
 
-* Join our channel on [Discord]()
+* Join our channel on [Discord](https://discord.com/channels/883083792112300104/1367982388747173888/1367982388747173888)
 * Open an issue on [GitHub](https://github.com/lara-zeus/mark/issues)
 * Email us using the [contact center](https://larazeus.com/contact-us)
