@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use LaraZeus\Mark\Facades\Mark;
+use LaraZeus\Mark\NotPassed;
 
 /**
  * @mixin Model
@@ -38,18 +39,21 @@ trait Rateable
             ->exists();
     }
 
-    protected function markRating(Model $marker, int $value, ?array $metaData = null)
+    protected function markRating(Model $marker, int $value, array | null | NotPassed $metaData = new NotPassed)
     {
-        return $this->ratings()
-            ->updateOrCreate(
-                [
-                    'marker_id' => $marker->getKey(),
-                ],
-                [
-                    'value' => (string) $value,
-                    'metadata' => $metaData,
-                ]
-            );
+        $attributes = [
+            'marker_id' => $marker->getKey(),
+        ];
+
+        $values = [
+            'value' => $value,
+        ];
+
+        if (! $metaData instanceof NotPassed) {
+            $values['metadata'] = $metaData;
+        }
+
+        return $this->ratings()->updateOrCreate($attributes, $values);
     }
 
     public function unmarkRating(Model $marker)
