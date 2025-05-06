@@ -20,6 +20,11 @@
 - 🔥 Fully customizable icons per state.
 - 🔥 Fully customizable colors per state.
 
+## Coming Soon
+- [ ] Table Column
+- [ ] Infolists Entry
+- [ ] Blade Component
+
 ## Screenshots
 
 ![](https://larazeus.com/images/screenshots/mark/mark-1.webp)
