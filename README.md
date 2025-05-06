@@ -58,9 +58,8 @@ composer test
 ## Support
 available support channels:
 
-* open an issue on [GitHub](https://github.com/lara-zeus/mark/issues)
-* Email us using the [contact center](https://larazeus.com/contact-us)
-* Our [discord channel](https://discord.com/channels/883083792112300104/1367982388747173888/1367982388747173888)
+* Open an issue on [GitHub](https://github.com/lara-zeus/mark/issues)
+* Join our channel on [discord channel](https://discord.com/channels/883083792112300104/1367982388747173888/1367982388747173888)
 
 ## Contributing
 

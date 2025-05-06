@@ -20,8 +20,11 @@ Integrate likes, bookmarks, favorites, reactions and custom made marks into your
 ## Screenshots
 
 ![](https://larazeus.com/images/screenshots/mark/mark-1.webp)
+
 ![](https://larazeus.com/images/screenshots/mark/mark-2.webp)
+
 ![](https://larazeus.com/images/screenshots/mark/mark-3.webp)
+
 ![](https://larazeus.com/images/screenshots/mark/mark-4.webp)
 
 ## Glossary
@@ -34,6 +37,5 @@ Integrate likes, bookmarks, favorites, reactions and custom made marks into your
 
 Available support channels:
 
-* Join our channel on [Discord](https://discord.com/channels/883083792112300104/1367982388747173888/1367982388747173888)
 * Open an issue on [GitHub](https://github.com/lara-zeus/mark/issues)
-* Email us using the [contact center](https://larazeus.com/contact-us)
+* Join our channel on [discord channel](https://discord.com/channels/883083792112300104/1367982388747173888/1367982388747173888)
