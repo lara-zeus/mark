@@ -15,6 +15,7 @@ class MarkServiceProvider extends PackageServiceProvider
 
     public function configurePackage(Package $package): void
     {
+        // test
         $package->name(static::$name)
             ->hasViews(static::$name)
             ->discoversMigrations();
