@@ -2,4 +2,4 @@
 
 namespace LaraZeus\Mark;
 
-final class NotPassed {}
+class NotPassed {}
