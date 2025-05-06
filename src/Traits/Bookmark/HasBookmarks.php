@@ -9,7 +9,7 @@ use LaraZeus\Mark\NotPassed;
 /**
  * @mixin Model
  */
-trait hasBookmarks
+trait HasBookmarks
 {
     public function bookmarks(): \Illuminate\Database\Eloquent\Relations\HasMany
     {

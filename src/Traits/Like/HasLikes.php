@@ -9,7 +9,7 @@ use LaraZeus\Mark\NotPassed;
 /**
  * @mixin Model
  */
-trait hasLikes
+trait HasLikes
 {
     public function likes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
