@@ -12,8 +12,11 @@ Ready-to-use Marking feature for Laravel, with built-in components for Filament
 ## Screenshots
 
 ![](https://larazeus.com/images/screenshots/mark/mark-1.webp)
+
 ![](https://larazeus.com/images/screenshots/mark/mark-2.webp)
+
 ![](https://larazeus.com/images/screenshots/mark/mark-3.webp)
+
 ![](https://larazeus.com/images/screenshots/mark/mark-4.webp)
 
 ## More Details
