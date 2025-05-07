@@ -4,11 +4,12 @@ namespace LaraZeus\Mark\Traits\Rating;
 
 use Illuminate\Database\Eloquent\Model;
 use LaraZeus\Mark\Facades\Mark;
+use LaraZeus\Mark\NotPassed;
 
 /**
  * @mixin Model
  */
-trait hasRatings
+trait HasRatings
 {
     public function ratings(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
@@ -20,19 +21,22 @@ trait hasRatings
         return $this->ratings()->whereBelongsTo($model, 'markable')->exists();
     }
 
-    public function markRating(Model $markable, int $value, ?array $metaData = null)
+    public function markRating(Model $markable, int $value, array | null | NotPassed $metaData = new NotPassed)
     {
-        return $this->ratings()
-            ->updateOrCreate(
-                [
-                    'markable_type' => $markable->getMorphClass(),
-                    'markable_id' => $markable->getKey(),
-                ],
-                [
-                    'value' => (string) $value,
-                    'metadata' => $metaData,
-                ]
-            );
+        $attributes = [
+            'markable_type' => $markable->getMorphClass(),
+            'markable_id' => $markable->getKey(),
+        ];
+
+        $values = [
+            'value' => $value,
+        ];
+
+        if (! $metaData instanceof NotPassed) {
+            $values['metadata'] = $metaData;
+        }
+
+        return $this->ratings()->updateOrCreate($attributes, $values);
     }
 
     public function unmarkRating(Model $markable)
@@ -43,7 +47,7 @@ trait hasRatings
             ?->delete();
     }
 
-    public function rate(Model $markable, int $value, ?array $metaData = null)
+    public function rate(Model $markable, int $value, array | null | NotPassed $metaData = new NotPassed)
     {
         return $this->markRating($markable, $value, $metaData);
     }

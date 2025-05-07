@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use LaraZeus\Mark\Facades\Mark;
+use LaraZeus\Mark\NotPassed;
 
 /**
  * @mixin Model
@@ -38,18 +39,21 @@ trait Bookmarkable
             ->exists();
     }
 
-    protected function markBookmark(Model $marker, $value, ?array $metaData = null)
+    protected function markBookmark(Model $marker, bool $value, array | null | NotPassed $metaData = new NotPassed)
     {
-        return $this->bookmarks()
-            ->updateOrCreate(
-                [
-                    'marker_id' => $marker->getKey(),
-                ],
-                [
-                    'value' => $value,
-                    'metadata' => $metaData,
-                ]
-            );
+        $attributes = [
+            'marker_id' => $marker->getKey(),
+        ];
+
+        $values = [
+            'value' => $value,
+        ];
+
+        if (! $metaData instanceof NotPassed) {
+            $values['metadata'] = $metaData;
+        }
+
+        return $this->bookmarks()->updateOrCreate($attributes, $values);
     }
 
     public function unmarkBookmark(Model $marker)

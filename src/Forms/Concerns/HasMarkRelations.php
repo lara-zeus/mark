@@ -8,6 +8,7 @@ use Filament\Schemas\Components\Concerns\EntanglesStateWithSingularRelationship;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use LaraZeus\Mark\NotPassed;
 use RuntimeException;
 use Throwable;
 
@@ -16,9 +17,9 @@ trait HasMarkRelations
     use EntanglesStateWithSingularRelationship;
 
     /**
-     * @param  array<string|int, mixed>|Closure(): array<string|int, mixed>|null  $metadata
+     * @param  array<string|int, mixed>|Closure(): array<string|int, mixed> |null  $metadata
      */
-    public function relationship(?string $name = null, array | Closure | null $metadata = null): static
+    public function relationship(?string $name = null, array | Closure | null | NotPassed $metadata = new NotPassed): static
     {
         $name = $this->evaluate($name) ?? $this->getName();
 
@@ -38,13 +39,17 @@ trait HasMarkRelations
                 return;
             }
 
+            $attributes = [
+                'marker_id' => $this->getMarker()->getKey(),
+            ];
+
             $values = ['value' => $state];
 
-            if ($metadata !== null) {
+            if (! $metadata instanceof NotPassed) {
                 $values += ['metadata' => $this->evaluate($metadata)];
             }
 
-            $relation->updateOrCreate(['marker_id' => $this->getMarker()->getKey()], $values);
+            $relation->updateOrCreate($attributes, $values);
         });
 
         $this->dehydrated(false);

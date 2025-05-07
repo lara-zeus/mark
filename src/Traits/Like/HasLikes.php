@@ -4,11 +4,12 @@ namespace LaraZeus\Mark\Traits\Like;
 
 use Illuminate\Database\Eloquent\Model;
 use LaraZeus\Mark\Facades\Mark;
+use LaraZeus\Mark\NotPassed;
 
 /**
  * @mixin Model
  */
-trait hasLikes
+trait HasLikes
 {
     public function likes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
@@ -20,19 +21,22 @@ trait hasLikes
         return $this->likes()->whereBelongsTo($model, 'markable')->exists();
     }
 
-    public function markLike(Model $markable, $value, ?array $metaData = null)
+    public function markLike(Model $markable, bool $value, array | null | NotPassed $metaData = new NotPassed)
     {
-        return $this->likes()
-            ->updateOrCreate(
-                [
-                    'markable_type' => $markable->getMorphClass(),
-                    'markable_id' => $markable->getKey(),
-                ],
-                [
-                    'value' => $value,
-                    'metadata' => $metaData,
-                ]
-            );
+        $attributes = [
+            'markable_type' => $markable->getMorphClass(),
+            'markable_id' => $markable->getKey(),
+        ];
+
+        $values = [
+            'value' => $value,
+        ];
+
+        if (! $metaData instanceof NotPassed) {
+            $values['metadata'] = $metaData;
+        }
+
+        return $this->likes()->updateOrCreate($attributes, $values);
     }
 
     public function unmarkLike(Model $markable)
@@ -43,12 +47,12 @@ trait hasLikes
             ?->delete();
     }
 
-    public function like(Model $markable, ?array $metaData = null)
+    public function like(Model $markable, array | null | NotPassed $metaData = new NotPassed)
     {
         return $this->markLike($markable, true, $metaData);
     }
 
-    public function dislike(Model $markable, ?array $metaData = null)
+    public function dislike(Model $markable, array | null | NotPassed $metaData = new NotPassed)
     {
         return $this->markLike($markable, false, $metaData);
     }
