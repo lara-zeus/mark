@@ -14,6 +14,7 @@ trait Bookmarkable
 {
     public function bookmarkedBy()
     {
+        // test
         return $this->morphToMany(Mark::getMarkerModel(), 'markable', (new (Mark::getBookmarkMorphPivotModel()))->getTable())
             ->using(Mark::getBookmarkMorphPivotModel())
             ->withPivot(['value', 'metadata'])
