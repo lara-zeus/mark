@@ -54,6 +54,6 @@ trait HasLikes
 
     public function dislike(Model $markable, array | null | NotPassed $metaData = new NotPassed)
     {
-        return $this->markLike($markable, false, $metaData);
+        return $this->unmarkLike($markable);
     }
 }

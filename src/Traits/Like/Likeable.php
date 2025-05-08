@@ -79,6 +79,6 @@ trait Likeable
 
     public function dislikeBy(Model $marker, $metadata = null): array
     {
-        return $this->markLike($marker, false, $metadata);
+        return $this->unmarkLike($marker);
     }
 }
