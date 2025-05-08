@@ -1,0 +1,6 @@
+includes:
+    - phpstan-8.2.neon.dist
+
+parameters:
+    ignoreErrors:
+        - identifier: property.defaultValue
