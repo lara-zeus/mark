@@ -1,5 +1,5 @@
 includes:
-    - phpstan-8.2.neon.dist
+    - phpstan-8.2.neon
 
 parameters:
     ignoreErrors:

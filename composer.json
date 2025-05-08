@@ -48,7 +48,7 @@
     },
     "scripts": {
         "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
-        "analyse": "v=$(php -r \"echo PHP_MAJOR_VERSION . \\\".\\\" . PHP_MINOR_VERSION;\"); echo \"PHP $v\" && ./vendor/bin/phpstan analyse -c phpstan-$v.neon.dist",
+        "analyse": "v=$(php -r \"echo PHP_MAJOR_VERSION . \\\".\\\" . PHP_MINOR_VERSION;\"); echo \"PHP $v\" && ./vendor/bin/phpstan analyse -c phpstan-$v.neon",
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
         "format": "vendor/bin/pint",
