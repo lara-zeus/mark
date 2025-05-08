@@ -5,50 +5,42 @@ namespace LaraZeus\Mark\Traits\Bookmark;
 use Illuminate\Database\Eloquent\Model;
 use LaraZeus\Mark\Facades\Mark;
 use LaraZeus\Mark\NotPassed;
+use LaraZeus\Mark\Traits\Marker;
+use Throwable;
 
 /**
  * @mixin Model
  */
 trait HasBookmarks
 {
+    use Marker;
+
     public function bookmarks(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Mark::getBookmarkMorphPivotModel(), 'marker_id');
     }
 
-    public function hasBookmarked(Model $model): bool
+    /**
+     * @throws Throwable
+     */
+    public function hasBookmarked(Model $markable): bool
     {
-        return $this->bookmarks()->whereMorphedTo('markable', $model)->exists();
+        return $this->hasMarked('bookmarks', $markable);
     }
 
-    public function markBookmark(Model $markable, bool $value, array | null | NotPassed $metaData = new NotPassed)
-    {
-        $attributes = [
-            'markable_type' => $markable->getMorphClass(),
-            'markable_id' => $markable->getKey(),
-        ];
-
-        $values = [
-            'value' => $value,
-        ];
-
-        if (! $metaData instanceof NotPassed) {
-            $values['metadata'] = $metaData;
-        }
-
-        return $this->bookmarks()->updateOrCreate($attributes, $values);
-    }
-
+    /**
+     * @throws Throwable
+     */
     public function unmarkBookmark(Model $markable)
     {
-        return $this->bookmarks()
-            ->whereMorphedTo('markable', $markable)
-            ->first()
-            ?->delete();
+        return $this->unmark('bookmarks', $markable);
     }
 
-    public function bookmark(Model $markable, array | null | NotPassed $metaData = new NotPassed)
+    /**
+     * @throws Throwable
+     */
+    public function bookmark(Model $markable, array | null | NotPassed $metadata = new NotPassed): Model
     {
-        return $this->markBookmark($markable, true, $metaData);
+        return $this->mark('bookmarks', $markable, true, $metadata);
     }
 }

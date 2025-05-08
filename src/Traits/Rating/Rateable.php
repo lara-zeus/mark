@@ -4,15 +4,18 @@ namespace LaraZeus\Mark\Traits\Rating;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 use LaraZeus\Mark\Facades\Mark;
 use LaraZeus\Mark\NotPassed;
+use LaraZeus\Mark\Traits\Markable;
+use Throwable;
 
 /**
  * @mixin Model
  */
 trait Rateable
 {
+    use Markable;
+
     public function ratedBy()
     {
         return $this->morphToMany(Mark::getMarkerModel(), 'markable', (new (Mark::getRatingMorphPivotModel()))->getTable())
@@ -26,46 +29,27 @@ trait Rateable
         return $this->morphMany(Mark::getRatingMorphPivotModel(), 'markable');
     }
 
-    public function rating(): MorphOne
+    /**
+     * @throws Throwable
+     */
+    public function hasRatedBy(Model $marker): bool
     {
-        return $this->morphOne(Mark::getRatingMorphPivotModel(), 'markable');
+        return $this->hasMarkedBy('ratings', $marker);
     }
 
-    public function isRatedBy(Model $marker): bool
-    {
-        return $this->ratings()
-            ->whereBelongsTo($marker, 'marker')
-            ->where('value', true)
-            ->exists();
-    }
-
-    protected function markRating(Model $marker, int $value, array | null | NotPassed $metaData = new NotPassed)
-    {
-        $attributes = [
-            'marker_id' => $marker->getKey(),
-        ];
-
-        $values = [
-            'value' => $value,
-        ];
-
-        if (! $metaData instanceof NotPassed) {
-            $values['metadata'] = $metaData;
-        }
-
-        return $this->ratings()->updateOrCreate($attributes, $values);
-    }
-
+    /**
+     * @throws Throwable
+     */
     public function unmarkRating(Model $marker)
     {
-        return $this->ratings()
-            ->whereBelongsTo($marker, 'marker')
-            ->first()
-            ?->delete();
+        return $this->unmarkBy('ratings', $marker);
     }
 
-    public function rateBy(Model $marker, int $value, $metadata = null): array
+    /**
+     * @throws Throwable
+     */
+    public function rateBy(Model $marker, int $value, array | null | NotPassed $metadata = new NotPassed): Model
     {
-        return $this->markRating($marker, $value, $metadata);
+        return $this->markBy('ratings', $marker, $value, $metadata);
     }
 }

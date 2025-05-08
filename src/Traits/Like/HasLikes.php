@@ -5,55 +5,50 @@ namespace LaraZeus\Mark\Traits\Like;
 use Illuminate\Database\Eloquent\Model;
 use LaraZeus\Mark\Facades\Mark;
 use LaraZeus\Mark\NotPassed;
+use LaraZeus\Mark\Traits\Marker;
+use Throwable;
 
 /**
  * @mixin Model
  */
 trait HasLikes
 {
+    use Marker;
+
     public function likes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Mark::getLikeMorphPivotModel(), 'marker_id');
     }
 
-    public function hasLiked(Model $model): bool
+    /**
+     * @throws Throwable
+     */
+    public function hasLikedOrDisliked(Model $markable): bool
     {
-        return $this->likes()->whereMorphedTo('markable', $model)->exists();
+        return $this->hasMarked('likes', $markable);
     }
 
-    public function markLike(Model $markable, bool $value, array | null | NotPassed $metaData = new NotPassed)
-    {
-        $attributes = [
-            'markable_type' => $markable->getMorphClass(),
-            'markable_id' => $markable->getKey(),
-        ];
-
-        $values = [
-            'value' => $value,
-        ];
-
-        if (! $metaData instanceof NotPassed) {
-            $values['metadata'] = $metaData;
-        }
-
-        return $this->likes()->updateOrCreate($attributes, $values);
-    }
-
+    /**
+     * @throws Throwable
+     */
     public function unmarkLike(Model $markable)
     {
-        return $this->likes()
-            ->whereMorphedTo('markable', $markable)
-            ->first()
-            ?->delete();
+        return $this->unmark('likes', $markable);
     }
 
-    public function like(Model $markable, array | null | NotPassed $metaData = new NotPassed)
+    /**
+     * @throws Throwable
+     */
+    public function like(Model $markable, array | null | NotPassed $metadata = new NotPassed): Model
     {
-        return $this->markLike($markable, true, $metaData);
+        return $this->mark('likes', $markable, true, $metadata);
     }
 
-    public function dislike(Model $markable, array | null | NotPassed $metaData = new NotPassed)
+    /**
+     * @throws Throwable
+     */
+    public function dislike(Model $markable, array | null | NotPassed $metadata = new NotPassed): Model
     {
-        return $this->markLike($markable, false, $metaData);
+        return $this->mark('likes', $markable, false, $metadata);
     }
 }

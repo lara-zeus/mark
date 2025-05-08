@@ -4,15 +4,18 @@ namespace LaraZeus\Mark\Traits\Bookmark;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 use LaraZeus\Mark\Facades\Mark;
 use LaraZeus\Mark\NotPassed;
+use LaraZeus\Mark\Traits\Markable;
+use Throwable;
 
 /**
  * @mixin Model
  */
 trait Bookmarkable
 {
+    use Markable;
+
     public function bookmarkedBy()
     {
         return $this->morphToMany(Mark::getMarkerModel(), 'markable', (new (Mark::getBookmarkMorphPivotModel()))->getTable())
@@ -26,46 +29,27 @@ trait Bookmarkable
         return $this->morphMany(Mark::getBookmarkMorphPivotModel(), 'markable');
     }
 
-    public function bookmark(): MorphOne
+    /**
+     * @throws Throwable
+     */
+    public function hasBookmarkedBy(Model $marker): bool
     {
-        return $this->morphOne(Mark::getBookmarkMorphPivotModel(), 'markable');
+        return $this->hasMarkedBy('bookmarks', $marker);
     }
 
-    public function isBookmarkedBy(Model $marker): bool
-    {
-        return $this->bookmarks()
-            ->whereBelongsTo($marker, 'marker')
-            ->where('value', true)
-            ->exists();
-    }
-
-    protected function markBookmark(Model $marker, bool $value, array | null | NotPassed $metaData = new NotPassed)
-    {
-        $attributes = [
-            'marker_id' => $marker->getKey(),
-        ];
-
-        $values = [
-            'value' => $value,
-        ];
-
-        if (! $metaData instanceof NotPassed) {
-            $values['metadata'] = $metaData;
-        }
-
-        return $this->bookmarks()->updateOrCreate($attributes, $values);
-    }
-
+    /**
+     * @throws Throwable
+     */
     public function unmarkBookmark(Model $marker)
     {
-        return $this->bookmarks()
-            ->whereBelongsTo($marker, 'marker')
-            ->first()
-            ?->delete();
+        return $this->unmarkBy('bookmarks', $marker);
     }
 
-    public function bookmarkBy(Model $marker, $metadata = null): array
+    /**
+     * @throws Throwable
+     */
+    public function bookmarkBy(Model $marker, array | null | NotPassed $metadata = new NotPassed): Model
     {
-        return $this->markBookmark($marker, true, $metadata);
+        return $this->markBy('bookmarks', $marker, true, $metadata);
     }
 }

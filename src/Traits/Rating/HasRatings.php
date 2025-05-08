@@ -5,50 +5,42 @@ namespace LaraZeus\Mark\Traits\Rating;
 use Illuminate\Database\Eloquent\Model;
 use LaraZeus\Mark\Facades\Mark;
 use LaraZeus\Mark\NotPassed;
+use LaraZeus\Mark\Traits\Marker;
+use Throwable;
 
 /**
  * @mixin Model
  */
 trait HasRatings
 {
+    use Marker;
+
     public function ratings(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Mark::getRatingMorphPivotModel(), 'marker_id');
     }
 
-    public function hasRated(Model $model): bool
+    /**
+     * @throws Throwable
+     */
+    public function hasRated(Model $markable): bool
     {
-        return $this->ratings()->whereMorphedTo('markable', $model)->exists();
+        return $this->hasMarked('ratings', $markable);
     }
 
-    public function markRating(Model $markable, int $value, array | null | NotPassed $metaData = new NotPassed)
-    {
-        $attributes = [
-            'markable_type' => $markable->getMorphClass(),
-            'markable_id' => $markable->getKey(),
-        ];
-
-        $values = [
-            'value' => $value,
-        ];
-
-        if (! $metaData instanceof NotPassed) {
-            $values['metadata'] = $metaData;
-        }
-
-        return $this->ratings()->updateOrCreate($attributes, $values);
-    }
-
+    /**
+     * @throws Throwable
+     */
     public function unmarkRating(Model $markable)
     {
-        return $this->ratings()
-            ->whereMorphedTo('markable', $markable)
-            ->first()
-            ?->delete();
+        return $this->unmark('ratings', $markable);
     }
 
-    public function rate(Model $markable, int $value, array | null | NotPassed $metaData = new NotPassed)
+    /**
+     * @throws Throwable
+     */
+    public function rate(Model $markable, int $value, array | null | NotPassed $metadata = new NotPassed): Model
     {
-        return $this->markRating($markable, $value, $metaData);
+        return $this->mark('ratings', $markable, $value, $metadata);
     }
 }

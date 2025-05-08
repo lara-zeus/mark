@@ -4,15 +4,18 @@ namespace LaraZeus\Mark\Traits\Like;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 use LaraZeus\Mark\Facades\Mark;
 use LaraZeus\Mark\NotPassed;
+use LaraZeus\Mark\Traits\Markable;
+use Throwable;
 
 /**
  * @mixin Model
  */
 trait Likeable
 {
+    use Markable;
+
     public function likedBy()
     {
         return $this->morphToMany(Mark::getMarkerModel(), 'markable', (new (Mark::getLikeMorphPivotModel()))->getTable())
@@ -26,59 +29,35 @@ trait Likeable
         return $this->morphMany(Mark::getLikeMorphPivotModel(), 'markable');
     }
 
-    public function like(): MorphOne
+    /**
+     * @throws Throwable
+     */
+    public function hasLikedOrDislikedBy(Model $marker): bool
     {
-        return $this->morphOne(Mark::getLikeMorphPivotModel(), 'markable');
+        return $this->hasMarkedBy('likes', $marker);
     }
 
-    public function isLikedBy(Model $marker): bool
-    {
-        return $this->likes()
-            ->whereBelongsTo($marker, 'marker')
-            ->where('value', true)
-            ->exists();
-    }
-
-    public function isDislikedBy(Model $marker): bool
-    {
-        return $this->likes()
-            ->whereBelongsTo($marker, 'marker')
-            ->where('value', false)
-            ->exists();
-    }
-
-    protected function markLike(Model $marker, bool $value, array | null | NotPassed $metaData = new NotPassed)
-    {
-        $attributes = [
-            'marker_id' => $marker->getKey(),
-        ];
-
-        $values = [
-            'value' => $value,
-        ];
-
-        if (! $metaData instanceof NotPassed) {
-            $values['metadata'] = $metaData;
-        }
-
-        return $this->likes()->updateOrCreate($attributes, $values);
-    }
-
+    /**
+     * @throws Throwable
+     */
     public function unmarkLike(Model $marker)
     {
-        return $this->likes()
-            ->whereBelongsTo($marker, 'marker')
-            ->first()
-            ?->delete();
+        return $this->unmarkBy('likes', $marker);
     }
 
-    public function likeBy(Model $marker, $metadata = null): array
+    /**
+     * @throws Throwable
+     */
+    public function likeBy(Model $marker, array | null | NotPassed $metadata = new NotPassed): Model
     {
-        return $this->markLike($marker, true, $metadata);
+        return $this->markBy('likes', $marker, true, $metadata);
     }
 
-    public function dislikeBy(Model $marker, $metadata = null): array
+    /**
+     * @throws Throwable
+     */
+    public function dislikeBy(Model $marker, array | null | NotPassed $metadata = new NotPassed): Model
     {
-        return $this->markLike($marker, false, $metadata);
+        return $this->markBy('likes', $marker, false, $metadata);
     }
 }
