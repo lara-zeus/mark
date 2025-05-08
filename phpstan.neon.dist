@@ -1,0 +1,14 @@
+includes:
+    - phpstan-baseline.neon
+
+parameters:
+    level: 6
+    paths:
+        - database
+        - resources
+        - src
+    ignoreErrors:
+        - identifier: trait.unused
+        - identifier: property.defaultValue
+    checkOctaneCompatibility: true
+    checkModelProperties: true
