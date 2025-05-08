@@ -18,7 +18,7 @@ trait HasLikes
 
     public function hasLiked(Model $model): bool
     {
-        return $this->likes()->whereBelongsTo($model, 'markable')->exists();
+        return $this->likes()->whereMorphedTo('markable', $model)->exists();
     }
 
     public function markLike(Model $markable, bool $value, array | null | NotPassed $metaData = new NotPassed)
@@ -42,7 +42,7 @@ trait HasLikes
     public function unmarkLike(Model $markable)
     {
         return $this->likes()
-            ->whereBelongsTo($markable, 'markable')
+            ->whereMorphedTo('markable', $markable)
             ->first()
             ?->delete();
     }

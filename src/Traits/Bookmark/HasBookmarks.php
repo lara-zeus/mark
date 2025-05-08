@@ -18,7 +18,7 @@ trait HasBookmarks
 
     public function hasBookmarked(Model $model): bool
     {
-        return $this->bookmarks()->whereBelongsTo($model, 'markable')->exists();
+        return $this->bookmarks()->whereMorphedTo('markable', $model)->exists();
     }
 
     public function markBookmark(Model $markable, bool $value, array | null | NotPassed $metaData = new NotPassed)
@@ -42,7 +42,7 @@ trait HasBookmarks
     public function unmarkBookmark(Model $markable)
     {
         return $this->bookmarks()
-            ->whereBelongsTo($markable, 'markable')
+            ->whereMorphedTo('markable', $markable)
             ->first()
             ?->delete();
     }
