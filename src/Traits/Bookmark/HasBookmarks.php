@@ -13,7 +13,7 @@ trait HasBookmarks
 {
     public function bookmarks(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Mark::getBookmarkMorphPivotModel());
+        return $this->hasMany(Mark::getBookmarkMorphPivotModel(), 'marker_id');
     }
 
     public function hasBookmarked(Model $model): bool

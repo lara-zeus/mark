@@ -13,7 +13,7 @@ trait HasLikes
 {
     public function likes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Mark::getLikeMorphPivotModel());
+        return $this->hasMany(Mark::getLikeMorphPivotModel(), 'marker_id');
     }
 
     public function hasLiked(Model $model): bool
