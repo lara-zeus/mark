@@ -13,7 +13,7 @@ trait HasRatings
 {
     public function ratings(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Mark::getRatingMorphPivotModel());
+        return $this->hasMany(Mark::getRatingMorphPivotModel(), 'marker_id');
     }
 
     public function hasRated(Model $model): bool
