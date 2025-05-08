@@ -18,7 +18,7 @@ trait HasRatings
 
     public function hasRated(Model $model): bool
     {
-        return $this->ratings()->whereBelongsTo($model, 'markable')->exists();
+        return $this->ratings()->whereMorphedTo('markable', $model)->exists();
     }
 
     public function markRating(Model $markable, int $value, array | null | NotPassed $metaData = new NotPassed)
@@ -42,7 +42,7 @@ trait HasRatings
     public function unmarkRating(Model $markable)
     {
         return $this->ratings()
-            ->whereBelongsTo($markable, 'markable')
+            ->whereMorphedTo('markable', $markable)
             ->first()
             ?->delete();
     }
