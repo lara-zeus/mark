@@ -4,6 +4,7 @@ namespace LaraZeus\Mark\Traits\Like;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use LaraZeus\Mark\Facades\Mark;
 use LaraZeus\Mark\NotPassed;
 use LaraZeus\Mark\Traits\Markable;
@@ -34,6 +35,10 @@ trait Likeable
         return $this->morphMany(Mark::getLikeMorphPivotModel(), 'markable');
     }
 
+    public function like(): MorphOne
+    {
+        return $this->morphOne(Mark::getLikeMorphPivotModel(), 'markable');
+    }
     /**
      * @throws Throwable
      */
