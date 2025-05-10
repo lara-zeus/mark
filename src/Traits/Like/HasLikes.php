@@ -23,14 +23,6 @@ trait HasLikes
     /**
      * @throws Throwable
      */
-    public function hasLikedOrDisliked(Model $markable): bool
-    {
-        return $this->hasMarked('likes', $markable);
-    }
-
-    /**
-     * @throws Throwable
-     */
     public function unmarkLike(Model $markable)
     {
         return $this->unmark('likes', $markable);
@@ -50,5 +42,23 @@ trait HasLikes
     public function dislike(Model $markable, array | null | NotPassed $metadata = new NotPassed): Model
     {
         return $this->mark('likes', $markable, false, $metadata);
+    }
+
+    /**
+     * @deprecated will be replaced with local scopes.
+     */
+    public function hasLiked(Model $model): bool
+    {
+        return $this->likes()->whereMorphedTo('markable', $model)->where('value', true)->exists();
+    }
+
+    /**
+     * @throws Throwable
+     *
+     * @deprecated for better naming alternative, use like() instead.
+     */
+    public function markLike(Model $markable, bool $value, array | null | NotPassed $metaData = new NotPassed): Model
+    {
+        return $this->mark('likes', $markable, $value, $metaData);
     }
 }
