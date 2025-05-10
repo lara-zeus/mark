@@ -18,7 +18,12 @@ trait Likeable
 
     public function likedBy()
     {
-        return $this->morphToMany(Mark::getMarkerModel(), 'markable', (new (Mark::getLikeMorphPivotModel()))->getTable())
+        return $this->morphToMany(
+            related: Mark::getMarkerModel(),
+            name: 'markable',
+            table: (new (Mark::getLikeMorphPivotModel()))->getTable(),
+            relatedPivotKey: 'marker_id'
+        )
             ->using(Mark::getLikeMorphPivotModel())
             ->withPivot(['value', 'metadata'])
             ->withTimestamps();

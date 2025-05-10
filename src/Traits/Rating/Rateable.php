@@ -18,7 +18,12 @@ trait Rateable
 
     public function ratedBy()
     {
-        return $this->morphToMany(Mark::getMarkerModel(), 'markable', (new (Mark::getRatingMorphPivotModel()))->getTable())
+        return $this->morphToMany(
+            related: Mark::getMarkerModel(),
+            name: 'markable',
+            table: (new (Mark::getRatingMorphPivotModel()))->getTable(),
+            relatedPivotKey: 'marker_id'
+        )
             ->using(Mark::getRatingMorphPivotModel())
             ->withPivot(['value', 'metadata'])
             ->withTimestamps();

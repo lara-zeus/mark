@@ -18,7 +18,13 @@ trait Bookmarkable
 
     public function bookmarkedBy()
     {
-        return $this->morphToMany(Mark::getMarkerModel(), 'markable', (new (Mark::getBookmarkMorphPivotModel()))->getTable())
+        return $this->morphToMany(
+            related: Mark::getMarkerModel(),
+            name: 'markable',
+            table: (new (Mark::getBookmarkMorphPivotModel()))->getTable(),
+            relatedPivotKey: 'marker_id'
+        )
+
             ->using(Mark::getBookmarkMorphPivotModel())
             ->withPivot(['value', 'metadata'])
             ->withTimestamps();
