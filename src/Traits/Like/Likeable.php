@@ -39,6 +39,7 @@ trait Likeable
     {
         return $this->morphOne(Mark::getLikeMorphPivotModel(), 'markable');
     }
+
     /**
      * @throws Throwable
      */

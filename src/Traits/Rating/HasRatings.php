@@ -46,6 +46,7 @@ trait HasRatings
 
     /**
      * @throws Throwable
+     *
      * @deprecated for better naming alternative, use rate() instead
      */
     public function markRating(Model $markable, int $value, array | null | NotPassed $metaData = new NotPassed): Model

@@ -69,6 +69,7 @@ trait Rateable
 
     /**
      * @throws Throwable
+     *
      * @deprecated for better naming alternative, use rateBy() instead.
      */
     protected function markRating(Model $marker, int $value, array | null | NotPassed $metaData = new NotPassed): Model
