@@ -51,14 +51,6 @@ trait Marker
     /**
      * @throws Throwable
      */
-    public function hasMarked(string $relation, Model $markable): bool
-    {
-        return $this->getMarkRelation($relation)->whereMorphedTo('markable', $markable)->exists();
-    }
-
-    /**
-     * @throws Throwable
-     */
     protected function getMarkRelation(string $relationName): HasMany
     {
         $relation = $this->{$relationName}();

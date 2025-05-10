@@ -44,14 +44,6 @@ trait Bookmarkable
     /**
      * @throws Throwable
      */
-    public function hasBookmarkedBy(Model $marker): bool
-    {
-        return $this->hasMarkedBy('bookmarks', $marker);
-    }
-
-    /**
-     * @throws Throwable
-     */
     public function unmarkBookmark(Model $marker)
     {
         return $this->unmarkBy('bookmarks', $marker);
@@ -68,11 +60,14 @@ trait Bookmarkable
     /**
      * @throws Throwable
      *
-     * @deprecated for better naming alternative, Use hasBookmarkedBy() instead
+     * @deprecated will be replaced for local scopes
      */
     public function isBookmarkedBy(Model $marker): bool
     {
-        return $this->hasBookmarkedBy($marker);
+        return $this->bookmarks()
+            ->whereBelongsTo($marker, 'marker')
+            ->where('value', true)
+            ->exists();
     }
 
     /**

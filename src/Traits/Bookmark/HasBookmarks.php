@@ -24,14 +24,6 @@ trait HasBookmarks
     /**
      * @throws Throwable
      */
-    public function hasBookmarked(Model $markable): bool
-    {
-        return $this->hasMarked('bookmarks', $markable);
-    }
-
-    /**
-     * @throws Throwable
-     */
     public function unmarkBookmark(Model $markable)
     {
         return $this->unmark('bookmarks', $markable);
@@ -43,6 +35,16 @@ trait HasBookmarks
     public function bookmark(Model $markable, array | null | NotPassed $metadata = new NotPassed): Model
     {
         return $this->mark('bookmarks', $markable, true, $metadata);
+    }
+
+    /**
+     * @throws Throwable
+     *
+     * @deprecated will be replaced with local scopes
+     */
+    public function hasBookmarked(Model $markable): bool
+    {
+        return $this->bookmarks()->whereMorphedTo('markable', $markable)->exists();
     }
 
     /**
