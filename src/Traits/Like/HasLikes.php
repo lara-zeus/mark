@@ -3,6 +3,7 @@
 namespace LaraZeus\Mark\Traits\Like;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use LaraZeus\Mark\Facades\Mark;
 use LaraZeus\Mark\NotPassed;
 
@@ -11,7 +12,7 @@ use LaraZeus\Mark\NotPassed;
  */
 trait HasLikes
 {
-    public function likes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function likes(): HasMany
     {
         return $this->hasMany(Mark::getLikeMorphPivotModel(), 'marker_id');
     }

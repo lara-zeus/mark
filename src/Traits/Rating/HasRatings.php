@@ -3,6 +3,7 @@
 namespace LaraZeus\Mark\Traits\Rating;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use LaraZeus\Mark\Facades\Mark;
 use LaraZeus\Mark\NotPassed;
 
@@ -11,7 +12,7 @@ use LaraZeus\Mark\NotPassed;
  */
 trait HasRatings
 {
-    public function ratings(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function ratings(): HasMany
     {
         return $this->hasMany(Mark::getRatingMorphPivotModel(), 'marker_id');
     }
