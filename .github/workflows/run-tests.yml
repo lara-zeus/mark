@@ -17,12 +17,10 @@ jobs:
         laravel: [11.*,12.*]
         stability: [prefer-lowest, prefer-stable]
         include:
-          - php: 8.2
-            openspout: 4.28.5
           - laravel: 11.*
             testbench: 9.*
             carbon: 3.*
-            openspout: ^4.0
+            openspout: 4.28.5
           - laravel: 12.*
             testbench: 10.*
             carbon: 3.*
