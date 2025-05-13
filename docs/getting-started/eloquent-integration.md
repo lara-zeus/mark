@@ -17,10 +17,10 @@ to setup the authenticated user (the Marker) that the plugin depend on it:
 In your `AppServiceProvider`, in the `boot` method add the following:
 
 ```PHP
-use App\Models\User;
-use LaraZeus\Mark\Facades\Mark;
+use App\Models\User; // [tl! add]
+use LaraZeus\Mark\Facades\Mark; // [tl! add]
 
-Mark::markerModel(User::class)
+Mark::markerModel(User::class) // [tl! focus]
 ```
 
 ## Migrations
