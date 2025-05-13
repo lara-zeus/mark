@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\MorphPivot;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use LaraZeus\Mark\Facades\Mark as MarkFacade;
 use RuntimeException;
+use Throwable;
 
 trait Mark
 {
@@ -19,7 +20,7 @@ trait Mark
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected static function bootMark(): void
     {

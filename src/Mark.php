@@ -4,6 +4,7 @@ namespace LaraZeus\Mark;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
+use RuntimeException;
 use Throwable;
 
 class Mark
@@ -30,7 +31,7 @@ class Mark
      */
     public function getMarkerModel(): string
     {
-        throw_if(! static::$markerModel, new \RuntimeException('Marker Model is not set.'));
+        throw_if(! static::$markerModel, new RuntimeException('Marker Model is not set.'));
 
         return static::$markerModel;
     }

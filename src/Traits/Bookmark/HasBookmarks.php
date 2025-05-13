@@ -3,6 +3,7 @@
 namespace LaraZeus\Mark\Traits\Bookmark;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use LaraZeus\Mark\Facades\Mark;
 use LaraZeus\Mark\NotPassed;
 
@@ -11,7 +12,7 @@ use LaraZeus\Mark\NotPassed;
  */
 trait HasBookmarks
 {
-    public function bookmarks(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function bookmarks(): HasMany
     {
         return $this->hasMany(Mark::getBookmarkMorphPivotModel(), 'marker_id');
     }
