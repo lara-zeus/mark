@@ -12,4 +12,5 @@ trait HasLikes
     use Marker\Actions;
     use Marker\Indicators;
     use Marker\Relations;
+    use Marker\Scopes;
 }
