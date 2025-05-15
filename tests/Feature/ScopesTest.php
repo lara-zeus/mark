@@ -74,7 +74,7 @@ test('markable filter the relations currectly', function ($scopeName) {
         ->toHaveCount(3)
         ->not->toContainModel($this->markables2);
 })
-->with('markable_scopes');
+    ->with('markable_scopes');
 
 test('marker filter the relations currectly', function ($scopeName) {
     expect(Marker::{$scopeName}($this->markables1)->get())
