@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use LaraZeus\Mark\Tests\Models\Markable;
 use LaraZeus\Mark\Tests\Models\Marker;
 
@@ -26,13 +29,40 @@ describe('scope', function () {
             );
     });
 
-    test('whereHasBookmarked', function () {
-        expect(Marker::whereHasBookmarked($this->markables1)->get()->modelKeys())
-            ->toHaveCount(1)
-            ->toMatchArray([$this->marker1->getKey()])
-            ->and(Marker::whereHasBookmarked($this->markables2)->get()->modelKeys())
-            ->toHaveCount(1)
-            ->toMatchArray([$this->marker2->getKey()]);
+    describe('whereBookmarked', function () {
+        test('has correct signature', function () {
+            $method = (new ReflectionClass(Marker::class))
+                ->getMethod('scopeWhereBookmarked');
 
+            expect($method->isPublic())->toBeTrue();
+
+            $parameters = $method->getParameters();
+            expect($parameters)->toHaveCount(2);
+
+            [$queryParam, $markableParam] = $parameters;
+
+            expect($queryParam->getName())->toBe('query')
+                ->and($queryParam->getType()->getName())->toBe(Builder::class)
+                ->and($queryParam->getType()->allowsNull())->toBeFalse();
+
+            expect($markableParam->getName())->toBe('markable')
+                ->and($markableParam->getType())->toBeInstanceOf(ReflectionUnionType::class)
+                ->and(collect($markableParam->getType()->getTypes())->map(fn ($t) => $t->getName())->all())
+                ->toMatchArray([Model::class, Collection::class]);
+        });
+
+        test('filter the relations currectly', function () {
+            expect(Marker::whereBookmarked($this->markables1)->get())
+                ->toHaveCount(1)
+                ->toContainModel($this->marker1);
+
+            expect(Marker::whereBookmarked($this->markables2)->get())
+                ->toHaveCount(1)
+                ->toContainModel($this->marker2);
+
+            expect(Marker::whereBookmarked($this->markables2)->get())
+                ->toHaveCount(1)
+                ->not->toContainModel($this->marker1);
+        });
     });
 });
