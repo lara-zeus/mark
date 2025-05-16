@@ -3,15 +3,12 @@ title: Customization
 weight: 5
 ---
 
-In your `AppServiceProvider`, you can do the following:
+## Custom Models
+
+If you want to use a custom pivot model for markable relationships, simply create your own model that uses the Mark trait. Then, register it in your AppServiceProvider:
 
 ```PHP
-use App\Models\User;
 use LaraZeus\Mark\Facades\Mark;
-```
 
-in case you want to have your own pivot model, (must use the Mark trait)
-
-```php
-Mark::likeMorphPivotModel(YourOwnLikeMorphPivotClass::class)
+Mark::likeMorphPivotModel(YourOwnLikeMorphPivotClass::class) // [tl! focus]
 ```
