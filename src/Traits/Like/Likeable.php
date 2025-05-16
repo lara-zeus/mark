@@ -12,4 +12,5 @@ trait Likeable
     use Markable\Actions;
     use Markable\Indicators;
     use Markable\Relations;
+    use Markable\Scopes;
 }
