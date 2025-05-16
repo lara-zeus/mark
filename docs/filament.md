@@ -8,6 +8,12 @@ Ready-to-use Marking feature for Laravel, with built-in components for Filament
 - 🔥 Ready-to-use Filament form component.
 - 🔥 Fully customizable icons per state.
 - 🔥 Fully customizable colors per state.
+- 🔥 Built-in Mark Types: Bookmark, like and rating
+- 🔥 Custom Marks Support
+- 🔥 Simple API for Managing Marks
+- 🔥 Eloquent Integration
+- 🔥 Metadata and Value Support
+- 🔥 Configuration Options
 
 ## Screenshots
 
