@@ -2,6 +2,14 @@
 
 All notable changes to `mark` will be documented in this file.
 
+## 1.1.1 - 2025-05-16
+
+### What's Changed
+
+* Update docs by @atmonshi in https://github.com/lara-zeus/mark/pull/37
+
+**Full Changelog**: https://github.com/lara-zeus/mark/compare/1.1.0...1.1.1
+
 ## 1.1.0 - 2025-05-16
 
 ### What's Changed
