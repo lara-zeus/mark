@@ -35,3 +35,68 @@ $post->isLikedBy($user);
 $post->markLike($user, value: true, metadata: []);
 $post->unmarkLike($user);
 ```
+
+## Trait Reference
+
+here is a list of all the Markable/Marker Trait API Reference
+
+### Likes
+
+| 🧩 Type  | 🧱 Trait   | ⚙️ Method                     |  
+|----------|------------|-------------------------------|
+| Markable | Relations  | `likedBy`                     |  
+|          |            | `likes`                       |  
+|          |            | `like`                        |  
+|          | Actions    | `unmarkLike`                  |  
+|          |            | `likeBy`                      |  
+|          |            | `dislikeBy`                   |  
+|          | Scopes     | `scopeWhereLikedOrDislikedBy` |  
+|          |            | `scopeWhereLikedBy`           |  
+|          |            | `scopeWhereDislikedBy`        |  
+|          | Indicators | `isLikedBy`                   |  
+|          |            | `isDislikedBy`                |  
+| Marker   | Relations  | `likes`                       |  
+|          | Actions    | `markLike`                    |  
+|          |            | `unmarkLike`                  |  
+|          |            | `like`                        |  
+|          |            | `dislike`                     |  
+|          | Scopes     | `scopeWhereLikedOrDisliked`   |  
+|          |            | `scopeWhereLiked`             |  
+|          |            | `scopeWhereDisliked`          |  
+|          | Indicators | `hasLiked`                    |  
+
+### Bookmarks:
+
+| 🧩 Type  | 🧱 Trait   | ⚙️ Method                |  
+|----------|------------|--------------------------|
+| Markable | Relations  | `bookmarkedBy`           |  
+|          |            | `bookmarks`              |  
+|          |            | `bookmark`               |  
+|          | Actions    | `unmarkBookmark`         |  
+|          |            | `bookmarkBy`             |  
+|          | Scopes     | `scopeWhereBookmarkedBy` |  
+|          | Indicators | `isBookmarkedBy`         |  
+| Marker   | Relations  | `bookmarks`              |  
+|          | Actions    | `markBookmark`           |  
+|          |            | `unmarkBookmark`         |  
+|          |            | `bookmark`               |  
+|          | Scopes     | `scopeWhereBookmarked`   |  
+|          | Indicators | `hasBookmarked`          |
+
+### Rating:
+
+| 🧩 Type  | 🧱 Trait   | ⚙️ Method           |  
+|----------|------------|---------------------|
+| Markable | Relations  | `ratedBy`           |  
+|          |            | `ratings`           |  
+|          |            | `rating`            |  
+|          | Actions    | `unmarkRating`      |  
+|          |            | `rateBy`            |  
+|          | Scopes     | `scopeWhereRatedBy` |  
+|          | Indicators | `isRatedBy`         |  
+| Marker   | Relations  | `ratings`           |  
+|          | Actions    | `markRating`        |  
+|          |            | `unmarkRating`      |  
+|          |            | `rate`              |  
+|          | Scopes     | `scopeWhereRated`   |  
+|          | Indicators | `hasRated`          |  

@@ -62,5 +62,3 @@ add the related traits to the marker and markable models, the following table li
 | Like     | HasLikes      | Likeable        |
 | Rating   | HasRatings    | Ratable         |
 | Bookmark | HasBookMarks  | Bookmarkable    |
-
----

@@ -35,10 +35,7 @@ And it's fully compatible with FilamentPHP, featuring ready-to-use components fo
 
 ## Glossary
 
-|title|title|
-|--|--|
-|row|data|
-
+Here are some definitions about Mark:
 
 - **Mark**: The mark itself, e.g., like, bookmark, or rating.
 - **Marker**: The entity that created the mark, e.g., a User.
