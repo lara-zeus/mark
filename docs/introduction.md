@@ -4,30 +4,41 @@ weight: 1
 ---
 
 ## Introduction
-Ready-to-use Marking feature for Laravel, with built-in components for Filament
 
-Integrate likes, bookmarks, favorites, reactions and custom made marks into your application
+Mark is a flexible and powerful marking system for Laravel and filament applications. Easily add bookmarks 📑, favorites ⭐️, reactions 👍, or any custom mark type to your models with minimal setup.
+
+Whether you're building a social platform, a content management system, or any app that needs interactive feedback, Mark has you covered.
+
+And it's fully compatible with FilamentPHP, featuring ready-to-use components for quick integration into your admin panels.
 
 **[Demo](https://demo.larazeus.com/admin/components-demo/mark) · [Github](https://github.com/lara-zeus/mark) · [Discord](https://discord.com/channels/883083792112300104/1367982388747173888/1367982388747173888)**
 
 ## Features
 
-- 🔥 Ready-to-use Database and Application structure.
-- 🔥 Ready-to-use Filament form component.
-- 🔥 Fully customizable icons per state.
-- 🔥 Fully customizable colors per state.
+* 🔥 Ready-to-use Database Structure
+* 🔥 Application-Ready Setup
+* 🔥 Built-in Mark Types (Bookmark, Like, Rating)
+* 🔥 Custom Mark Support
+* 🔥 Filament Form Component
+* 🔥 Customizable Icons
+* 🔥 Customizable Colors
+* 🔥 Simple API
+* 🔥 Eloquent Integration
+* 🔥 Metadata & Value Support
+* 🔥 Configuration Options
 
-## Screenshots
+## Screenshot
 
-![](https://larazeus.com/images/screenshots/mark/mark-1.webp)
-
-![](https://larazeus.com/images/screenshots/mark/mark-2.webp)
-
-![](https://larazeus.com/images/screenshots/mark/mark-3.webp)
-
-![](https://larazeus.com/images/screenshots/mark/mark-4.webp)
+@blade
+<x-auto-screenshot name="mark/mark-1" alt="using mark component in forms" />
+@endblade
 
 ## Glossary
+
+|title|title|
+|--|--|
+|row|data|
+
 
 - **Mark**: The mark itself, e.g., like, bookmark, or rating.
 - **Marker**: The entity that created the mark, e.g., a User.
