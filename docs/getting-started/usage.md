@@ -6,65 +6,63 @@ weight: 3
 # Filament
 
 ## Form Field
-to use @zeus mark in your forms:
 
-@blade
-<x-auto-screenshot name="mark/mark-1" alt="using mark component in forms" />
-@endblade
+to use @zeus Mark in your forms:
 
 ```PHP
 use LaraZeus\Mark\Forms\Components\Mark;
 use App\Models\Like;
 
-Mark::make('like')
-
-    // ready to use marks
-    ->like()
-    ->bookmark()
-    ->rating()
-    
-    // custom marks
-    ->icons([
-        true => 'heroicon-o-hand-thumb-up',
-        false => 'heroicon-o-hand-thumb-down',
-    ])
-    ->selectedIcons([
-        true => 'heroicon-s-hand-thumb-up',
-        false => 'heroicon-s-hand-thumb-down',
-    ])
-    
-    // relationships
-    ->relationship() // default uses component name
-    ->relationship(name: 'like')
-    ->relationship(metadata: fn($record) => ['name' => $record->name])
+Mark::make('like') // [tl! focus]
 ```
 
-## Laravel
-
-Check each Marker and markables traits for full list of available usages, the following is a sample:
+and you can chain any other method as in filament default components:
 
 ```PHP
-use LaraZeus\Mark\Forms\Components\Mark;
-use App\Models\Like;
+Mark::make('like')
+    ->label('Like it')
+    ->columnFullSpan()
+    // ...
+```
 
-// Marker samples
+## Mark Type:
 
-// Note: metadata parameter is optional
-$post = Post::first();
+to set the marker type:
 
-auth()->user()->like($post, metadata: []);
-auth()->user()->dislike($post, metadata: []);
-auth()->user()->hasLiked($post);
-auth()->user()->markLike($post, value: true, metadata: []);
-auth()->user()->unmarkLike($post);
+```PHP
+Mark::make('like')
+    ->like() // [tl! focus]
+    ->bookmark() // [tl! focus]
+    ->rating() // [tl! focus]
+```
 
-// Markable samples
+## custom mark
 
-// Note: metadata parameter is optional
-$user = auth()->user();
-$post->likeBy($user, metadata: []);
-$post->dislikeBy($user, metadata: []);
-$post->isLikedBy($user);
-$post->markLike($user, value: true, metadata: []);
-$post->unmarkLike($user);
+```PHP
+Mark::make('like')
+    ->icons([ // [tl! focus]
+        true => 'heroicon-o-hand-thumb-up', // [tl! focus]
+        false => 'heroicon-o-hand-thumb-down', // [tl! focus]
+    ]) // [tl! focus]
+    ->selectedIcons([ // [tl! focus]
+        true => 'heroicon-s-hand-thumb-up', // [tl! focus]
+        false => 'heroicon-s-hand-thumb-down', // [tl! focus]
+    ]) // [tl! focus]
+```
+
+## Set The Relationships
+
+```php
+Mark::make('like')
+    // default uses component name
+    ->relationship() // [tl! focus]
+    // or custom relation name
+    ->relationship(name: 'like') // [tl! focus]
+```
+
+## Set Custom Metadata
+
+```php
+Mark::make('like')
+    ->relationship(metadata: fn($record) => ['name' => $record->name]) // [tl! focus]
 ```
