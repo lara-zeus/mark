@@ -2,6 +2,16 @@
 
 All notable changes to `mark` will be documented in this file.
 
+## 1.2.0 - 2025-05-19
+
+### What's Changed
+
+* test: add tests for relations by @Abdulmajeed-Jamaan in https://github.com/lara-zeus/mark/pull/41
+* test: add indicators tests by @Abdulmajeed-Jamaan in https://github.com/lara-zeus/mark/pull/42
+* feat(like): add missing indicators by @Abdulmajeed-Jamaan in https://github.com/lara-zeus/mark/pull/43
+
+**Full Changelog**: https://github.com/lara-zeus/mark/compare/1.1.1...1.2.0
+
 ## 1.1.1 - 2025-05-16
 
 ### What's Changed
