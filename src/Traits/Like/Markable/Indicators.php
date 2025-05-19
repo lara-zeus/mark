@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 trait Indicators
 {
+    public function isLikedOrDislikedBy(Model $marker): bool
+    {
+        return $this->likes()
+            ->whereBelongsTo($marker, 'marker')
+            ->exists();
+    }
+
     public function isLikedBy(Model $marker): bool
     {
         return $this->likes()

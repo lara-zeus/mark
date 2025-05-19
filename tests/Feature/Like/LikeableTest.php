@@ -11,6 +11,53 @@ use LaraZeus\Mark\Tests\Models\Markable;
 use LaraZeus\Mark\Tests\Models\Marker;
 
 describe('indicator', function () {
+    describe('isLikedOrDislikedBy', function () {
+        test('it has correct signature', function () {
+            $reflection = new ReflectionClass(Markable::class);
+
+            expect($reflection->hasMethod('isLikedOrDislikedBy'))->toBeTrue();
+
+            $method = $reflection->getMethod('isLikedOrDislikedBy');
+
+            $parameters = $method->getParameters();
+            expect(count($parameters))->toBe(1);
+
+            $param = $parameters[0];
+            $paramType = $param->getType();
+
+            expect($paramType)->not->toBeNull();
+            expect($paramType->getName())->toBe(Model::class);
+            expect($paramType->isBuiltin())->toBeFalse();
+
+            $returnType = $method->getReturnType();
+
+            expect($returnType)->not->toBeNull();
+            expect($returnType->getName())->toBe('bool');
+            expect($returnType->allowsNull())->toBeFalse();
+        });
+
+        test('it returns true if the marker has marked the markable', function () {
+            $marker = Marker::factory()->create();
+            $markable = Markable::factory()->create();
+
+            $markable->likes()->create([
+                'marker_id' => $marker->getKey(),
+                'value' => true,
+            ]);
+
+            expect($markable->isLikedOrDislikedBy($marker))->toBeTrue();
+        })
+            ->depends('it has correct signature');
+
+        test('it returns false if the marker has not marked the markable', function () {
+            $marker = Marker::factory()->create();
+            $markable = Markable::factory()->create();
+
+            expect($markable->isLikedOrDislikedBy($marker))->toBeFalse();
+        })
+            ->depends('it has correct signature');
+    });
+
     describe('isLikedBy', function () {
         test('it has correct signature', function () {
             $reflection = new ReflectionClass(Markable::class);
