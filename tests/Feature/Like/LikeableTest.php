@@ -3,8 +3,92 @@
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use LaraZeus\Mark\Models\MarkLike;
 use LaraZeus\Mark\Tests\Models\Markable;
 use LaraZeus\Mark\Tests\Models\Marker;
+
+describe('relation', function () {
+    describe('likedBy', function () {
+        test('it has correct signature', function () {
+            $marker = new Markable;
+            expect(method_exists($marker, 'likedBy'))->toBeTrue();
+            expect($marker->likedBy())->toBeInstanceOf(MorphToMany::class);
+        });
+
+        test('it can retrieve currect records via relation', function () {
+            $marker = Marker::factory()->create();
+            $markable = Markable::factory()->create();
+
+            $mark = MarkLike::create([
+                'value' => true,
+                'marker_id' => $marker->getKey(),
+                'markable_id' => $markable->getKey(),
+                'markable_type' => $markable->getMorphClass(),
+
+            ]);
+
+            expect($markable->likedBy()->get())
+                ->toHaveCount(1)
+                ->toContainModel($marker);
+        })
+            ->depends('it has correct signature');
+    });
+
+    describe('likes', function () {
+        test('it has correct signature', function () {
+            $marker = new Markable;
+            expect(method_exists($marker, 'likes'))->toBeTrue();
+            expect($marker->likes())->toBeInstanceOf(MorphMany::class);
+        });
+
+        test('it can retrieve currect records via relation', function () {
+            $marker = Marker::factory()->create();
+            $markable = Markable::factory()->create();
+
+            $mark = MarkLike::create([
+                'value' => true,
+                'marker_id' => $marker->getKey(),
+                'markable_id' => $markable->getKey(),
+                'markable_type' => $markable->getMorphClass(),
+
+            ]);
+
+            expect($markable->likes()->get())
+                ->toHaveCount(1)
+                ->toContainModel($mark);
+        })
+            ->depends('it has correct signature');
+    });
+
+    describe('like', function () {
+        test('it has correct signature', function () {
+            $marker = new Markable;
+            expect(method_exists($marker, 'like'))->toBeTrue();
+            expect($marker->like())->toBeInstanceOf(MorphOne::class);
+        });
+
+        test('it can retrieve currect records via relation', function () {
+            $marker = Marker::factory()->create();
+            $markable = Markable::factory()->create();
+
+            $mark = MarkLike::create([
+                'value' => true,
+                'marker_id' => $marker->getKey(),
+                'markable_id' => $markable->getKey(),
+                'markable_type' => $markable->getMorphClass(),
+
+            ]);
+
+            expect($markable->like()->get())
+                ->toHaveCount(1)
+                ->toContainModel($mark);
+        })
+            ->depends('it has correct signature');
+    });
+});
 
 describe('scope', function () {
     describe('whereLikedOrDislikedBy', function () {
