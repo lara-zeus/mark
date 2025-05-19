@@ -3,8 +3,12 @@ name: run-tests
 on:
   push:
     branches: [1.x]
+    paths:
+      - '**.php'
   pull_request:
     branches: [1.x]
+    paths:
+      - '**.php'
   workflow_dispatch:
 
 jobs:
