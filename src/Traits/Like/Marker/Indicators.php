@@ -8,6 +8,6 @@ trait Indicators
 {
     public function hasLiked(Model $model): bool
     {
-        return $this->likes()->whereMorphedTo('markable', $model)->exists();
+        return $this->likes()->whereMorphedTo('markable', $model)->where('value', true)->exists();
     }
 }
