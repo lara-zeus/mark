@@ -12,6 +12,11 @@ use Throwable;
 
 trait Mark
 {
+    public function getIncrementing(): bool
+    {
+        return true;
+    }
+
     protected function casts(): array
     {
         return [
