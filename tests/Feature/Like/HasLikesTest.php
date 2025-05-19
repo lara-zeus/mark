@@ -8,6 +8,56 @@ use LaraZeus\Mark\Models\MarkLike;
 use LaraZeus\Mark\Tests\Models\Markable;
 use LaraZeus\Mark\Tests\Models\Marker;
 
+describe('indicator', function () {
+    describe('hasLiked', function () {
+        test('it has correct signature', function () {
+            $reflection = new ReflectionClass(Marker::class);
+
+            expect($reflection->hasMethod('hasLiked'))->toBeTrue();
+
+            $method = $reflection->getMethod('hasLiked');
+
+            $parameters = $method->getParameters();
+            expect(count($parameters))->toBe(1);
+
+            $param = $parameters[0];
+            $paramType = $param->getType();
+
+            expect($paramType)->not->toBeNull();
+            expect($paramType->getName())->toBe(Model::class);
+            expect($paramType->isBuiltin())->toBeFalse();
+
+            $returnType = $method->getReturnType();
+
+            expect($returnType)->not->toBeNull();
+            expect($returnType->getName())->toBe('bool');
+            expect($returnType->allowsNull())->toBeFalse();
+        });
+
+        it('returns true if the marker has marked the markable', function () {
+            $marker = Marker::factory()->create();
+            $markable = Markable::factory()->create();
+
+            $marker->likes()->create([
+                'markable_id' => $markable->getKey(),
+                'markable_type' => $markable->getMorphClass(),
+                'value' => true,
+            ]);
+
+            expect($marker->hasLiked($markable))->toBeTrue();
+        })
+            ->depends('it has correct signature');
+
+        it('returns false if the marker has not marked the markable', function () {
+            $marker = Marker::factory()->create();
+            $markable = Markable::factory()->create();
+
+            expect($marker->hasLiked($markable))->toBeFalse();
+        })
+            ->depends('it has correct signature');
+    });
+});
+
 describe('relation', function () {
     describe('likes', function () {
         test('it has correct signature', function () {
