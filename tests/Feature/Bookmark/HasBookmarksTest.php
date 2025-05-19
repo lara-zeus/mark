@@ -8,6 +8,56 @@ use LaraZeus\Mark\Models\MarkBookmark;
 use LaraZeus\Mark\Tests\Models\Markable;
 use LaraZeus\Mark\Tests\Models\Marker;
 
+describe('indicator', function () {
+    describe('hasBookmarked', function () {
+        test('it has correct signature', function () {
+            $reflection = new ReflectionClass(Marker::class);
+
+            expect($reflection->hasMethod('hasBookmarked'))->toBeTrue();
+
+            $method = $reflection->getMethod('hasBookmarked');
+
+            $parameters = $method->getParameters();
+            expect(count($parameters))->toBe(1);
+
+            $param = $parameters[0];
+            $paramType = $param->getType();
+
+            expect($paramType)->not->toBeNull();
+            expect($paramType->getName())->toBe(Model::class);
+            expect($paramType->isBuiltin())->toBeFalse();
+
+            $returnType = $method->getReturnType();
+
+            expect($returnType)->not->toBeNull();
+            expect($returnType->getName())->toBe('bool');
+            expect($returnType->allowsNull())->toBeFalse();
+        });
+
+        it('returns true if the marker has marked the markable', function () {
+            $marker = Marker::factory()->create();
+            $markable = Markable::factory()->create();
+
+            $marker->bookmarks()->create([
+                'markable_id' => $markable->getKey(),
+                'markable_type' => $markable->getMorphClass(),
+                'value' => true,
+            ]);
+
+            expect($marker->hasBookmarked($markable))->toBeTrue();
+        })
+            ->depends('it has correct signature');
+
+        it('returns false if the marker has not marked the markable', function () {
+            $marker = Marker::factory()->create();
+            $markable = Markable::factory()->create();
+
+            expect($marker->hasBookmarked($markable))->toBeFalse();
+        })
+            ->depends('it has correct signature');
+    });
+});
+
 describe('relation', function () {
     describe('bookmarks', function () {
         test('it has correct signature', function () {
