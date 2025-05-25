@@ -54,7 +54,8 @@ here is a list of all the Markable/Marker Trait API Reference
 |          |            | `scopeWhereLikedBy`           |  
 |          |            | `scopeWhereDislikedBy`        |  
 |          | Indicators | `isLikedBy`                   |  
-|          |            | `isDislikedBy`                |  
+|          |            | `isDislikedBy`                |
+|          |            | `isLikedOrDislikedBy`         |
 | Marker   | Relations  | `likes`                       |  
 |          | Actions    | `markLike`                    |  
 |          |            | `unmarkLike`                  |  
@@ -64,6 +65,8 @@ here is a list of all the Markable/Marker Trait API Reference
 |          |            | `scopeWhereLiked`             |  
 |          |            | `scopeWhereDisliked`          |  
 |          | Indicators | `hasLiked`                    |  
+|          |            | `hasDisliked`                 |  
+|          |            | `hasLikedOrDisliked`          |  
 
 ### Bookmarks:
 

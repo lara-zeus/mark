@@ -3,8 +3,184 @@
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use LaraZeus\Mark\Models\MarkLike;
 use LaraZeus\Mark\Tests\Models\Markable;
 use LaraZeus\Mark\Tests\Models\Marker;
+
+describe('indicator', function () {
+    describe('hasLikedOrDisliked', function () {
+        test('it has correct signature', function () {
+            $reflection = new ReflectionClass(Marker::class);
+
+            expect($reflection->hasMethod('hasLikedOrDisliked'))->toBeTrue();
+
+            $method = $reflection->getMethod('hasLikedOrDisliked');
+
+            $parameters = $method->getParameters();
+            expect(count($parameters))->toBe(1);
+
+            $param = $parameters[0];
+            $paramType = $param->getType();
+
+            expect($paramType)->not->toBeNull();
+            expect($paramType->getName())->toBe(Model::class);
+            expect($paramType->isBuiltin())->toBeFalse();
+
+            $returnType = $method->getReturnType();
+
+            expect($returnType)->not->toBeNull();
+            expect($returnType->getName())->toBe('bool');
+            expect($returnType->allowsNull())->toBeFalse();
+        });
+
+        it('returns true if the marker has marked the markable', function () {
+            $marker = Marker::factory()->create();
+            $markable = Markable::factory()->create();
+
+            $marker->likes()->create([
+                'markable_id' => $markable->getKey(),
+                'markable_type' => $markable->getMorphClass(),
+                'value' => true,
+            ]);
+
+            expect($marker->hasLikedOrDisliked($markable))->toBeTrue();
+        })
+            ->depends('it has correct signature');
+
+        it('returns false if the marker has not marked the markable', function () {
+            $marker = Marker::factory()->create();
+            $markable = Markable::factory()->create();
+
+            expect($marker->hasLikedOrDisliked($markable))->toBeFalse();
+        })
+            ->depends('it has correct signature');
+    });
+
+    describe('hasLiked', function () {
+        test('it has correct signature', function () {
+            $reflection = new ReflectionClass(Marker::class);
+
+            expect($reflection->hasMethod('hasLiked'))->toBeTrue();
+
+            $method = $reflection->getMethod('hasLiked');
+
+            $parameters = $method->getParameters();
+            expect(count($parameters))->toBe(1);
+
+            $param = $parameters[0];
+            $paramType = $param->getType();
+
+            expect($paramType)->not->toBeNull();
+            expect($paramType->getName())->toBe(Model::class);
+            expect($paramType->isBuiltin())->toBeFalse();
+
+            $returnType = $method->getReturnType();
+
+            expect($returnType)->not->toBeNull();
+            expect($returnType->getName())->toBe('bool');
+            expect($returnType->allowsNull())->toBeFalse();
+        });
+
+        it('returns true if the marker has marked the markable', function () {
+            $marker = Marker::factory()->create();
+            $markable = Markable::factory()->create();
+
+            $marker->likes()->create([
+                'markable_id' => $markable->getKey(),
+                'markable_type' => $markable->getMorphClass(),
+                'value' => true,
+            ]);
+
+            expect($marker->hasLiked($markable))->toBeTrue();
+        })
+            ->depends('it has correct signature');
+
+        it('returns false if the marker has not marked the markable', function () {
+            $marker = Marker::factory()->create();
+            $markable = Markable::factory()->create();
+
+            expect($marker->hasLiked($markable))->toBeFalse();
+        })
+            ->depends('it has correct signature');
+    });
+
+    describe('hasDisliked', function () {
+        test('it has correct signature', function () {
+            $reflection = new ReflectionClass(Marker::class);
+
+            expect($reflection->hasMethod('hasDisliked'))->toBeTrue();
+
+            $method = $reflection->getMethod('hasDisliked');
+
+            $parameters = $method->getParameters();
+            expect(count($parameters))->toBe(1);
+
+            $param = $parameters[0];
+            $paramType = $param->getType();
+
+            expect($paramType)->not->toBeNull();
+            expect($paramType->getName())->toBe(Model::class);
+            expect($paramType->isBuiltin())->toBeFalse();
+
+            $returnType = $method->getReturnType();
+
+            expect($returnType)->not->toBeNull();
+            expect($returnType->getName())->toBe('bool');
+            expect($returnType->allowsNull())->toBeFalse();
+        });
+
+        it('returns true if the marker has marked the markable', function () {
+            $marker = Marker::factory()->create();
+            $markable = Markable::factory()->create();
+
+            $marker->likes()->create([
+                'markable_id' => $markable->getKey(),
+                'markable_type' => $markable->getMorphClass(),
+                'value' => false,
+            ]);
+
+            expect($marker->hasDisliked($markable))->toBeTrue();
+        })
+            ->depends('it has correct signature');
+
+        it('returns false if the marker has not marked the markable', function () {
+            $marker = Marker::factory()->create();
+            $markable = Markable::factory()->create();
+
+            expect($marker->hasDisliked($markable))->toBeFalse();
+        })
+            ->depends('it has correct signature');
+    });
+});
+
+describe('relation', function () {
+    describe('likes', function () {
+        test('it has correct signature', function () {
+            $marker = new Marker;
+            expect(method_exists($marker, 'likes'))->toBeTrue();
+            expect($marker->likes())->toBeInstanceOf(HasMany::class);
+        });
+
+        test('it can retrieve currect records via relation', function () {
+            $marker = Marker::factory()->create();
+            $markable = Markable::factory()->create();
+
+            $mark = MarkLike::create([
+                'value' => true,
+                'marker_id' => $marker->getKey(),
+                'markable_id' => $markable->getKey(),
+                'markable_type' => $markable->getMorphClass(),
+
+            ]);
+
+            expect($marker->likes()->get())
+                ->toHaveCount(1)
+                ->toContainModel($mark);
+        })
+            ->depends('it has correct signature');
+    });
+});
 
 describe('scope', function () {
     beforeEach(function () {
