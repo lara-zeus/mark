@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 trait Scopes
 {
-    public function scopeWhereRatedBy(Builder $query, Model | Collection $marker): Builder
+    public function scopeRatedBy(Builder $query, Model | Collection $marker): Builder
     {
         return $query->whereRelation(
             'ratings',
