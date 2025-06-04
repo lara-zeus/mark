@@ -18,7 +18,6 @@ return new class extends Migration
                 ->constrained((new (Mark::getMarkerModel()))->getTable())
                 ->cascadeOnUpdate();
             $table->morphs('markable');
-            $table->string('value');
             $table->json('metadata')->nullable();
             $table->timestamps();
             $table->unique(['marker_id', 'markable_type', 'markable_id']);
