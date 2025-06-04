@@ -3,7 +3,6 @@
 namespace LaraZeus\Mark\Traits\Like\Markable;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 use LaraZeus\Mark\Facades\Mark;
 
 trait Relations
