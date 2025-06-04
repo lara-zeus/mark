@@ -3,58 +3,61 @@
 namespace LaraZeus\Mark\Forms\Concerns;
 
 use Closure;
-use Filament\Forms\Components\Concerns\EntanglesStateWithSingularRelationship;
-use Filament\Forms\Components\Field;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use LaraZeus\Mark\Forms\Components\Mark;
 use LaraZeus\Mark\NotPassed;
 use RuntimeException;
 use Throwable;
 
 trait HasMarkRelations
 {
-    use EntanglesStateWithSingularRelationship;
-
     /**
-     * @param  array<string|int, mixed>|Closure(): array<string|int, mixed> |null  $metadata
+     * @param  array<string|int, mixed>|Closure|NotPassed|null  $metadata
      */
-    public function relationship(?string $name = null, array | Closure | null | NotPassed $metadata = new NotPassed): static
+    public function relationship(?string $name = null, array | Closure | NotPassed | null $metadata = new NotPassed): static
     {
         $name = $this->evaluate($name) ?? $this->getName();
 
-        $this->loadStateFromRelationshipsUsing(function (Model $record, Field $component) use ($name) {
-            $relation = $this->getMarkRelation($record, $name);
-            $component->state(
-                $relation->whereBelongsTo($this->getMarker(), 'marker')->value('value')
-            );
-        });
+        return $this
+            ->loadStateFromRelationshipsUsing(function (Model $record, Mark $component) use ($name) {
+                $relation = $this->getMarkRelation($record, $name)
+                    ->whereBelongsTo($this->getMarker(), 'marker');
 
-        $this->saveRelationshipsUsing(function (Model $record, $state) use ($name, $metadata) {
-            $relation = $this->getMarkRelation($record, $name);
+                $component->state(
+                    $component->isMultiple()
+                        ? $relation->value('value')
+                        : $relation->exists()
+                );
+            })
+            ->saveRelationshipsUsing(function (Model $record, $state, Mark $component) use ($name, $metadata) {
+                $relation = $this->getMarkRelation($record, $name);
 
-            if ($state === null) {
-                $relation->whereBelongsTo($this->getMarker(), 'marker')->delete();
+                if (($component->isMultiple() && $state === null)
+                    || (! $component->isMultiple() && $state === false)) {
+                    $relation->whereBelongsTo($this->getMarker(), 'marker')->first()?->delete();
 
-                return;
-            }
+                    return;
+                }
 
-            $attributes = [
-                'marker_id' => $this->getMarker()->getKey(),
-            ];
+                $attributes = [
+                    'marker_id' => $this->getMarker()->getKey(),
+                ];
 
-            $values = ['value' => $state];
+                if ($component->isMultiple()) {
+                    $values = ['value' => $state];
+                } else {
+                    $values = [];
+                }
 
-            if (! $metadata instanceof NotPassed) {
-                $values += ['metadata' => $this->evaluate($metadata)];
-            }
+                if (! $metadata instanceof NotPassed) {
+                    $values += ['metadata' => $this->evaluate($metadata)];
+                }
 
-            $relation->updateOrCreate($attributes, $values);
-        });
-
-        $this->dehydrated(false);
-
-        return $this;
+                $relation->updateOrCreate($attributes, $values);
+            })
+            ->dehydrated(false);
     }
 
     /**
@@ -66,19 +69,23 @@ trait HasMarkRelations
     {
         $relation = $record->{$name}();
 
-        if ($relation instanceof MorphOne || $relation instanceof MorphMany) {
-            return $relation;
-        }
+        throw_unless(
+            $relation instanceof MorphOne || $relation instanceof MorphMany,
+            new RuntimeException('Relation "' . $name . '" must be instance of ("' . MorphOne::class . '" || "' . MorphOne::class . '").')
+        );
 
-        throw new RuntimeException('Relation "' . $name . '" must be instance of ("' . MorphOne::class . '" || "' . MorphOne::class . '").');
+        return $relation;
     }
 
+    /**
+     * @throws Throwable
+     */
     protected function getMarker(): Model
     {
-        $user = auth()->user();
+        $marker = auth()->user();
 
-        if ($user instanceof Model) {
-            return $user;
+        if ($marker instanceof Model) {
+            return $marker;
         }
 
         throw new RuntimeException('Authenticated User must be instance of "' . Model::class . '".');
