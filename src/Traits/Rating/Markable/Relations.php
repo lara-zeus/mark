@@ -8,7 +8,7 @@ use LaraZeus\Mark\Facades\Mark;
 
 trait Relations
 {
-    public function ratedBy()
+    public function raters()
     {
         return $this->morphToMany(
             related: Mark::getMarkerModel(),

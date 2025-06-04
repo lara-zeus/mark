@@ -8,7 +8,7 @@ use LaraZeus\Mark\Facades\Mark;
 
 trait Relations
 {
-    public function likedBy()
+    public function likers()
     {
         return $this->morphToMany(
             related: Mark::getMarkerModel(),

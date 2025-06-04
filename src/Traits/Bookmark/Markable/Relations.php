@@ -8,7 +8,7 @@ use LaraZeus\Mark\Facades\Mark;
 
 trait Relations
 {
-    public function bookmarkedBy()
+    public function bookmarkers()
     {
         return $this->morphToMany(
             related: Mark::getMarkerModel(),
