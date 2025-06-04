@@ -25,9 +25,4 @@ trait Relations
     {
         return $this->morphMany(Mark::getLikeMorphPivotModel(), 'markable');
     }
-
-    public function like(): MorphOne
-    {
-        return $this->morphOne(Mark::getLikeMorphPivotModel(), 'markable');
-    }
 }

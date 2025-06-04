@@ -26,9 +26,4 @@ trait Relations
     {
         return $this->morphMany(Mark::getBookmarkMorphPivotModel(), 'markable');
     }
-
-    public function bookmark(): MorphOne
-    {
-        return $this->morphOne(Mark::getBookmarkMorphPivotModel(), 'markable');
-    }
 }

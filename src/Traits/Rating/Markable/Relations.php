@@ -25,9 +25,4 @@ trait Relations
     {
         return $this->morphMany(Mark::getRatingMorphPivotModel(), 'markable');
     }
-
-    public function rating(): MorphOne
-    {
-        return $this->morphOne(Mark::getRatingMorphPivotModel(), 'markable');
-    }
 }
