@@ -2,17 +2,20 @@
 
 namespace LaraZeus\Mark\Forms\Concerns;
 
+use Closure;
+use Illuminate\Contracts\Support\Arrayable;
+
 trait HasColors
 {
     /**
-     * @var array<string|int, string>|string|null
+     * @var array<string|int, string>|Arrayable<string|int, string>|string|null
      */
-    protected array | string | null $colors = null;
+    protected array | string | Arrayable | Closure | null $colors = null;
 
     /**
-     * @param  array<string|int, string>|string|null  $colors
+     * @param  array<string|int, string>|Arrayable<string|int, string>|string  $colors
      */
-    public function colors(array | string | null $colors): static
+    public function colors(array | string | Arrayable | Closure $colors): static
     {
         $this->colors = $colors;
 
@@ -24,6 +27,12 @@ trait HasColors
      */
     public function getColors(): array
     {
-        return $this->colors ?? [];
+        $colors = $this->evaluate($this->colors);
+
+        if ($colors instanceof Arrayable) {
+            $colors = $colors->toArray();
+        }
+
+        return $colors ?? [];
     }
 }
