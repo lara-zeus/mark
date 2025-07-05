@@ -20,12 +20,12 @@ class Mark extends Field
         return $this
             ->icons(
                 [
-                    'heroicon-o-hand-thumb-down',
-                    'heroicon-o-hand-thumb-up',
+                    1 => 'heroicon-o-hand-thumb-up',
+                    0 => 'heroicon-o-hand-thumb-down',
                 ],
                 [
-                    'heroicon-s-hand-thumb-down',
-                    'heroicon-s-hand-thumb-up',
+                    1 => 'heroicon-s-hand-thumb-up',
+                    0 => 'heroicon-s-hand-thumb-down',
                 ]
             )
             ->rules(['boolean', 'nullable']);
@@ -34,6 +34,9 @@ class Mark extends Field
     public function bookmark(): static
     {
         return $this
+            ->afterStateHydrated(static function ($component, $state): void {
+                $component->state((bool) $state);
+            })
             ->icons('heroicon-o-bookmark', 'heroicon-s-bookmark')
             ->rule('boolean');
     }

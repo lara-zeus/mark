@@ -16,26 +16,28 @@ trait HasMarkRelations
     /**
      * @param  array<string|int, mixed>|Closure|NotPassed|null  $metadata
      */
-    public function relationship(?string $name = null, array | Closure | NotPassed | null $metadata = new NotPassed): static
-    {
+    public function relationship(
+        ?string $name = null,
+        array | Closure | NotPassed | null $metadata = new NotPassed,
+        ?string $stateColumn = null
+    ): static {
         $name = $this->evaluate($name) ?? $this->getName();
 
         return $this
-            ->loadStateFromRelationshipsUsing(function (Model $record, Mark $component) use ($name) {
+            ->loadStateFromRelationshipsUsing(function (Model $record, Mark $component) use ($name, $stateColumn) {
                 $relation = $this->getMarkRelation($record, $name)
                     ->whereBelongsTo($this->getMarker(), 'marker');
 
                 $component->state(
-                    $component->isMultiple()
-                        ? $relation->value('value')
-                        : $relation->exists()
+                    is_null($stateColumn)
+                        ? $relation->exists()
+                        : $relation->value($stateColumn)
                 );
             })
-            ->saveRelationshipsUsing(function (Model $record, $state, Mark $component) use ($name, $metadata) {
+            ->saveRelationshipsUsing(function (Model $record, $state) use ($name, $metadata, $stateColumn) {
                 $relation = $this->getMarkRelation($record, $name);
 
-                if (($component->isMultiple() && $state === null)
-                    || (! $component->isMultiple() && $state === false)) {
+                if ((is_null($stateColumn) && $state === false) || (! is_null($stateColumn) && $state === null)) {
                     $relation->whereBelongsTo($this->getMarker(), 'marker')->first()?->delete();
 
                     return;
@@ -45,10 +47,10 @@ trait HasMarkRelations
                     'marker_id' => $this->getMarker()->getKey(),
                 ];
 
-                if ($component->isMultiple()) {
+                $values = [];
+
+                if (! is_null($stateColumn)) {
                     $values = ['value' => $state];
-                } else {
-                    $values = [];
                 }
 
                 if (! $metadata instanceof NotPassed) {

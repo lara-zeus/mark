@@ -55,11 +55,6 @@ trait HasSelectableIcons
         return $this->isSequential;
     }
 
-    public function isMultiple(): bool
-    {
-        return is_array($this->getIconsState($this->defaultIconsState));
-    }
-
     /**
      * @param  array<string|int, string>|Arrayable<string|int, string>|string|Closure  $iconState
      * @return array<string|int, string>|string
