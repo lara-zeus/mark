@@ -1,1 +1,26 @@
 @import '../../vendor/filament/filament/resources/css/theme.css';
+
+.zeus-mark input + div > button:first-child {
+    display: flex;
+}
+.zeus-mark input + div > button:last-child {
+    display: none;
+}
+.zeus-mark input:checked + div > button:first-child {
+    display: none;
+}
+.zeus-mark input:checked + div > button:last-child {
+    display: flex;
+}
+.zeus-mark[sequential]:has(input:checked) input + div > button:first-child {
+    display: none;
+}
+.zeus-mark[sequential]:has(input:checked) input + div > button:last-child {
+    display: flex;
+}
+.zeus-mark[sequential]:has(input:checked) input:checked + div ~ div > button:first-child {
+    display: flex;
+}
+.zeus-mark[sequential]:has(input:checked) input:checked + div ~ div > button:last-child {
+    display: none;
+}

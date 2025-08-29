@@ -64,34 +64,6 @@
         ->class("zeus-mark flex flex-wrap gap-5")
     }}
 >
-    @once
-        <style>
-            .zeus-mark input + div > button:first-child {
-                display: flex;
-            }
-            .zeus-mark input + div > button:last-child {
-                display: none;
-            }
-            .zeus-mark input:checked + div > button:first-child {
-                display: none;
-            }
-            .zeus-mark input:checked + div > button:last-child {
-                display: flex;
-            }
-            .zeus-mark[sequential]:has(input:checked) input + div > button:first-child {
-                display: none;
-            }
-            .zeus-mark[sequential]:has(input:checked) input + div > button:last-child {
-                display: flex;
-            }
-            .zeus-mark[sequential]:has(input:checked) input:checked + div ~ div > button:first-child {
-                display: flex;
-            }
-            .zeus-mark[sequential]:has(input:checked) input:checked + div ~ div > button:last-child {
-                display: none;
-            }
-        </style>
-    @endonce
     @foreach($defaultIcons as $value => $defaultIcon)
         @php
             $iconColor = is_array($colors) ? $colors[$value] : $colors;
