@@ -6,14 +6,11 @@ use App\Filament\Resources\CommentResource\Pages;
 use App\Models\Bookmark;
 use App\Models\Comment;
 use App\Models\Like;
-use App\Models\Rating;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 use LaraZeus\Mark\Forms\Components\Mark;
 
 class CommentResource extends Resource
@@ -36,41 +33,41 @@ class CommentResource extends Resource
                 Forms\Components\Textarea::make('text')
                     ->required()
                     ->columnSpanFull(),
-//                Forms\Components\ToggleButtons::make('text222')
-//                    ->options([
-//                        '12' => 12
-//                    ])
-//                    ->required()
-//                    ->columnSpanFull(),
-//                Forms\Components\Toggle::make('text2')
-//                    ->required()
-//                    ->columnSpanFull(),
-//                Forms\Components\Checkbox::make('text3')
-//                    ->columnSpanFull(),
-//                Forms\Components\CheckboxList::make('text3')
-//                    ->options([
-//                        1,
-//                        2
-//                    ])
-//                    ->columnSpanFull(),
-//                Forms\Components\Checkbox::make('def'),
-//                Mark::make('the mark')
-//                ->icons([
-//                    'heroicon-o-star',
-//                    'heroicon-c-star'
-//                ]),
-//            Forms\Components\Select::make()
-//            ->relationship(),
-//            Tables\Actions\AttachAction::
-//            Forms\Components\Grid::make()
-//            ->relationship(),
-//                Mark::make('like')
-//                    ->relationship()
-//                    ->like(),
-//                Mark::make('bookmarks')
-////                    ->relationship()
-//                    ->bookmark()
-//                    ->relationship(),
+                //                Forms\Components\ToggleButtons::make('text222')
+                //                    ->options([
+                //                        '12' => 12
+                //                    ])
+                //                    ->required()
+                //                    ->columnSpanFull(),
+                //                Forms\Components\Toggle::make('text2')
+                //                    ->required()
+                //                    ->columnSpanFull(),
+                //                Forms\Components\Checkbox::make('text3')
+                //                    ->columnSpanFull(),
+                //                Forms\Components\CheckboxList::make('text3')
+                //                    ->options([
+                //                        1,
+                //                        2
+                //                    ])
+                //                    ->columnSpanFull(),
+                //                Forms\Components\Checkbox::make('def'),
+                //                Mark::make('the mark')
+                //                ->icons([
+                //                    'heroicon-o-star',
+                //                    'heroicon-c-star'
+                //                ]),
+                //            Forms\Components\Select::make()
+                //            ->relationship(),
+                //            Tables\Actions\AttachAction::
+                //            Forms\Components\Grid::make()
+                //            ->relationship(),
+                //                Mark::make('like')
+                //                    ->relationship()
+                //                    ->like(),
+                //                Mark::make('bookmarks')
+                // //                    ->relationship()
+                //                    ->bookmark()
+                //                    ->relationship(),
                 Mark::make('rating')
                     ->live()
                     ->relationship(stateColumn: 'value')
@@ -85,11 +82,11 @@ class CommentResource extends Resource
                     ->live()
                     ->bookmark(),
                 Forms\Components\Radio::make('feedback')
-                    ->visible(fn($get) => $get('rating') === '1')
+                    ->visible(fn ($get) => $get('rating') === '1')
                     ->label('Like this post ?')
                     ->boolean()
                     ->inline()
-                    ->inlineLabel(false)
+                    ->inlineLabel(false),
             ]);
     }
 
