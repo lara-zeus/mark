@@ -11,8 +11,10 @@ use LaraZeus\Mark\Traits\Rating\Rateable;
 
 class Comment extends Model
 {
-    /** @use HasFactory<\Database\Factories\CommentFactory> */
-    use HasFactory, Likeable, Bookmarkable, Rateable;
+    use Bookmarkable; /** @use HasFactory<\Database\Factories\CommentFactory> */
+    use HasFactory;
+    use Likeable;
+    use Rateable;
 
     public function post(): BelongsTo
     {

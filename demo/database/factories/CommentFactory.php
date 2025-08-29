@@ -21,7 +21,7 @@ class CommentFactory extends Factory
         return [
             'user_id' => User::factory(),
             'post_id' => Post::factory()->for(User::factory()),
-            'text' => $this->faker->sentence
+            'text' => $this->faker->sentence,
         ];
     }
 }
