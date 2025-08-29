@@ -2,6 +2,8 @@
 
 namespace LaraZeus\Mark;
 
+use Filament\Support\Assets\Css;
+use Filament\Support\Facades\FilamentAsset;
 use LaraZeus\Mark\Facades\Mark;
 use LaraZeus\Mark\Models\MarkBookmark;
 use LaraZeus\Mark\Models\MarkLike;
@@ -25,5 +27,12 @@ class MarkServiceProvider extends PackageServiceProvider
         Mark::likeMorphPivotModel(MarkLike::class)
             ->bookmarkMorphPivotModel(MarkBookmark::class)
             ->ratingMorphPivotModel(MarkRate::class);
+
+        FilamentAsset::register(
+            [
+                Css::make('mark-styles', __DIR__ . '/../resources/dist/mark.css'),
+            ],
+            'lara-zeus/mark'
+        );
     }
 }
