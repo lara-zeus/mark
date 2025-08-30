@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -7,13 +9,11 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use LaraZeus\Mark\Models\MarkBookmark;
-use LaraZeus\Mark\Tests\Models\Markable;
-use LaraZeus\Mark\Tests\Models\Marker;
 
 describe('indicator', function () {
     describe('isBookmarkedBy', function () {
         test('it has correct signature', function () {
-            $reflection = new ReflectionClass(Markable::class);
+            $reflection = new ReflectionClass(Comment::class);
 
             expect($reflection->hasMethod('isBookmarkedBy'))->toBeTrue();
 
@@ -37,8 +37,8 @@ describe('indicator', function () {
         });
 
         test('it returns true if the marker has marked the markable', function () {
-            $marker = Marker::factory()->create();
-            $markable = Markable::factory()->create();
+            $marker = User::factory()->create();
+            $markable = Comment::factory()->create();
 
             $markable->bookmarks()->create([
                 'marker_id' => $marker->getKey(),
@@ -50,8 +50,8 @@ describe('indicator', function () {
             ->depends('it has correct signature');
 
         test('it returns false if the marker has not marked the markable', function () {
-            $marker = Marker::factory()->create();
-            $markable = Markable::factory()->create();
+            $marker = User::factory()->create();
+            $markable = Comment::factory()->create();
 
             expect($markable->isBookmarkedBy($marker))->toBeFalse();
         })
@@ -62,14 +62,14 @@ describe('indicator', function () {
 describe('relation', function () {
     describe('bookmarkedBy', function () {
         test('it has correct signature', function () {
-            $marker = new Markable;
+            $marker = new Comment;
             expect(method_exists($marker, 'bookmarkedBy'))->toBeTrue();
             expect($marker->bookmarkedBy())->toBeInstanceOf(MorphToMany::class);
         });
 
         test('it can retrieve currect records via relation', function () {
-            $marker = Marker::factory()->create();
-            $markable = Markable::factory()->create();
+            $marker = User::factory()->create();
+            $markable = Comment::factory()->create();
 
             $mark = MarkBookmark::create([
                 'value' => true,
@@ -88,14 +88,14 @@ describe('relation', function () {
 
     describe('bookmarks', function () {
         test('it has correct signature', function () {
-            $marker = new Markable;
+            $marker = new Comment;
             expect(method_exists($marker, 'bookmarks'))->toBeTrue();
             expect($marker->bookmarks())->toBeInstanceOf(MorphMany::class);
         });
 
         test('it can retrieve currect records via relation', function () {
-            $marker = Marker::factory()->create();
-            $markable = Markable::factory()->create();
+            $marker = User::factory()->create();
+            $markable = Comment::factory()->create();
 
             $mark = MarkBookmark::create([
                 'value' => true,
@@ -114,14 +114,14 @@ describe('relation', function () {
 
     describe('bookmark', function () {
         test('it has correct signature', function () {
-            $marker = new Markable;
+            $marker = new Comment;
             expect(method_exists($marker, 'bookmark'))->toBeTrue();
             expect($marker->bookmark())->toBeInstanceOf(MorphOne::class);
         });
 
         test('it can retrieve currect records via relation', function () {
-            $marker = Marker::factory()->create();
-            $markable = Markable::factory()->create();
+            $marker = User::factory()->create();
+            $markable = Comment::factory()->create();
 
             $mark = MarkBookmark::create([
                 'value' => true,
@@ -141,22 +141,22 @@ describe('relation', function () {
 
 describe('scope', function () {
     beforeEach(function () {
-        $this->marker1 = Marker::factory()->create();
-        $this->markables1 = Markable::factory()
+        $this->marker1 = User::factory()->create();
+        $this->markables1 = Comment::factory()
             ->count(3)
             ->create()
             ->each(
-                fn (Markable $markable) => $markable
+                fn (Comment $markable) => $markable
                     ->bookmarkedBy()
                     ->attach($this->marker1, ['value' => true])
             );
 
-        $this->marker2 = Marker::factory()->create();
-        $this->markables2 = Markable::factory()
+        $this->marker2 = User::factory()->create();
+        $this->markables2 = Comment::factory()
             ->count(3)
             ->create()
             ->each(
-                fn (Markable $markable) => $markable
+                fn (Comment $markable) => $markable
                     ->bookmarkedBy()
                     ->attach($this->marker2, ['value' => true])
             );
@@ -165,7 +165,7 @@ describe('scope', function () {
     describe('whereBookmarkedBy', function () {
 
         test('has correct signature', function () {
-            $method = (new ReflectionClass(Markable::class))
+            $method = (new ReflectionClass(Comment::class))
                 ->getMethod('scopeWhereBookmarkedBy');
 
             expect($method->isPublic())->toBeTrue();
@@ -186,15 +186,15 @@ describe('scope', function () {
         });
 
         test('filter the relations currectly', function () {
-            expect(Markable::whereBookmarkedBy($this->marker1)->get())
+            expect(Comment::whereBookmarkedBy($this->marker1)->get())
                 ->toHaveCount(3)
                 ->toContainModel($this->markables1);
 
-            expect(Markable::whereBookmarkedBy($this->marker2)->get())
+            expect(Comment::whereBookmarkedBy($this->marker2)->get())
                 ->toHaveCount(3)
                 ->toContainModel($this->markables2);
 
-            expect(Markable::whereBookmarkedBy($this->marker1)->get())
+            expect(Comment::whereBookmarkedBy($this->marker1)->get())
                 ->toHaveCount(3)
                 ->not->toContainModel($this->markables2);
         });

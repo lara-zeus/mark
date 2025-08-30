@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
 /*
@@ -15,7 +17,7 @@ use Tests\TestCase;
 */
 
 pest()->extend(TestCase::class)
-    ->use(RefreshDatabase::class)
+    ->use(DatabaseMigrations::class)
     ->in('Feature');
 
 /*
@@ -31,6 +33,10 @@ pest()->extend(TestCase::class)
 
 expect()->extend('toBeOne', function () {
     return $this->toBe(1);
+});
+
+expect()->extend('toContainModel', function (Model | Collection $model) {
+    expect($this->value->modelKeys())->toContain(...Collection::wrap($model)->modelKeys());
 });
 
 /*

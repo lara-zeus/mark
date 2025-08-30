@@ -8,12 +8,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use LaraZeus\Mark\Traits\Bookmark\HasBookmarks;
+use LaraZeus\Mark\Traits\Like\HasLikes;
+use LaraZeus\Mark\Traits\Rating\HasRatings;
 
 class User extends Authenticatable
 {
+    use HasBookmarks;
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
 
+    use HasLikes;
+    use HasRatings;
     use Notifiable;
 
     /**

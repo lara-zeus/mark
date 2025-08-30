@@ -1,17 +1,17 @@
 <?php
 
+use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use LaraZeus\Mark\Models\MarkRate;
-use LaraZeus\Mark\Tests\Models\Markable;
-use LaraZeus\Mark\Tests\Models\Marker;
 
 describe('indicator', function () {
     describe('hasRated', function () {
         test('it has correct signature', function () {
-            $reflection = new ReflectionClass(Marker::class);
+            $reflection = new ReflectionClass(User::class);
 
             expect($reflection->hasMethod('hasRated'))->toBeTrue();
 
@@ -35,8 +35,8 @@ describe('indicator', function () {
         });
 
         it('returns true if the marker has marked the markable', function () {
-            $marker = Marker::factory()->create();
-            $markable = Markable::factory()->create();
+            $marker = User::factory()->create();
+            $markable = Comment::factory()->create();
 
             $marker->ratings()->create([
                 'markable_id' => $markable->getKey(),
@@ -49,8 +49,8 @@ describe('indicator', function () {
             ->depends('it has correct signature');
 
         it('returns false if the marker has not marked the markable', function () {
-            $marker = Marker::factory()->create();
-            $markable = Markable::factory()->create();
+            $marker = User::factory()->create();
+            $markable = Comment::factory()->create();
 
             expect($marker->hasRated($markable))->toBeFalse();
         })
@@ -61,14 +61,14 @@ describe('indicator', function () {
 describe('relation', function () {
     describe('ratings', function () {
         test('it has correct signature', function () {
-            $marker = new Marker;
+            $marker = new User;
             expect(method_exists($marker, 'ratings'))->toBeTrue();
             expect($marker->ratings())->toBeInstanceOf(HasMany::class);
         });
 
         test('it can retrieve currect records via relation', function () {
-            $marker = Marker::factory()->create();
-            $markable = Markable::factory()->create();
+            $marker = User::factory()->create();
+            $markable = Comment::factory()->create();
 
             $mark = MarkRate::create([
                 'value' => true,
@@ -88,22 +88,22 @@ describe('relation', function () {
 
 describe('scope', function () {
     beforeEach(function () {
-        $this->marker1 = Marker::factory()->create();
-        $this->markables1 = Markable::factory()
+        $this->marker1 = User::factory()->create();
+        $this->markables1 = Comment::factory()
             ->count(3)
             ->create()
             ->each(
-                fn (Markable $markable) => $markable
+                fn (Comment $markable) => $markable
                     ->ratedBy()
                     ->attach($this->marker1, ['value' => true])
             );
 
-        $this->marker2 = Marker::factory()->create();
-        $this->markables2 = Markable::factory()
+        $this->marker2 = User::factory()->create();
+        $this->markables2 = Comment::factory()
             ->count(3)
             ->create()
             ->each(
-                fn (Markable $markable) => $markable
+                fn (Comment $markable) => $markable
                     ->ratedBy()
                     ->attach($this->marker2, ['value' => true])
             );
@@ -111,7 +111,7 @@ describe('scope', function () {
 
     describe('whereRated', function () {
         test('has correct signature', function () {
-            $method = (new ReflectionClass(Marker::class))
+            $method = (new ReflectionClass(User::class))
                 ->getMethod('scopeWhereRated');
 
             expect($method->isPublic())->toBeTrue();
@@ -132,15 +132,15 @@ describe('scope', function () {
         });
 
         test('filter the relations currectly', function () {
-            expect(Marker::whereRated($this->markables1)->get())
+            expect(User::whereRated($this->markables1)->get())
                 ->toHaveCount(1)
                 ->toContainModel($this->marker1);
 
-            expect(Marker::whereRated($this->markables2)->get())
+            expect(User::whereRated($this->markables2)->get())
                 ->toHaveCount(1)
                 ->toContainModel($this->marker2);
 
-            expect(Marker::whereRated($this->markables2)->get())
+            expect(User::whereRated($this->markables2)->get())
                 ->toHaveCount(1)
                 ->not->toContainModel($this->marker1);
         });
