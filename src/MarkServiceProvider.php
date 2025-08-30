@@ -30,7 +30,7 @@ class MarkServiceProvider extends PackageServiceProvider
 
         FilamentAsset::register(
             [
-                Css::make('mark-styles', __DIR__ . '/../resources/dist/mark.css'),
+                Css::make('mark-styles', __DIR__.'/../resources/dist/mark.css'),
             ],
             'lara-zeus/mark'
         );
