@@ -35,11 +35,21 @@
         }
     },
     "scripts": {
-        "post-install-cmd": "composer install --working-dir=demo",
-        "analyse": "composer analyse --working-dir=demo",
-        "format": "composer format --working-dir=demo",
-        "test": "composer test --working-dir=demo",
-        "lint": "composer lint --working-dir=demo"
+        "post-install-cmd": [
+            "composer --working-dir=demo install"
+        ],
+        "analyse": [
+            "composer --working-dir=demo analyse"
+        ],
+        "format": [
+            "composer --working-dir=demo format"
+        ],
+        "test": [
+            "composer --working-dir=demo test"
+        ],
+        "lint": [
+            "composer --working-dir=demo lint"
+        ]
     },
     "config": {
         "sort-packages": true
