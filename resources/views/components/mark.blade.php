@@ -43,14 +43,18 @@
     }
 
     $defaultButtonAttributes = $defaultButtonAttributes
-        ->class($direction === 'rtl' ? '-scale-x-100' : '')
+        ->class([
+            '-scale-x-100' => $direction === 'rtl',
+        ])
         ->merge([
             'size' => 'xl',
             'x-on:click' => '$el.parentElement.firstElementChild.checked = !$el.parentElement.firstElementChild.checked'
         ], false);
 
     $selectedButtonAttributes = $selectedButtonAttributes
-        ->class($direction === 'rtl' ? '-scale-x-100' : '')
+        ->class([
+            '-scale-x-100' => $direction === 'rtl',
+        ])
         ->merge([
             'size' => 'xl',
             'x-on:click' => '$el.parentElement.firstElementChild.checked = !$el.parentElement.firstElementChild.checked'
