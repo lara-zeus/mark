@@ -37,6 +37,9 @@
     "scripts": {
         "post-install-cmd": [
             "composer --working-dir=demo install",
+            "@setup"
+        ],
+        "setup": [
             "composer --working-dir=demo setup"
         ],
         "dev": [
