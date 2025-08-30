@@ -39,6 +39,9 @@
             "composer --working-dir=demo install",
             "composer --working-dir=demo setup"
         ],
+        "dev": [
+            "composer --working-dir=demo dev"
+        ],
         "analyse": [
             "composer --working-dir=demo analyse"
         ],
