@@ -36,7 +36,8 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "composer --working-dir=demo install"
+            "composer --working-dir=demo install",
+            "composer --working-dir=demo setup"
         ],
         "analyse": [
             "composer --working-dir=demo analyse"
