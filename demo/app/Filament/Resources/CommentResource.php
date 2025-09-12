@@ -3,9 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CommentResource\Pages;
-use App\Models\Bookmark;
 use App\Models\Comment;
-use App\Models\Like;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;

@@ -6,7 +6,6 @@ use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
-use LaraZeus\Mark\Forms\Components\Mark;
 use LaraZeus\Mark\NotPassed;
 use LaraZeus\Mark\Tables\Columns\MarkColumn;
 use RuntimeException;
@@ -23,6 +22,7 @@ trait HasMarkRelations
         ?string $stateColumn = null
     ): static {
         $name = $this->evaluate($name) ?? $this->getName();
+
         return $this
             ->getStateUsing(function (Model $record, MarkColumn $column) use ($name, $stateColumn) {
                 $relation = $this->getMarkRelation($record, $name)
