@@ -10,12 +10,12 @@ trait HasSelectableIcons
     /**
      * @var array<string|int, string>|Arrayable<string|int, string>|string|Closure
      */
-    protected array|string|Arrayable|Closure $defaultIconsState;
+    protected array | string | Arrayable | Closure $defaultIconsState;
 
     /**
      * @var array<string|int, string>|Arrayable<string|int, string>|string|Closure
      */
-    protected array|string|Arrayable|Closure $selectedIconsState;
+    protected array | string | Arrayable | Closure $selectedIconsState;
 
     protected bool $isSequential = false;
 
@@ -24,7 +24,7 @@ trait HasSelectableIcons
      * @param  array<string|int, string>|Arrayable<string|int, string>|string|Closure  $selected
      * @return $this
      */
-    public function icons(array|string|Arrayable|Closure $default, array|string|Arrayable|Closure $selected): static
+    public function icons(array | string | Arrayable | Closure $default, array | string | Arrayable | Closure $selected): static
     {
         $this->defaultIconsState = $default;
         $this->selectedIconsState = $selected;
@@ -59,7 +59,7 @@ trait HasSelectableIcons
      * @param  array<string|int, string>|Arrayable<string|int, string>|string|Closure  $iconState
      * @return array<string|int, string>|string
      */
-    protected function getIconsState(array|Arrayable|Closure|string $iconState): array|string
+    protected function getIconsState(array | Arrayable | Closure | string $iconState): array | string
     {
         $state = $this->evaluate($iconState);
 

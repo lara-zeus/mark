@@ -36,7 +36,7 @@ class Mark extends Field
         return $this
             ->bookmarkIcons()
             ->rule('boolean')
-            ->afterStateHydrated(static function ($component, $state): void {
+            ->afterStateHydrated(function ($component, $state) {
                 $component->state((bool) $state);
             });
     }
@@ -47,7 +47,7 @@ class Mark extends Field
             ->ratingIcons()
             ->in(range(1, 5))
             ->nullable()
-            ->afterStateHydrated(static function ($component, $state): void {
+            ->afterStateHydrated(function ($component, $state) {
                 $component->state((string) $state);
             });
     }

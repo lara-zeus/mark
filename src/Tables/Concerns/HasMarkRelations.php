@@ -6,7 +6,6 @@ use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
-use LaraZeus\Mark\Forms\Components\Mark;
 use LaraZeus\Mark\NotPassed;
 use LaraZeus\Mark\Tables\Columns\MarkColumn;
 use RuntimeException;
@@ -19,10 +18,11 @@ trait HasMarkRelations
      */
     public function relationship(
         ?string $name = null,
-        array|Closure|NotPassed|null $metadata = new NotPassed,
+        array | Closure | NotPassed | null $metadata = new NotPassed,
         ?string $stateColumn = null
     ): static {
         $name = $this->evaluate($name) ?? $this->getName();
+
         return $this
             ->getStateUsing(function (Model $record, MarkColumn $column) use ($name, $stateColumn) {
                 $relation = $this->getMarkRelation($record, $name)
@@ -62,13 +62,13 @@ trait HasMarkRelations
      *
      * @throws Throwable
      */
-    protected function getMarkRelation(Model $record, string $name): MorphOne|MorphMany
+    protected function getMarkRelation(Model $record, string $name): MorphOne | MorphMany
     {
         $relation = $record->{$name}();
 
         throw_unless(
             $relation instanceof MorphOne || $relation instanceof MorphMany,
-            new RuntimeException('Relation "'.$name.'" must be instance of ("'.MorphOne::class.'" || "'.MorphOne::class.'").')
+            new RuntimeException('Relation "' . $name . '" must be instance of ("' . MorphOne::class . '" || "' . MorphOne::class . '").')
         );
 
         return $relation;
@@ -85,6 +85,6 @@ trait HasMarkRelations
             return $marker;
         }
 
-        throw new RuntimeException('Authenticated User must be instance of "'.Model::class.'".');
+        throw new RuntimeException('Authenticated User must be instance of "' . Model::class . '".');
     }
 }

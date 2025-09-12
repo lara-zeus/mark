@@ -33,7 +33,7 @@ trait Mark
         $isSubclass = is_subclass_of(static::class, MorphPivot::class);
         throw_unless(
             $isSubclass,
-            new RuntimeException('"'.static::class.'" must be instance of "'.MorphPivot::class.'"')
+            new RuntimeException('"' . static::class . '" must be instance of "' . MorphPivot::class . '"')
         );
     }
 
