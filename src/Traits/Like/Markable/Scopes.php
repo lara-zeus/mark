@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 trait Scopes
 {
-    public function scopeWhereLikedOrDislikedBy(Builder $query, Model | Collection $marker): Builder
+    public function scopeWhereLikedOrDislikedBy(Builder $query, Model|Collection $marker): Builder
     {
         return $query->whereRelation(
             'likes',
@@ -16,7 +16,7 @@ trait Scopes
         );
     }
 
-    public function scopeWhereLikedBy(Builder $query, Model | Collection $marker): Builder
+    public function scopeWhereLikedBy(Builder $query, Model|Collection $marker): Builder
     {
         return $query->whereRelation(
             'likes',
@@ -26,7 +26,7 @@ trait Scopes
         );
     }
 
-    public function scopeWhereDislikedBy(Builder $query, Model | Collection $marker): Builder
+    public function scopeWhereDislikedBy(Builder $query, Model|Collection $marker): Builder
     {
         return $query->whereRelation(
             'likes',

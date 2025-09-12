@@ -35,7 +35,7 @@ expect()->extend('toBeOne', function () {
     return $this->toBe(1);
 });
 
-expect()->extend('toContainModel', function (Model | Collection $model) {
+expect()->extend('toContainModel', function (Model|Collection $model) {
     expect($this->value->modelKeys())->toContain(...Collection::wrap($model)->modelKeys());
 });
 
