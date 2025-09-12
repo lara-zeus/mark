@@ -73,4 +73,34 @@ trait HasSelectableIcons
 
         return $state;
     }
+
+    public function like(): static
+    {
+        return $this
+            ->icons(
+                [
+                    'heroicon-o-hand-thumb-down',
+                    'heroicon-o-hand-thumb-up',
+                ],
+                [
+                    'heroicon-s-hand-thumb-down',
+                    'heroicon-s-hand-thumb-up',
+                ]
+            );
+    }
+
+    public function bookmark(): static
+    {
+        return $this->icons('heroicon-o-bookmark', 'heroicon-s-bookmark');
+    }
+
+    public function rating(): static
+    {
+        return $this
+            ->icons(
+                array_fill(1, 5, 'heroicon-o-star'),
+                array_fill(1, 5, 'heroicon-s-star')
+            )
+            ->sequential();
+    }
 }

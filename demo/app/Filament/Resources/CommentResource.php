@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use LaraZeus\Mark\Forms\Components\Mark;
+use LaraZeus\Mark\Tables\Columns\MarkColumn;
 
 class CommentResource extends Resource
 {
@@ -33,41 +34,6 @@ class CommentResource extends Resource
                 Forms\Components\Textarea::make('text')
                     ->required()
                     ->columnSpanFull(),
-                //                Forms\Components\ToggleButtons::make('text222')
-                //                    ->options([
-                //                        '12' => 12
-                //                    ])
-                //                    ->required()
-                //                    ->columnSpanFull(),
-                //                Forms\Components\Toggle::make('text2')
-                //                    ->required()
-                //                    ->columnSpanFull(),
-                //                Forms\Components\Checkbox::make('text3')
-                //                    ->columnSpanFull(),
-                //                Forms\Components\CheckboxList::make('text3')
-                //                    ->options([
-                //                        1,
-                //                        2
-                //                    ])
-                //                    ->columnSpanFull(),
-                //                Forms\Components\Checkbox::make('def'),
-                //                Mark::make('the mark')
-                //                ->icons([
-                //                    'heroicon-o-star',
-                //                    'heroicon-c-star'
-                //                ]),
-                //            Forms\Components\Select::make()
-                //            ->relationship(),
-                //            Tables\Actions\AttachAction::
-                //            Forms\Components\Grid::make()
-                //            ->relationship(),
-                //                Mark::make('like')
-                //                    ->relationship()
-                //                    ->like(),
-                //                Mark::make('bookmarks')
-                // //                    ->relationship()
-                //                    ->bookmark()
-                //                    ->relationship(),
                 Mark::make('rating')
                     ->live()
                     ->relationship(stateColumn: 'value')
@@ -96,7 +62,15 @@ class CommentResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('user.name'),
                 Tables\Columns\TextColumn::make('post.title'),
-                Tables\Columns\TextColumn::make('text'),
+                MarkColumn::make('like')
+                    ->relationship(stateColumn: 'value')
+                    ->like(),
+                MarkColumn::make('rating')
+                    ->relationship(stateColumn: 'value')
+                    ->rating(),
+                MarkColumn::make('bookmark')
+                    ->relationship()
+                    ->bookmark(),
             ])
             ->filters([
                 //

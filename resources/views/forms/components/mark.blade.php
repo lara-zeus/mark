@@ -20,6 +20,7 @@
         :x-data="'{
             state: $wire.'.$applyStateBindingModifiers('$entangle(\''.$statePath.'\')').'
         }'"
+        :class="$canWrap() ? 'flex-wrap' : ''"
         :name="$id"
         :default-icons="$defaultIconsState"
         :selected-icons="$selectedIconsState"

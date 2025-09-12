@@ -1,6 +1,5 @@
 @php
-    use Illuminate\View\ComponentAttributeBag;
-    use LaraZeus\Mark\NotPassed;
+    use Illuminate\View\ComponentAttributeBag;use LaraZeus\Mark\NotPassed;
 @endphp
 
 @props([
@@ -9,6 +8,8 @@
     'selectedIcons',
     'colors' => 'primary',
     'direction' => 'ltr',
+    'disabled' => false,
+    'readOnly' => false,
     'inputAttributes' => [],
     'defaultButtonAttributes' => [],
     'selectedButtonAttributes' => [],
@@ -42,30 +43,29 @@
         $selectedButtonAttributes = new ComponentAttributeBag($selectedButtonAttributes);
     }
 
-    $defaultButtonAttributes = $defaultButtonAttributes
-        ->class([
-            '-scale-x-100' => $direction === 'rtl',
-        ])
-        ->merge([
-            'size' => 'xl',
-            'x-on:click' => '$el.parentElement.firstElementChild.checked = !$el.parentElement.firstElementChild.checked'
-        ], false);
+    $commonAttributesFn = fn (ComponentAttributeBag $attributes) => $attributes
+            ->class([
+                '-scale-x-100' => $direction === 'rtl',
+                'pointer-events-none' => $readOnly,
+            ])
+            ->merge([
+                'size' => 'xl',
+                'disabled' => $disabled,
+                'wire:loading.attr' => false,
+            ])
+            ->when($attributes->whereStartsWith('x-on:click')->isEmpty(), fn($attrs) => $attrs->merge([
+                'x-on:click' => '$el.parentElement.firstElementChild.checked = !$el.parentElement.firstElementChild.checked'
+            ]));
 
-    $selectedButtonAttributes = $selectedButtonAttributes
-        ->class([
-            '-scale-x-100' => $direction === 'rtl',
-        ])
-        ->merge([
-            'size' => 'xl',
-            'x-on:click' => '$el.parentElement.firstElementChild.checked = !$el.parentElement.firstElementChild.checked'
-        ], false);
+    $defaultButtonAttributes = $commonAttributesFn($defaultButtonAttributes);
 
+    $selectedButtonAttributes = $commonAttributesFn($selectedButtonAttributes);
 @endphp
 
 <div
     {{ $attributes
         ->merge(['x-data' => ''])
-        ->class("zeus-mark flex flex-wrap gap-5")
+        ->class("zeus-mark")
     }}
 >
     @foreach($defaultIcons as $value => $defaultIcon)

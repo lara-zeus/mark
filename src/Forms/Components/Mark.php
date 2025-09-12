@@ -3,53 +3,52 @@
 namespace LaraZeus\Mark\Forms\Components;
 
 use Filament\Forms\Components\Field;
+use Filament\Tables\Columns\Concerns\CanWrap;
 use LaraZeus\Mark\Forms\Concerns\HasColors;
 use LaraZeus\Mark\Forms\Concerns\HasMarkRelations;
 use LaraZeus\Mark\Forms\Concerns\HasSelectableIcons;
 
 class Mark extends Field
 {
+    use CanWrap;
     use HasColors;
     use HasMarkRelations;
-    use HasSelectableIcons;
+    use HasSelectableIcons {
+        HasSelectableIcons::like as likeIcons;
+        HasSelectableIcons::rating as ratingIcons;
+        HasSelectableIcons::bookmark as bookmarkIcons;
+    }
 
     protected string $view = 'zeus-mark::forms.components.mark';
 
     public function like(): static
     {
         return $this
-            ->icons(
-                [
-                    1 => 'heroicon-o-hand-thumb-up',
-                    0 => 'heroicon-o-hand-thumb-down',
-                ],
-                [
-                    1 => 'heroicon-s-hand-thumb-up',
-                    0 => 'heroicon-s-hand-thumb-down',
-                ]
-            )
-            ->rules(['boolean', 'nullable']);
+            ->likeIcons()
+            ->rules(['boolean', 'nullable'])
+            ->afterStateHydrated(static function ($component, $state): void {
+                $component->state((string) $state);
+            });
     }
 
     public function bookmark(): static
     {
         return $this
+            ->bookmarkIcons()
+            ->rule('boolean')
             ->afterStateHydrated(static function ($component, $state): void {
                 $component->state((bool) $state);
-            })
-            ->icons('heroicon-o-bookmark', 'heroicon-s-bookmark')
-            ->rule('boolean');
+            });
     }
 
     public function rating(): static
     {
         return $this
-            ->icons(
-                array_fill(1, 5, 'heroicon-o-star'),
-                array_fill(1, 5, 'heroicon-s-star')
-            )
-            ->sequential()
+            ->ratingIcons()
             ->in(range(1, 5))
-            ->nullable();
+            ->nullable()
+            ->afterStateHydrated(static function ($component, $state): void {
+                $component->state((string) $state);
+            });
     }
 }

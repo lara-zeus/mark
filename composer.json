@@ -36,11 +36,18 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "composer --working-dir=demo install",
-            "@setup"
+            "composer --working-dir=demo install"
         ],
         "setup": [
+            "@build-styles",
+            "composer --working-dir=demo install",
             "composer --working-dir=demo setup"
+        ],
+        "build-styles": [
+            "composer install",
+            "npm install",
+            "npm run build:styles",
+            "rm -rf vendor node_modules"
         ],
         "dev": [
             "composer --working-dir=demo dev"
