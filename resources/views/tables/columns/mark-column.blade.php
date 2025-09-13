@@ -20,7 +20,7 @@
         ':class'=> "{'pointer-events-none opacity-70': isLoading}",
         'x-bind:disabled'=> "isLoading",
         'x-on:click.stop.prevent' => $isMultiple
-        ? 'updateState(state === $el.parentElement.previousElementSibling.value ? \'\' : $el.parentElement.previousElementSibling.value)'
+        ? 'updateState(state === $el.parentElement.previousElementSibling.value ? null : $el.parentElement.previousElementSibling.value)'
         : 'updateState(!state)'
     ];
 @endphp
@@ -70,6 +70,7 @@
 
                     @if($isMultiple)
                         let newState = $refs.newState.value.replaceAll('\\'+String.fromCharCode(34), String.fromCharCode(34))
+                        newState  = newState.length ? newState : null
                     @else
                         let newState = $refs.newState.checked
                     @endif
