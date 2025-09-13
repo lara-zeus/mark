@@ -45,7 +45,7 @@
             ])
             ->merge([
                 'size' => 'xl',
-                'disabled' => $disabled,
+                'disabled' => $disabled || $readOnly,
                 'wire:loading.attr' => false,
             ])
             ->when($attributes->whereStartsWith('x-on:click')->isEmpty(), fn($attrs) => $attrs->merge([
