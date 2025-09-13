@@ -18,7 +18,7 @@ trait HasMarkRelations
      */
     public function relationship(
         ?string $name = null,
-        array|Closure|NotPassed|null $metadata = new NotPassed,
+        array | Closure | NotPassed | null $metadata = new NotPassed,
         ?string $stateColumn = null
     ): static {
         $name = $this->evaluate($name) ?? $this->getName();
@@ -62,13 +62,13 @@ trait HasMarkRelations
      *
      * @throws Throwable
      */
-    protected function getMarkRelation(Model $record, string $name): MorphOne|MorphMany
+    protected function getMarkRelation(Model $record, string $name): MorphOne | MorphMany
     {
         $relation = $record->{$name}();
 
         throw_unless(
             $relation instanceof MorphOne || $relation instanceof MorphMany,
-            new RuntimeException('Relation "'.$name.'" must be instance of ("'.MorphOne::class.'" || "'.MorphOne::class.'").')
+            new RuntimeException('Relation "' . $name . '" must be instance of ("' . MorphOne::class . '" || "' . MorphOne::class . '").')
         );
 
         return $relation;
@@ -85,6 +85,6 @@ trait HasMarkRelations
             return $marker;
         }
 
-        throw new RuntimeException('Authenticated User must be instance of "'.Model::class.'".');
+        throw new RuntimeException('Authenticated User must be instance of "' . Model::class . '".');
     }
 }

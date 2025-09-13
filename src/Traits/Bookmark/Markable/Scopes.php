@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 trait Scopes
 {
-    public function scopeWhereBookmarkedBy(Builder $query, Model|Collection $marker): Builder
+    public function scopeWhereBookmarkedBy(Builder $query, Model | Collection $marker): Builder
     {
         return $query->whereRelation(
             'bookmarks',

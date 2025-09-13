@@ -7,7 +7,7 @@ use LaraZeus\Mark\NotPassed;
 
 trait Actions
 {
-    protected function markBookmark(Model $marker, bool $value, array|null|NotPassed $metaData = new NotPassed)
+    protected function markBookmark(Model $marker, bool $value, array | null | NotPassed $metaData = new NotPassed)
     {
         $attributes = [
             'marker_id' => $marker->getKey(),
