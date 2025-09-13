@@ -66,7 +66,7 @@ describe('relation', function () {
             expect($marker->bookmarkedBy())->toBeInstanceOf(MorphToMany::class);
         });
 
-        test('it can retrieve currect records via relation', function () {
+        test('it can retrieve correct records via relation', function () {
             $marker = User::factory()->create();
             $markable = Comment::factory()->create();
 
@@ -90,7 +90,7 @@ describe('relation', function () {
             expect($marker->bookmarks())->toBeInstanceOf(MorphMany::class);
         });
 
-        test('it can retrieve currect records via relation', function () {
+        test('it can retrieve correct records via relation', function () {
             $marker = User::factory()->create();
             $markable = Comment::factory()->create();
 
@@ -115,7 +115,7 @@ describe('relation', function () {
             expect($marker->bookmark())->toBeInstanceOf(MorphOne::class);
         });
 
-        test('it can retrieve currect records via relation', function () {
+        test('it can retrieve correct records via relation', function () {
             $marker = User::factory()->create();
             $markable = Comment::factory()->create();
 
@@ -180,7 +180,7 @@ describe('scope', function () {
                 ->toMatchArray([Model::class, Collection::class]);
         });
 
-        test('filter the relations currectly', function () {
+        test('filter the relations correctly', function () {
             expect(Comment::whereBookmarkedBy($this->marker1)->get())
                 ->toHaveCount(3)
                 ->toContainModel($this->markables1);

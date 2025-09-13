@@ -66,7 +66,7 @@ describe('relation', function () {
             expect($marker->ratings())->toBeInstanceOf(HasMany::class);
         });
 
-        test('it can retrieve currect records via relation', function () {
+        test('it can retrieve correct records via relation', function () {
             $marker = User::factory()->create();
             $markable = Comment::factory()->create();
 
@@ -131,7 +131,7 @@ describe('scope', function () {
                 ->toMatchArray([Model::class, Collection::class]);
         });
 
-        test('filter the relations currectly', function () {
+        test('filter the relations correctly', function () {
             expect(User::whereRated($this->markables1)->get())
                 ->toHaveCount(1)
                 ->toContainModel($this->marker1);

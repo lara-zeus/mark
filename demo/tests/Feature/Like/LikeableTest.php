@@ -161,7 +161,7 @@ describe('relation', function () {
             expect($marker->likedBy())->toBeInstanceOf(MorphToMany::class);
         });
 
-        test('it can retrieve currect records via relation', function () {
+        test('it can retrieve correct records via relation', function () {
             $marker = User::factory()->create();
             $markable = Comment::factory()->create();
 
@@ -187,7 +187,7 @@ describe('relation', function () {
             expect($marker->likes())->toBeInstanceOf(MorphMany::class);
         });
 
-        test('it can retrieve currect records via relation', function () {
+        test('it can retrieve correct records via relation', function () {
             $marker = User::factory()->create();
             $markable = Comment::factory()->create();
 
@@ -213,7 +213,7 @@ describe('relation', function () {
             expect($marker->like())->toBeInstanceOf(MorphOne::class);
         });
 
-        test('it can retrieve currect records via relation', function () {
+        test('it can retrieve correct records via relation', function () {
             $marker = User::factory()->create();
             $markable = Comment::factory()->create();
 
@@ -278,7 +278,7 @@ describe('scope', function () {
                 ->toMatchArray([Model::class, Collection::class]);
         });
 
-        test('filter the relations currectly', function () {
+        test('filter the relations correctly', function () {
             expect(Comment::whereLikedOrDislikedBy($this->marker1)->get())
                 ->toHaveCount(3)
                 ->toContainModel($this->markables1);
@@ -337,7 +337,7 @@ describe('scope', function () {
                 ->toMatchArray([Model::class, Collection::class]);
         });
 
-        test('filter the relations currectly', function () {
+        test('filter the relations correctly', function () {
             expect(Comment::whereLikedBy($this->marker1)->get())
                 ->toHaveCount(3)
                 ->toContainModel($this->markables1);
@@ -396,7 +396,7 @@ describe('scope', function () {
                 ->toMatchArray([Model::class, Collection::class]);
         });
 
-        test('filter the relations currectly', function () {
+        test('filter the relations correctly', function () {
             expect(Comment::whereDislikedBy($this->marker1)->get())
                 ->toHaveCount(3)
                 ->toContainModel($this->markables1);
