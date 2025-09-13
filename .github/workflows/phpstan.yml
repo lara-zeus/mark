@@ -24,6 +24,9 @@ jobs:
 
       - name: Install composer dependencies
         uses: ramsey/composer-install@v3
+        with:
+          working-directory: "demo"
 
       - name: Run PHPStan
+        working-directory: "demo"
         run: ./vendor/bin/phpstan --error-format=github
