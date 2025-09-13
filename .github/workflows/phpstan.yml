@@ -31,4 +31,5 @@ jobs:
           working-directory: "demo"
 
       - name: Run PHPStan
-        run: cd demo && ./vendor/bin/phpstan analyze --error-format=github
+        working-directory: "demo"
+        run: ./vendor/bin/phpstan --error-format=github
