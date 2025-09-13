@@ -52,4 +52,4 @@ jobs:
 
       - name: Execute tests
         working-directory: demo
-        run: composer test
+        run: composer test -- --compact
