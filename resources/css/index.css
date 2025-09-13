@@ -1,7 +1,7 @@
 @import '../../vendor/filament/filament/resources/css/theme.css';
 
 .zeus-mark {
-    @apply flex gap-5 p-2.5
+    @apply flex gap-5
 }
 .zeus-mark input + div > button:first-child {
     @apply flex

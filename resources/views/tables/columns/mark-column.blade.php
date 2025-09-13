@@ -25,6 +25,7 @@
     ];
 @endphp
 <div
+    class="p-2.5"
     x-data="{
         error: undefined,
 

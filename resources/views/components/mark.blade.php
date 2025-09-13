@@ -37,7 +37,7 @@
     $initAttributesBag($defaultButtonAttributes);
     $initAttributesBag($selectedButtonAttributes);
 
-    $commonAttributesFn = fn (ComponentAttributeBag &$attributes) => $attributes = $attributes
+    $commonBtnAttributesFn = fn (ComponentAttributeBag &$attributes) => $attributes = $attributes
             ->class([
                 '-scale-x-100' => $direction === 'rtl',
                 'pointer-events-none opacity-70' => $disabled,
@@ -45,15 +45,15 @@
             ])
             ->merge([
                 'size' => 'xl',
-                'disabled' => $disabled || $readOnly,
+                'disabled' => $disabled,
                 'wire:loading.attr' => false,
             ])
             ->when($attributes->whereStartsWith('x-on:click')->isEmpty(), fn($attrs) => $attrs->merge([
                 'x-on:click' => '$el.parentElement.firstElementChild.checked = !$el.parentElement.firstElementChild.checked'
             ]));
 
-    $commonAttributesFn($defaultButtonAttributes);
-    $commonAttributesFn($selectedButtonAttributes);
+    $commonBtnAttributesFn($defaultButtonAttributes);
+    $commonBtnAttributesFn($selectedButtonAttributes);
 
     $idFn = fn($name, $value) => $isMultiple ? "$name-$value" : $name;
 @endphp
@@ -75,7 +75,7 @@
                     'id' => $idFn($name, $value),
                     'name' => $name,
                     'type' => $isMultiple ? 'radio' : 'checkbox',
-                    'disabled' => $disabled
+                    'disabled' => $disabled || $readOnly
                 ], false)
                 ->when($isMultiple, fn($attrs) => $attrs->merge([
                     'value' => $value

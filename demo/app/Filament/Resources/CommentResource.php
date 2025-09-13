@@ -6,10 +6,13 @@ use App\Filament\Resources\CommentResource\Pages;
 use App\Models\Comment;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use LaraZeus\Mark\Forms\Components\Mark;
+use LaraZeus\Mark\Infolists\Components\MarkEntry;
 use LaraZeus\Mark\Tables\Columns\MarkColumn;
 
 class CommentResource extends Resource
@@ -75,6 +78,7 @@ class CommentResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -90,12 +94,30 @@ class CommentResource extends Resource
         ];
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            TextEntry::make('text'),
+            MarkEntry::make('like')
+                ->relationship(stateColumn: 'value')
+                ->like(),
+            MarkEntry::make('rating')
+                ->relationship(stateColumn: 'value')
+                ->rating(),
+            MarkEntry::make('bookmark')
+                ->relationship()
+                ->bookmark(),
+
+        ]);
+    }
+
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListComments::route('/'),
             'create' => Pages\CreateComment::route('/create'),
             'edit' => Pages\EditComment::route('/{record}/edit'),
+            'view' => Pages\ViewComment::route('/{record}'),
         ];
     }
 }
