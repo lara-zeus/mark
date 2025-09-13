@@ -10,12 +10,12 @@ trait HasColors
     /**
      * @var array<string|int, string>|Arrayable<string|int, string>|string|null
      */
-    protected array|string|Arrayable|Closure|null $colors = null;
+    protected array | string | Arrayable | Closure | null $colors = null;
 
     /**
      * @param  array<string|int, string>|Arrayable<string|int, string>|string  $colors
      */
-    public function colors(array|string|Arrayable|Closure $colors): static
+    public function colors(array | string | Arrayable | Closure $colors): static
     {
         $this->colors = $colors;
 

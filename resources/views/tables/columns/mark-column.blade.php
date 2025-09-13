@@ -3,10 +3,9 @@
     $colors = $getColors();
     $direction = __('filament-panels::layout.direction');
     $state = $getState();
-
-    [$defaultIconsState, $selectedIconsState] = $getIcons();
+    $icons = $getIcons();
     $isSequential = $isSequential();
-    $isMultiple = is_array($defaultIconsState) && count($defaultIconsState) > 1;
+    $isMultiple = $isMultiple();
 
     if ($isMultiple){
         $state = strval($getState());
@@ -112,10 +111,9 @@
     <x-zeus-mark::mark
             :class="$canWrap() ? 'flex-wrap' : ''"
             :name="$inputName"
-            :default-icons="$defaultIconsState"
-            :selected-icons="$selectedIconsState"
+            :icons="$icons"
             :direction="$direction"
-            :colors="$colors"
+            :colors="$colors ?: 'primary'"
             :sequential="$isSequential"
             :input-attributes="$inputAttributes"
             :default-button-attributes="$buttonsAttributes"

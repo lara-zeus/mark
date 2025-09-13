@@ -7,7 +7,7 @@ use LaraZeus\Mark\NotPassed;
 
 trait Actions
 {
-    public function markBookmark(Model $markable, bool $value, array|null|NotPassed $metaData = new NotPassed)
+    public function markBookmark(Model $markable, bool $value, array | null | NotPassed $metaData = new NotPassed)
     {
         $attributes = [
             'markable_type' => $markable->getMorphClass(),
@@ -33,7 +33,7 @@ trait Actions
             ?->delete();
     }
 
-    public function bookmark(Model $markable, array|null|NotPassed $metaData = new NotPassed)
+    public function bookmark(Model $markable, array | null | NotPassed $metaData = new NotPassed)
     {
         return $this->markBookmark($markable, true, $metaData);
     }

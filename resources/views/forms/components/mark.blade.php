@@ -3,9 +3,9 @@
     $id = $getId();
     $defaultState = $getDefaultState();
     $colors = $getColors();
-    [$defaultIconsState, $selectedIconsState] = $getIcons();
+    $icons = $getIcons();
+    $isMultiple = $isMultiple();
     $isSequential = $isSequential();
-    $isMultiple = is_array($defaultIconsState) && count($defaultIconsState) > 1;
     $buttonsAttributes = [
         'x-on:click' => $isMultiple
         ? 'state = state === $el.parentElement.previousElementSibling.value ? null : $el.parentElement.previousElementSibling.value'
@@ -22,10 +22,9 @@
         }'"
         :class="$canWrap() ? 'flex-wrap' : ''"
         :name="$id"
-        :default-icons="$defaultIconsState"
-        :selected-icons="$selectedIconsState"
+        :icons="$icons"
         :direction="__('filament-panels::layout.direction')"
-        :colors="$colors"
+        :colors="$colors ?: 'primary'"
         :sequential="$isSequential"
         :selected-value="$defaultState"
         :input-attributes="['x-model' => 'state']"

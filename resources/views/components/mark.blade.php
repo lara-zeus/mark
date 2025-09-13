@@ -1,51 +1,46 @@
 @php
-    use Illuminate\View\ComponentAttributeBag;use LaraZeus\Mark\NotPassed;
+    use Illuminate\Support\Arr;
+    use Illuminate\View\ComponentAttributeBag;
+    use LaraZeus\Mark\NotPassed;
 @endphp
 
 @props([
     'name',
-    'defaultIcons',
-    'selectedIcons',
+    'icons',
     'colors' => 'primary',
     'direction' => 'ltr',
     'disabled' => false,
     'readOnly' => false,
+    'selectedValue' => new NotPassed,
     'inputAttributes' => [],
     'defaultButtonAttributes' => [],
     'selectedButtonAttributes' => [],
-    'selectedValue' => new NotPassed,
 ])
 
 @php
-    $isMultiple = is_array($defaultIcons) && count($defaultIcons) > 1;
-    $idFn = fn($name, $value) => $isMultiple ? "$name-$value" : $name;
+    [$defaultIcons, $selectedIcons] = $icons;
 
-    if(!$isMultiple && !is_array($defaultIcons)){
-        $defaultIcons = [$defaultIcons];
-        $selectedIcons = [$selectedIcons];
-    }
+    $defaultIcons = Arr::wrap($defaultIcons);
+    $selectedIcons = Arr::wrap($selectedIcons);
+
+    $isMultiple =  count($defaultIcons) > 1;
 
     if ($selectedValue instanceof NotPassed){
         $selectedValue = $isMultiple ? null : false;
     }
 
-    if (empty($colors)){
-        $colors = 'primary';
-    }
+    $initAttributesBag = function( &$attrs ) {
+        $attrs = $attrs instanceof ComponentAttributeBag ? $attrs : new ComponentAttributeBag($attrs);
+    };
 
-    if (is_array($inputAttributes)){
-        $inputAttributes = new ComponentAttributeBag($inputAttributes);
-    }
-    if (is_array($defaultButtonAttributes)){
-        $defaultButtonAttributes = new ComponentAttributeBag($defaultButtonAttributes);
-    }
-    if (is_array($selectedButtonAttributes)){
-        $selectedButtonAttributes = new ComponentAttributeBag($selectedButtonAttributes);
-    }
+    $initAttributesBag($inputAttributes);
+    $initAttributesBag($defaultButtonAttributes);
+    $initAttributesBag($selectedButtonAttributes);
 
-    $commonAttributesFn = fn (ComponentAttributeBag $attributes) => $attributes
+    $commonAttributesFn = fn (ComponentAttributeBag &$attributes) => $attributes = $attributes
             ->class([
                 '-scale-x-100' => $direction === 'rtl',
+                'pointer-events-none opacity-70' => $disabled,
                 'pointer-events-none' => $readOnly,
             ])
             ->merge([
@@ -57,9 +52,10 @@
                 'x-on:click' => '$el.parentElement.firstElementChild.checked = !$el.parentElement.firstElementChild.checked'
             ]));
 
-    $defaultButtonAttributes = $commonAttributesFn($defaultButtonAttributes);
+    $commonAttributesFn($defaultButtonAttributes);
+    $commonAttributesFn($selectedButtonAttributes);
 
-    $selectedButtonAttributes = $commonAttributesFn($selectedButtonAttributes);
+    $idFn = fn($name, $value) => $isMultiple ? "$name-$value" : $name;
 @endphp
 
 <div
@@ -78,7 +74,8 @@
                 ->merge([
                     'id' => $idFn($name, $value),
                     'name' => $name,
-                    'type' => $isMultiple ? 'radio' : 'checkbox'
+                    'type' => $isMultiple ? 'radio' : 'checkbox',
+                    'disabled' => $disabled
                 ], false)
                 ->when($isMultiple, fn($attrs) => $attrs->merge([
                     'value' => $value
