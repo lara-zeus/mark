@@ -35,16 +35,19 @@ jobs:
           coverage: none
 
       - name: Setup problem matchers
+        working-directory: demo
         run: |
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - name: Install dependencies
+        working-directory: demo
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: List Installed Dependencies
+        working-directory: demo
         run: composer show -D
 
       - name: Execute tests
