@@ -6,6 +6,8 @@ on:
       - '**.php'
       - '**.neon'
       - '.github/workflows/phpstan.yml'
+  workflow_dispatch:
+    
 
 jobs:
   phpstan:
