@@ -31,5 +31,4 @@ jobs:
           working-directory: "demo"
 
       - name: Run PHPStan
-        working-directory: "demo"
-        run: composer analyse
+        run: cd demo && ./vendor/bin/phpstan analyze --error-format=github
