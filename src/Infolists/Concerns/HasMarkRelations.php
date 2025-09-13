@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use LaraZeus\Mark\NotPassed;
-use LaraZeus\Mark\Tables\Columns\MarkColumn;
 use RuntimeException;
 use Throwable;
 
