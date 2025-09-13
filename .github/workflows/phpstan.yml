@@ -32,4 +32,4 @@ jobs:
 
       - name: Run PHPStan
         working-directory: "demo"
-        run: ./vendor/bin/phpstan --error-format=github
+        run: ./vendor/bin/phpstan analyse --error-format=github
