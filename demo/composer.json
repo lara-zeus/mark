@@ -17,7 +17,7 @@
     "require": {
         "php": "^8.2",
         "filament/filament": "^3.3",
-        "lara-zeus/mark": "1.x-dev",
+        "lara-zeus/mark": "*",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "livewire/volt": "^1.7.0"
