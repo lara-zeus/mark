@@ -41,7 +41,6 @@ describe('indicator', function () {
             $marker->bookmarks()->create([
                 'markable_id' => $markable->getKey(),
                 'markable_type' => $markable->getMorphClass(),
-                'value' => true,
             ]);
 
             expect($marker->hasBookmarked($markable))->toBeTrue();
@@ -71,7 +70,6 @@ describe('relation', function () {
             $markable = Comment::factory()->create();
 
             $mark = MarkBookmark::create([
-                'value' => true,
                 'marker_id' => $marker->getKey(),
                 'markable_id' => $markable->getKey(),
                 'markable_type' => $markable->getMorphClass(),
@@ -95,7 +93,7 @@ describe('scope', function () {
             ->each(
                 fn (Comment $markable) => $markable
                     ->bookmarkedBy()
-                    ->attach($this->marker1, ['value' => true])
+                    ->attach($this->marker1)
             );
 
         $this->marker2 = User::factory()->create();
@@ -105,7 +103,7 @@ describe('scope', function () {
             ->each(
                 fn (Comment $markable) => $markable
                     ->bookmarkedBy()
-                    ->attach($this->marker2, ['value' => true])
+                    ->attach($this->marker2)
             );
     });
 

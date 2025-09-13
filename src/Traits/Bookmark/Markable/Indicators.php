@@ -10,7 +10,6 @@ trait Indicators
     {
         return $this->bookmarks()
             ->whereBelongsTo($marker, 'marker')
-            ->where('value', true)
             ->exists();
     }
 }
