@@ -78,7 +78,7 @@
             "@php artisan test --parallel"
         ],
         "analyse": "vendor/bin/phpstan analyse",
-        "format": "vendor/bin/pint ..",
+        "format": "vendor/bin/pint .. --parallel",
         "lint": [
             "@format",
             "@analyse"

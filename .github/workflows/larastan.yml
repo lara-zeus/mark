@@ -1,11 +1,11 @@
-name: PHPStan
+name: Larastan
 
 on:
   push:
     paths:
       - '**.php'
       - '**.neon'
-      - '.github/workflows/phpstan.yml'
+      - '.github/workflows/larastan.yml'
   workflow_dispatch:
 
 
@@ -32,4 +32,4 @@ jobs:
 
       - name: Run PHPStan
         working-directory: "demo"
-        run: ./vendor/bin/phpstan analyse --error-format=github
+        run: composer analyse -- --error-format=github
