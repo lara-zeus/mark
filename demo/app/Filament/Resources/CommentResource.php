@@ -62,7 +62,8 @@ class CommentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name'),
-                Tables\Columns\TextColumn::make('post.title'),
+                Tables\Columns\TextColumn::make('post.title')
+                ->wrap(),
                 MarkColumn::make('like')
                     ->relationship(stateColumn: 'value')
                     ->like(),
