@@ -35,19 +35,19 @@ class CommentResource extends Resource
                 Forms\Components\Textarea::make('text')
                     ->required()
                     ->columnSpanFull(),
-//                Mark::make('rating')
-//                    ->live()
-//                    ->relationship(stateColumn: 'value')
-//                    ->rating(),
-//
-//                Mark::make('like')
-//                    ->live()
-//                    ->relationship(stateColumn: 'value')
-//                    ->like(),
-//                Mark::make('bookmark')
-//                    ->relationship()
-//                    ->live()
-//                    ->bookmark(),
+                //                Mark::make('rating')
+                //                    ->live()
+                //                    ->relationship(stateColumn: 'value')
+                //                    ->rating(),
+                //
+                //                Mark::make('like')
+                //                    ->live()
+                //                    ->relationship(stateColumn: 'value')
+                //                    ->like(),
+                //                Mark::make('bookmark')
+                //                    ->relationship()
+                //                    ->live()
+                //                    ->bookmark(),
                 Forms\Components\Radio::make('feedback')
                     ->visible(fn ($get) => $get('rating') === '1')
                     ->label('Like this post ?')
@@ -64,15 +64,15 @@ class CommentResource extends Resource
                 Tables\Columns\TextColumn::make('user.name'),
                 Tables\Columns\TextColumn::make('post.title')
                     ->wrap(),
-//                MarkColumn::make('like')
-//                    ->relationship(stateColumn: 'value')
-//                    ->like(),
-//                MarkColumn::make('rating')
-//                    ->relationship(stateColumn: 'value')
-//                    ->rating(),
-//                MarkColumn::make('bookmark')
-//                    ->relationship()
-//                    ->bookmark(),
+                //                MarkColumn::make('like')
+                //                    ->relationship(stateColumn: 'value')
+                //                    ->like(),
+                //                MarkColumn::make('rating')
+                //                    ->relationship(stateColumn: 'value')
+                //                    ->rating(),
+                //                MarkColumn::make('bookmark')
+                //                    ->relationship()
+                //                    ->bookmark(),
             ])
             ->filters([
                 //
@@ -99,15 +99,15 @@ class CommentResource extends Resource
     {
         return $infolist->schema([
             TextEntry::make('text'),
-//            MarkEntry::make('like')
-//                ->relationship(stateColumn: 'value')
-//                ->like(),
-//            MarkEntry::make('rating')
-//                ->relationship(stateColumn: 'value')
-//                ->rating(),
-//            MarkEntry::make('bookmark')
-//                ->relationship()
-//                ->bookmark(),
+            //            MarkEntry::make('like')
+            //                ->relationship(stateColumn: 'value')
+            //                ->like(),
+            //            MarkEntry::make('rating')
+            //                ->relationship(stateColumn: 'value')
+            //                ->rating(),
+            //            MarkEntry::make('bookmark')
+            //                ->relationship()
+            //                ->bookmark(),
 
         ]);
     }
