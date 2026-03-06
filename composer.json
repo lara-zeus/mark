@@ -25,18 +25,6 @@
         "illuminate/database": "^11.40|^12.0",
         "spatie/laravel-package-tools": "^1.18"
     },
-    "require-dev": {
-        "laravel/pint": "^1.0",
-        "nunomaduro/collision": "^8.0",
-        "larastan/larastan": "^3.0",
-        "orchestra/testbench": "^10.0",
-        "pestphp/pest": "^3.5",
-        "pestphp/pest-plugin-arch": "^3.0",
-        "pestphp/pest-plugin-laravel": "^3.0",
-        "phpstan/extension-installer": "^1.0",
-        "phpstan/phpstan-deprecation-rules": "^2.0",
-        "phpstan/phpstan-phpunit": "^2.0"
-    },
     "autoload": {
         "psr-4": {
             "LaraZeus\\Mark\\": "src/"
@@ -44,26 +32,41 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "LaraZeus\\Mark\\Tests\\": "tests/"
         }
     },
     "scripts": {
-        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
-        "analyse": "vendor/bin/phpstan analyse",
-        "test": "vendor/bin/pest --parallel",
-        "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint",
+        "post-install-cmd": [
+            "composer --working-dir=demo install"
+        ],
+        "setup": [
+            "composer --working-dir=demo install",
+            "composer --working-dir=demo setup"
+        ],
+        "build-styles": [
+            "composer install",
+            "npm install",
+            "npm run build:styles",
+            "rm -rf vendor node_modules",
+            "@setup"
+        ],
+        "dev": [
+            "composer --working-dir=demo dev"
+        ],
+        "analyse": [
+            "composer --working-dir=demo analyse"
+        ],
+        "format": [
+            "composer --working-dir=demo format"
+        ],
+        "test": [
+            "composer --working-dir=demo test"
+        ],
         "lint": [
-            "@format",
-            "@analyse"
+            "composer --working-dir=demo lint"
         ]
     },
     "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "pestphp/pest-plugin": true,
-            "phpstan/extension-installer": true
-        }
+        "sort-packages": true
     },
     "extra": {
         "laravel": {

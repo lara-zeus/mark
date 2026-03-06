@@ -8,15 +8,14 @@ use Illuminate\Contracts\Support\Arrayable;
 trait HasColors
 {
     /**
-     * @var array<string>|Arrayable<array-key, string>|Closure|null
+     * @var array<string|int, string>|Arrayable<string|int, string>|string|null
      */
-    protected array | Arrayable | Closure | null $colors = null;
+    protected array | string | Arrayable | Closure | null $colors = null;
 
     /**
-     * @param  array<string>|Arrayable<array-key, string>|Closure|null  $colors
-     * @return $this
+     * @param  array<string|int, string>|Arrayable<string|int, string>|string  $colors
      */
-    public function colors(array | Arrayable | Closure | null $colors): static
+    public function colors(array | string | Arrayable | Closure $colors): static
     {
         $this->colors = $colors;
 
@@ -24,15 +23,7 @@ trait HasColors
     }
 
     /**
-     * @return string|array<string>|null
-     */
-    public function getColor(mixed $value): string | array | null
-    {
-        return $this->getColors()[$value] ?? null;
-    }
-
-    /**
-     * @return array<string>
+     * @return array<string|int, string>
      */
     public function getColors(): array
     {

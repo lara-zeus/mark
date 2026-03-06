@@ -18,7 +18,7 @@ trait Relations
         )
 
             ->using(Mark::getBookmarkMorphPivotModel())
-            ->withPivot(['value', 'metadata'])
+            ->withPivot('metadata')
             ->withTimestamps();
     }
 

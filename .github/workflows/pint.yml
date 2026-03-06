@@ -1,0 +1,35 @@
+name: Pint
+
+on:
+  push:
+    paths:
+      - '**.php'
+      - 'demo/pint.json'
+      - '.github/workflows/pint.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  php-code-styling:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Install composer dependencies
+        uses: ramsey/composer-install@v3
+        with:
+          working-directory: "demo"
+
+      - name: Run PHPStan
+        working-directory: "demo"
+        run: composer lint
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v6
+        with:
+          commit_message: 'style: run laravel pint'

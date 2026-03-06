@@ -1,0 +1,29 @@
+@import '../../vendor/filament/filament/resources/css/theme.css';
+
+.zeus-mark {
+    @apply flex gap-5
+}
+.zeus-mark input + div > button:first-child {
+    @apply flex
+}
+.zeus-mark input + div > button:last-child {
+    @apply hidden
+}
+.zeus-mark input:checked + div > button:first-child {
+    @apply hidden
+}
+.zeus-mark input:checked + div > button:last-child {
+    @apply flex
+}
+.zeus-mark[sequential]:has(input:checked) input + div > button:first-child {
+    @apply hidden
+}
+.zeus-mark[sequential]:has(input:checked) input + div > button:last-child {
+    @apply flex
+}
+.zeus-mark[sequential]:has(input:checked) input:checked + div ~ div > button:first-child {
+    @apply flex
+}
+.zeus-mark[sequential]:has(input:checked) input:checked + div ~ div > button:last-child {
+    @apply hidden
+}

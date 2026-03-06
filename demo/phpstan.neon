@@ -1,0 +1,14 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+    - vendor/nesbot/carbon/extension.neon
+
+parameters:
+    level: 6
+    paths:
+        - ../database
+        - ../resources
+        - ../src
+    ignoreErrors:
+        - identifier: trait.unused
+    checkOctaneCompatibility: true
+    checkModelProperties: true
