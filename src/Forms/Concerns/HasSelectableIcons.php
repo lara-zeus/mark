@@ -3,18 +3,19 @@
 namespace LaraZeus\Mark\Forms\Concerns;
 
 use Closure;
+use Illuminate\Support\Arr;
 
 trait HasSelectableIcons
 {
     /**
      * @var array<string|int|bool, string>|Closure|null
      */
-    protected array | Closure | null $icons = null;
+    protected array | string | Closure | null $icons = null;
 
     /**
      * @var array<string|int|bool, string>|Closure|null
      */
-    protected array | Closure | null $selectedIcons = null;
+    protected array | string | Closure | null $selectedIcons = null;
 
     protected bool | Closure | null $isSequential = false;
 
@@ -22,7 +23,7 @@ trait HasSelectableIcons
      * @param  array<string|int|bool, string>  $icons
      * @return $this
      */
-    public function icons(array $icons): static
+    public function icons(array | string $icons): static
     {
         $this->icons = $icons;
 
@@ -34,14 +35,14 @@ trait HasSelectableIcons
      */
     public function getIcons(): array
     {
-        return $this->evaluate($this->icons);
+        return Arr::wrap($this->evaluate($this->icons));
     }
 
     /**
      * @param  array<string|int|bool, string>  $selectedIcons
      * @return $this
      */
-    public function selectedIcons(array $selectedIcons): static
+    public function selectedIcons(array | string $selectedIcons): static
     {
         $this->selectedIcons = $selectedIcons;
 
@@ -53,7 +54,7 @@ trait HasSelectableIcons
      */
     public function getSelectedIcons(): array
     {
-        return $this->evaluate($this->selectedIcons);
+        return Arr::wrap($this->evaluate($this->selectedIcons));
     }
 
     public function sequential(bool $isSequential = true): static

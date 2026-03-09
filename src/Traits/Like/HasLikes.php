@@ -2,6 +2,10 @@
 
 namespace LaraZeus\Mark\Traits\Like;
 
+use LaraZeus\Mark\Traits\Like\Marker\Actions;
+use LaraZeus\Mark\Traits\Like\Marker\Indicators;
+use LaraZeus\Mark\Traits\Like\Marker\Relations;
+use LaraZeus\Mark\Traits\Like\Marker\Scopes;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -9,8 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 trait HasLikes
 {
-    use Marker\Actions;
-    use Marker\Indicators;
-    use Marker\Relations;
-    use Marker\Scopes;
+    use Actions;
+    use Indicators;
+    use Relations;
+    use Scopes;
 }

@@ -1,5 +1,5 @@
 @php
-    $colors = $getColors();
+    use Filament\Facades\Filament;$colors = $getColors();
     $statePath = $getStatePath();
     $icons = $getIcons();
     $selectedIcons = $getSelectedIcons();
@@ -34,7 +34,7 @@
                     type="{{ count($icons) > 1 ? 'radio' : 'checkbox' }}"
                     name="{{ $statePath }}"
                     x-model="state"
-                   :value="'{{ $key }}'"
+                    :value="'{{ $key }}'"
                     class="hidden"
                 >
                 <x-filament::icon-button

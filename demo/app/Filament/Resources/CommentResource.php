@@ -2,12 +2,24 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Radio;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use App\Filament\Resources\CommentResource\Pages\ListComments;
+use App\Filament\Resources\CommentResource\Pages\CreateComment;
+use App\Filament\Resources\CommentResource\Pages\EditComment;
+use App\Filament\Resources\CommentResource\Pages\ViewComment;
 use App\Filament\Resources\CommentResource\Pages;
 use App\Models\Comment;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -19,36 +31,37 @@ class CommentResource extends Resource
 {
     protected static ?string $model = Comment::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->columns(1)
             ->schema([
-                Forms\Components\Select::make('post_id')
+                Select::make('post_id')
                     ->relationship('post', 'title')
                     ->required(),
-                Forms\Components\Select::make('user_id')
+                Select::make('user_id')
                     ->relationship('user', 'email')
                     ->required(),
-                Forms\Components\Textarea::make('text')
+                CheckboxList::make('aa')
+                    ->options([
+                        'a',
+                        'b',
+                    ]),
+                Textarea::make('text')
                     ->required()
                     ->columnSpanFull(),
-                //                Mark::make('rating')
-                //                    ->live()
-                //                    ->relationship(stateColumn: 'value')
-                //                    ->rating(),
-                //
-                //                Mark::make('like')
-                //                    ->live()
-                //                    ->relationship(stateColumn: 'value')
-                //                    ->like(),
-                //                Mark::make('bookmark')
-                //                    ->relationship()
-                //                    ->live()
-                //                    ->bookmark(),
-                Forms\Components\Radio::make('feedback')
+                Mark::make('rating')
+                    ->live()
+                    ->rating(),
+                Mark::make('like')
+                    ->live()
+                    ->like(),
+                Mark::make('bookmark')
+                    ->live()
+                    ->bookmark(),
+                Radio::make('feedback')
                     ->visible(fn ($get) => $get('rating') === '1')
                     ->label('Like this post ?')
                     ->boolean()
@@ -61,8 +74,8 @@ class CommentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name'),
-                Tables\Columns\TextColumn::make('post.title')
+                TextColumn::make('user.name'),
+                TextColumn::make('post.title')
                     ->wrap(),
                 //                MarkColumn::make('like')
                 //                    ->relationship(stateColumn: 'value')
@@ -77,13 +90,13 @@ class CommentResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\ViewAction::make(),
+            ->recordActions([
+                EditAction::make(),
+                ViewAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -95,9 +108,9 @@ class CommentResource extends Resource
         ];
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist->schema([
+        return $schema->components([
             TextEntry::make('text'),
             //            MarkEntry::make('like')
             //                ->relationship(stateColumn: 'value')
@@ -115,10 +128,10 @@ class CommentResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListComments::route('/'),
-            'create' => Pages\CreateComment::route('/create'),
-            'edit' => Pages\EditComment::route('/{record}/edit'),
-            'view' => Pages\ViewComment::route('/{record}'),
+            'index' => ListComments::route('/'),
+            'create' => CreateComment::route('/create'),
+            'edit' => EditComment::route('/{record}/edit'),
+            'view' => ViewComment::route('/{record}'),
         ];
     }
 }

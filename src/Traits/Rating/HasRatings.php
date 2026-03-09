@@ -2,6 +2,10 @@
 
 namespace LaraZeus\Mark\Traits\Rating;
 
+use LaraZeus\Mark\Traits\Rating\Marker\Actions;
+use LaraZeus\Mark\Traits\Rating\Marker\Indicators;
+use LaraZeus\Mark\Traits\Rating\Marker\Relations;
+use LaraZeus\Mark\Traits\Rating\Marker\Scopes;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -9,8 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 trait HasRatings
 {
-    use Marker\Actions;
-    use Marker\Indicators;
-    use Marker\Relations;
-    use Marker\Scopes;
+    use Actions;
+    use Indicators;
+    use Relations;
+    use Scopes;
 }

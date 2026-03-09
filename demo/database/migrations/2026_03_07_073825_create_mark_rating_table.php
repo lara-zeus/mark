@@ -12,12 +12,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create((new (Mark::getBookmarkMorphPivotModel()))->getTable(), function (Blueprint $table) {
+        Schema::create((new (Mark::getRatingMorphPivotModel()))->getTable(), function (Blueprint $table) {
             $table->id();
             $table->foreignId('marker_id')
                 ->constrained((new (Mark::getMarkerModel()))->getTable())
                 ->cascadeOnUpdate();
             $table->morphs('markable');
+            $table->string('value');
             $table->json('metadata')->nullable();
             $table->timestamps();
             $table->unique(['marker_id', 'markable_type', 'markable_id']);
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists((new (Mark::getBookmarkMorphPivotModel()))->getTable());
+        Schema::dropIfExists((new (Mark::getRatingMorphPivotModel()))->getTable());
     }
 };

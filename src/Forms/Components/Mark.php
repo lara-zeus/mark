@@ -15,38 +15,36 @@ class Mark extends Field
 
     protected string $view = 'zeus-mark::forms.components.mark';
 
-    public function like(): static
+    public function configureDefaults(): static
     {
-        return $this
-            ->icons([
-                true => 'heroicon-o-hand-thumb-up',
-                false => 'heroicon-o-hand-thumb-down',
-            ])
-            ->selectedIcons([
-                true => 'heroicon-s-hand-thumb-up',
-                false => 'heroicon-s-hand-thumb-down',
-            ])
-            ->in(array_keys($this->getIcons()));
-    }
+        static::macro('rating', function () {
+            return $this
+                ->icons(array_fill(1, 5, 'heroicon-o-star'))
+                ->selectedIcons(array_fill(1, 5, 'heroicon-s-star'))
+                ->sequential()
+                ->in(array_keys($this->getIcons()));
+        });
 
-    public function bookmark(): static
-    {
-        return $this
-            ->icons([
-                true => 'heroicon-o-bookmark',
-            ])
-            ->selectedIcons([
-                true => 'heroicon-s-bookmark',
-            ])
-            ->in(array_keys($this->getIcons()));
-    }
+        static::macro('bookmark', function () {
+            return $this
+                ->icons('heroicon-o-bookmark')
+                ->selectedIcons('heroicon-s-bookmark')
+                ->in(array_keys($this->getIcons()));
+        });
 
-    public function rating(): static
-    {
-        return $this
-            ->icons(array_fill(1, 5, 'heroicon-o-star'))
-            ->selectedIcons(array_fill(1, 5, 'heroicon-s-star'))
-            ->sequential()
-            ->in(array_keys($this->getIcons()));
+        static::macro('like', function () {
+            return $this
+                ->icons([
+                    'heroicon-o-hand-thumb-down',
+                    'heroicon-o-hand-thumb-up',
+                ])
+                ->selectedIcons([
+                    'heroicon-s-hand-thumb-down',
+                    'heroicon-s-hand-thumb-up',
+                ])
+                ->in(array_keys($this->getIcons()));
+        });
+
+        return $this;
     }
 }

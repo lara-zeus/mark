@@ -2,6 +2,10 @@
 
 namespace LaraZeus\Mark\Traits\Bookmark;
 
+use LaraZeus\Mark\Traits\Bookmark\Markable\Actions;
+use LaraZeus\Mark\Traits\Bookmark\Markable\Indicators;
+use LaraZeus\Mark\Traits\Bookmark\Markable\Relations;
+use LaraZeus\Mark\Traits\Bookmark\Markable\Scopes;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -9,8 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 trait Bookmarkable
 {
-    use Markable\Actions;
-    use Markable\Indicators;
-    use Markable\Relations;
-    use Markable\Scopes;
+    use Actions;
+    use Indicators;
+    use Relations;
+    use Scopes;
 }
