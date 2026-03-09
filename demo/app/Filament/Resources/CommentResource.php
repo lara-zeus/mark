@@ -17,7 +17,6 @@ use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Infolists\Components\IconEntry;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
@@ -111,7 +110,7 @@ class CommentResource extends Resource
     {
         return $schema->components([
             IconEntry::make('text')
-            ->boolean(),
+                ->boolean(),
             MarkEntry::make('ss')
                 ->state(2)
                 ->rating(),
@@ -120,7 +119,7 @@ class CommentResource extends Resource
                 ->like(),
             MarkEntry::make('ss3')
                 ->state(true)
-                ->bookmark()
+                ->bookmark(),
             //            MarkEntry::make('like')
             //                ->relationship(stateColumn: 'value')
             //                ->like(),
