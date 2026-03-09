@@ -106,22 +106,22 @@ class CommentResource extends Resource
         ];
     }
 
-    public static function infolist(Schema $schema): Schema
-    {
-        return $schema->components([
-            TextEntry::make('text'),
-            //            MarkEntry::make('like')
-            //                ->relationship(stateColumn: 'value')
-            //                ->like(),
-            //            MarkEntry::make('rating')
-            //                ->relationship(stateColumn: 'value')
-            //                ->rating(),
-            //            MarkEntry::make('bookmark')
-            //                ->relationship()
-            //                ->bookmark(),
-
-        ]);
-    }
+//    public static function infolist(Schema $schema): Schema
+//    {
+//        return $schema->components([
+//            TextEntry::make('text'),
+//            //            MarkEntry::make('like')
+//            //                ->relationship(stateColumn: 'value')
+//            //                ->like(),
+//            //            MarkEntry::make('rating')
+//            //                ->relationship(stateColumn: 'value')
+//            //                ->rating(),
+//            //            MarkEntry::make('bookmark')
+//            //                ->relationship()
+//            //                ->bookmark(),
+//
+//        ]);
+//    }
 
     public static function getPages(): array
     {

@@ -1,5 +1,5 @@
 @php
-    use Filament\Support\Facades\FilamentAsset;use \Illuminate\Support\Js;use LaraZeus\Mark\MarkServiceProvider;
+    use Filament\Support\Facades\FilamentAsset;use Illuminate\Support\Js;use LaraZeus\Mark\MarkServiceProvider;
 
     $colors = $getColors();
     $statePath = $getStatePath();
@@ -7,6 +7,8 @@
     $isBoolean = $getBoolean();
     $selectedIcons = $getSelectedIcons();
     $isSequential = $isSequential();
+    $disabled = $isDisabled();
+    $classes = __('filament-panels::layout.direction') === 'rtl' ? '-scale-x-100' : '';
 @endphp
 <x-dynamic-component
     :component="$getFieldWrapperView()"
@@ -25,23 +27,27 @@
         @foreach($icons as $value => $icon)
             @php
                 $value = $isBoolean ? (bool) $value : (string) $value;
+                $onClick = 'state = (state === ' . Js::from($value) . ' ? null : ' . Js::from($value) . ')';
+                $show = 'isSelected('. Js::from($value) .')'
             @endphp
             <div>
                 <x-filament::icon-button
-                    color="{{ $getColor($value) }}"
-                    x-on:click="state = (state === {{ Js::from($value) }} ? null : {{ Js::from($value) }})"
-                    x-show="isSelected({{ Js::from($value) }})"
-                    icon="{{ $selectedIcons[$value] }}"
                     size="xl"
-                    class="{{ __('filament-panels::layout.direction') === 'rtl' ? '-scale-x-100' : '' }}"
+                    :x-show="$show"
+                    :x-on:click="$onClick"
+                    :color="$getColor($value)"
+                    :icon="$selectedIcons[$value]"
+                    :class="$classes"
+                    :disabled="$disabled"
                 />
                 <x-filament::icon-button
-                    color="{{ $getColor($value) }}"
-                    x-on:click="state = (state === {{ Js::from($value) }} ? null : {{ Js::from($value) }})"
-                    x-show="! isSelected({{ Js::from($value) }})"
-                    icon="{{ $icon }}"
                     size="xl"
-                    class="{{ __('filament-panels::layout.direction') === 'rtl' ? '-scale-x-100' : '' }}"
+                    :x-show="'!' . $show"
+                    :x-on:click="$onClick"
+                    :color="$getColor($value)"
+                    :icon="$icon"
+                    :class="$classes"
+                    :disabled="$disabled"
                 />
             </div>
         @endforeach
