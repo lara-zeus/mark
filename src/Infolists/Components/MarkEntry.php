@@ -42,34 +42,21 @@ class MarkEntry extends Entry
             return $this
                 ->icons('heroicon-o-bookmark')
                 ->selectedIcons('heroicon-s-bookmark')
-                ->boolean(isNullable: false, isStoredAsInt: false);
+                ->boolean();
         });
 
         return $this;
     }
 
-    public function boolean(bool $isNullable = false, bool $isStoredAsInt = false): static
+    public function boolean(): static
     {
         $this->boolean = true;
 
-        return $this
-            ->stateCast(
-                app(BooleanStateCast::class, ['isNullable' => $isNullable, 'isStoredAsInt' => $isStoredAsInt])
-            );
+        return $this;
     }
 
     public function getBoolean(): bool
     {
         return $this->boolean;
-    }
-
-
-    public function getDefaultStateCasts(): array
-    {
-        if ($this->hasCustomStateCasts()) {
-            return parent::getDefaultStateCasts();
-        }
-
-        return [app(OptionStateCast::class)];
     }
 }
