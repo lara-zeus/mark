@@ -4,13 +4,14 @@ namespace LaraZeus\Mark\Forms\Concerns;
 
 use Closure;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Arr;
 
 trait HasColors
 {
     /**
      * @var array<string>|Arrayable<array-key, string>|Closure|null
      */
-    protected array | Arrayable | Closure | null $colors = null;
+    protected array | string | Arrayable | Closure | null $colors = null;
 
     /**
      * @param  array<string>|Arrayable<array-key, string>|Closure|null  $colors
@@ -42,6 +43,6 @@ trait HasColors
             $colors = $colors->toArray();
         }
 
-        return $colors ?? [];
+        return Arr::wrap($colors ?? []);
     }
 }
