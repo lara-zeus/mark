@@ -20,6 +20,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use LaraZeus\Mark\Forms\Components\Mark;
 use LaraZeus\Mark\Infolists\Components\MarkEntry;
+use LaraZeus\Mark\Tables\Columns\MarkColumn;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -64,5 +65,6 @@ class AdminPanelProvider extends PanelProvider
     {
         Mark::configureUsing(fn (Mark $component) => $component->configureDefaults());
         MarkEntry::configureUsing(fn (MarkEntry $component) => $component->configureDefaults());
+        MarkColumn::configureUsing(fn (MarkColumn $component) => $component->configureDefaults());
     }
 }

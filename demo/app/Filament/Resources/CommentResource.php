@@ -75,6 +75,15 @@ class CommentResource extends Resource
                 TextColumn::make('user.name'),
                 TextColumn::make('post.title')
                     ->wrap(),
+                MarkColumn::make('aa1')
+                    ->state(fn() => 3)
+                ->rating(),
+                MarkColumn::make('aa2')
+                    ->state(fn() => 0)
+                ->like(),
+                MarkColumn::make('aa3')
+                    ->state(fn() => false)
+                ->bookmark(),
                 //                MarkColumn::make('like')
                 //                    ->relationship(stateColumn: 'value')
                 //                    ->like(),
