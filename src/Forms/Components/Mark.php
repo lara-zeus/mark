@@ -17,6 +17,8 @@ class Mark extends Field
 
     protected string $view = 'zeus-mark::forms.components.mark';
 
+    protected bool $boolean = false;
+
     public function configureDefaults(): static
     {
         static::macro('rating', function () {
@@ -37,7 +39,6 @@ class Mark extends Field
                     'heroicon-s-hand-thumb-down',
                     'heroicon-s-hand-thumb-up',
                 ])
-                ->boolean(isNullable: true, isStoredAsInt: true)
                 ->in(array_keys($this->getIcons()));
         });
 
@@ -46,7 +47,7 @@ class Mark extends Field
                 ->icons('heroicon-o-bookmark')
                 ->selectedIcons('heroicon-s-bookmark')
                 ->boolean(isNullable: false, isStoredAsInt: false)
-                ->in(array_keys($this->getIcons()));
+                ->rule('boolean');
         });
 
         return $this;
@@ -54,10 +55,17 @@ class Mark extends Field
 
     public function boolean(bool $isNullable = false, bool $isStoredAsInt = false): static
     {
+        $this->boolean = true;
+
         return $this
             ->stateCast(
                 app(BooleanStateCast::class, ['isNullable' => $isNullable, 'isStoredAsInt' => $isStoredAsInt])
             );
+    }
+
+    public function getBoolean(): bool
+    {
+        return $this->boolean;
     }
 
     public function getDefaultStateCasts(): array

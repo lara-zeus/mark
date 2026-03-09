@@ -25,11 +25,11 @@ trait HasColors
     }
 
     /**
-     * @return string|array<string>|null
+     * @return string|array<string>
      */
-    public function getColor(mixed $value): string | array | null
+    public function getColor(mixed $value): string | array
     {
-        return $this->getColors()[$value] ?? null;
+        return $this->getColors()[$value] ?? 'primary';
     }
 
     /**

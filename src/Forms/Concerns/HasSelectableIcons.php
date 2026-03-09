@@ -35,7 +35,13 @@ trait HasSelectableIcons
      */
     public function getIcons(): array
     {
-        return Arr::wrap($this->evaluate($this->icons));
+        $icons = $this->evaluate($this->icons);
+
+        if (! is_array($icons) && $this->getBoolean()) {
+            $icons = [1 => $icons];
+        }
+
+        return Arr::wrap($icons);
     }
 
     /**
@@ -54,7 +60,13 @@ trait HasSelectableIcons
      */
     public function getSelectedIcons(): array
     {
-        return Arr::wrap($this->evaluate($this->selectedIcons));
+        $selectedIcons = $this->evaluate($this->selectedIcons);
+
+        if (! is_array($selectedIcons) && $this->getBoolean()) {
+            $selectedIcons = [1 => $selectedIcons];
+        }
+
+        return Arr::wrap($selectedIcons);
     }
 
     public function sequential(bool $isSequential = true): static

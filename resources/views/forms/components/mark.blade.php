@@ -1,19 +1,12 @@
 @php
-    use Filament\Facades\Filament;$colors = $getColors();
+    use \Illuminate\Support\Js;
+
+    $colors = $getColors();
     $statePath = $getStatePath();
     $icons = $getIcons();
+    $isBoolean = $getBoolean();
     $selectedIcons = $getSelectedIcons();
     $isSequential = $isSequential();
-    $keys = array_keys($icons);
-    $showSelectedValues = function($key) use ($isSequential, $keys) {
-        if(!$isSequential){
-            return [(string)$key];
-        }
-        $keyIndex = array_search($key, $keys);
-        $keys =  array_filter($keys, fn($key) => $key >= $keyIndex, ARRAY_FILTER_USE_KEY);
-
-        return array_values(array_map(fn($value) => (string) $value, $keys));
-    };
 @endphp
 <x-dynamic-component
     :component="$getFieldWrapperView()"
@@ -25,30 +18,23 @@
         }"
         class="flex flex-wrap gap-5"
     >
-        @foreach($icons as $key => $icon)
+        @foreach($icons as $value => $icon)
             @php
-                $values = json_encode($showSelectedValues($key), JSON_THROW_ON_ERROR);
+                $value = $isBoolean ? (bool) $value : (string) $value;
             @endphp
             <div>
-                <input
-                    type="{{ count($icons) > 1 ? 'radio' : 'checkbox' }}"
-                    name="{{ $statePath }}"
-                    x-model="state"
-                    :value="'{{ $key }}'"
-                    class="hidden"
-                >
                 <x-filament::icon-button
-                    :color="$getColor($key) ?? 'primary'"
-                    x-on:click="state = state === '{{ $key }}' ? null : '{{ $key }}'"
-                    x-show="{{ $values }}.includes(state)"
-                    icon="{{ $selectedIcons[$key] }}"
+                    :color="$getColor($value)"
+                    x-on:click="state = (state === {{ Js::encode($value) }} ? null : {{ Js::encode($value) }})"
+                    x-show="state === {{ Js::encode($value) }}"
+                    icon="{{ $selectedIcons[$value] }}"
                     size="xl"
                     :class="__('filament-panels::layout.direction') === 'rtl' ? '-scale-x-100' : ''"
                 />
                 <x-filament::icon-button
-                    :color="$getColor($key) ?? 'primary'"
-                    x-on:click="state = state === '{{ $key }}' ? null : '{{ $key }}'"
-                    x-show="!{{ $values }}.includes(state)"
+                    :color="$getColor($value)"
+                    x-on:click="state = (state === {{ Js::encode($value) }} ? null : {{ Js::encode($value) }})"
+                    x-show="state !== {{ Js::encode($value) }}"
                     icon="{{ $icon }}"
                     size="xl"
                     :class="__('filament-panels::layout.direction') === 'rtl' ? '-scale-x-100' : ''"
