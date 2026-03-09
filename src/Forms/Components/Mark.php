@@ -17,8 +17,6 @@ class Mark extends Field
 
     protected string $view = 'lara-zeus-mark::forms.components.mark';
 
-    protected bool $boolean = false;
-
     public function configureDefaults(): static
     {
         static::macro('rating', function () {
@@ -44,36 +42,11 @@ class Mark extends Field
 
         static::macro('bookmark', function () {
             return $this
-                ->icons('heroicon-o-bookmark')
-                ->selectedIcons('heroicon-s-bookmark')
-                ->boolean(isNullable: false, isStoredAsInt: false)
+                ->icons([1 => 'heroicon-o-bookmark'])
+                ->selectedIcons([1 => 'heroicon-s-bookmark'])
                 ->rule('boolean');
         });
 
         return $this;
-    }
-
-    public function boolean(bool $isNullable = false, bool $isStoredAsInt = false): static
-    {
-        $this->boolean = true;
-
-        return $this
-            ->stateCast(
-                app(BooleanStateCast::class, ['isNullable' => $isNullable, 'isStoredAsInt' => $isStoredAsInt])
-            );
-    }
-
-    public function getBoolean(): bool
-    {
-        return $this->boolean;
-    }
-
-    public function getDefaultStateCasts(): array
-    {
-        if ($this->hasCustomStateCasts()) {
-            return parent::getDefaultStateCasts();
-        }
-
-        return [app(OptionStateCast::class)];
     }
 }

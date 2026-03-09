@@ -4,7 +4,6 @@
     $colors = $getColors();
     $statePath = $getStatePath();
     $icons = $getIcons();
-    $isBoolean = $getBoolean();
     $selectedIcons = $getSelectedIcons();
     $isSequential = $isSequential();
     $disabled = $isDisabled();
@@ -20,13 +19,12 @@
         x-data="zeusMark({
             state: $wire.{{ $applyStateBindingModifiers("\$entangle('{$statePath}')") }},
             isSequential: @js($isSequential),
-            icons: @js(array_map(fn($value) => $isBoolean ? (bool) $value : (string) $value, array_keys($icons)))
+            icons: @js(array_keys($icons))
         })"
         class="flex flex-wrap gap-5"
     >
         @foreach($icons as $value => $icon)
             @php
-                $value = $isBoolean ? (bool) $value : (string) $value;
                 $onClick = 'state = (state === ' . Js::from($value) . ' ? null : ' . Js::from($value) . ')';
                 $show = 'isSelected('. Js::from($value) .')';
                 $size = 'xl';

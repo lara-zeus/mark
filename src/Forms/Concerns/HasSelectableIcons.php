@@ -10,12 +10,12 @@ trait HasSelectableIcons
     /**
      * @var array<string|int|bool, string>|Closure|null
      */
-    protected array | string | Closure | null $icons = null;
+    protected array | Closure | null $icons = null;
 
     /**
      * @var array<string|int|bool, string>|Closure|null
      */
-    protected array | string | Closure | null $selectedIcons = null;
+    protected array | Closure | null $selectedIcons = null;
 
     protected bool | Closure | null $isSequential = false;
 
@@ -23,7 +23,7 @@ trait HasSelectableIcons
      * @param  array<string|int|bool, string>  $icons
      * @return $this
      */
-    public function icons(array | string $icons): static
+    public function icons(array $icons): static
     {
         $this->icons = $icons;
 
@@ -37,18 +37,14 @@ trait HasSelectableIcons
     {
         $icons = $this->evaluate($this->icons);
 
-        if (! is_array($icons) && $this->getBoolean()) {
-            $icons = [1 => $icons];
-        }
-
-        return Arr::wrap($icons);
+        return $icons;
     }
 
     /**
      * @param  array<string|int|bool, string>  $selectedIcons
      * @return $this
      */
-    public function selectedIcons(array | string $selectedIcons): static
+    public function selectedIcons(array $selectedIcons): static
     {
         $this->selectedIcons = $selectedIcons;
 
@@ -62,11 +58,7 @@ trait HasSelectableIcons
     {
         $selectedIcons = $this->evaluate($this->selectedIcons);
 
-        if (! is_array($selectedIcons) && $this->getBoolean()) {
-            $selectedIcons = [1 => $selectedIcons];
-        }
-
-        return Arr::wrap($selectedIcons);
+        return $selectedIcons;
     }
 
     public function sequential(bool $isSequential = true): static
