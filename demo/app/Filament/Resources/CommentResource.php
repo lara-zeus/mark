@@ -60,7 +60,7 @@ class CommentResource extends Resource
                     ->live()
                     ->bookmark(),
                 Radio::make('feedback')
-                    ->visible(fn ($get) => $get('rating') === '1')
+                    ->visible(fn ($get) => $get('rating') === 1)
                     ->label('Like this post ?')
                     ->boolean()
                     ->inline()

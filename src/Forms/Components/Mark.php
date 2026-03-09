@@ -15,7 +15,7 @@ class Mark extends Field
     use HasMarkRelations;
     use HasSelectableIcons;
 
-    protected string $view = 'zeus-mark::forms.components.mark';
+    protected string $view = 'lara-zeus-mark::forms.components.mark';
 
     protected bool $boolean = false;
 

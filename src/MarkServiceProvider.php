@@ -2,6 +2,8 @@
 
 namespace LaraZeus\Mark;
 
+use Filament\Support\Assets\AlpineComponent;
+use Filament\Support\Facades\FilamentAsset;
 use LaraZeus\Mark\Facades\Mark;
 use LaraZeus\Mark\Models\MarkBookmark;
 use LaraZeus\Mark\Models\MarkLike;
@@ -11,12 +13,12 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class MarkServiceProvider extends PackageServiceProvider
 {
-    public static string $name = 'zeus-mark';
+    public static string $name = 'lara-zeus-mark';
 
     public function configurePackage(Package $package): void
     {
         $package->name(static::$name)
-            ->hasViews(static::$name)
+            ->hasViews()
             ->discoversMigrations();
     }
 
@@ -25,5 +27,9 @@ class MarkServiceProvider extends PackageServiceProvider
         Mark::likeMorphPivotModel(MarkLike::class)
             ->bookmarkMorphPivotModel(MarkBookmark::class)
             ->ratingMorphPivotModel(MarkRate::class);
+
+        FilamentAsset::register([
+            AlpineComponent::make('mark', __DIR__ . '/../resources/dist/mark.js'),
+        ], package: static::$name);
     }
 }
