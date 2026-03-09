@@ -18,7 +18,7 @@
     <div {{ $getExtraAttributeBag()->class('fi-in-icon flex flex-wrap gap-5') }}>
         @foreach($icons as $value => $icon)
             @php
-                $size = IconSize::ExtraLarge;
+                $size = IconSize::Large;
                 $icon = ($isBoolean ? (bool) $value : $value) === $state ? $selectedIcons[$value] : $icon;
                 if ($isSequential && $loop->index <= $stateIndex){
                     $icon = $selectedIcons[$value];
