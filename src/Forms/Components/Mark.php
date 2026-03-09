@@ -3,6 +3,8 @@
 namespace LaraZeus\Mark\Forms\Components;
 
 use Filament\Forms\Components\Field;
+use Filament\Schemas\Components\StateCasts\BooleanStateCast;
+use Filament\Schemas\Components\StateCasts\OptionStateCast;
 use LaraZeus\Mark\Forms\Concerns\HasColors;
 use LaraZeus\Mark\Forms\Concerns\HasMarkRelations;
 use LaraZeus\Mark\Forms\Concerns\HasSelectableIcons;
@@ -25,13 +27,6 @@ class Mark extends Field
                 ->in(array_keys($this->getIcons()));
         });
 
-        static::macro('bookmark', function () {
-            return $this
-                ->icons('heroicon-o-bookmark')
-                ->selectedIcons('heroicon-s-bookmark')
-                ->in(array_keys($this->getIcons()));
-        });
-
         static::macro('like', function () {
             return $this
                 ->icons([
@@ -42,9 +37,35 @@ class Mark extends Field
                     'heroicon-s-hand-thumb-down',
                     'heroicon-s-hand-thumb-up',
                 ])
+                ->boolean(isNullable: true, isStoredAsInt: true)
+                ->in(array_keys($this->getIcons()));
+        });
+
+        static::macro('bookmark', function () {
+            return $this
+                ->icons('heroicon-o-bookmark')
+                ->selectedIcons('heroicon-s-bookmark')
+                ->boolean(isNullable: false, isStoredAsInt: false)
                 ->in(array_keys($this->getIcons()));
         });
 
         return $this;
+    }
+
+    public function boolean(bool $isNullable = false, bool $isStoredAsInt = false): static
+    {
+        return $this
+            ->stateCast(
+                app(BooleanStateCast::class, ['isNullable' => $isNullable, 'isStoredAsInt' => $isStoredAsInt])
+            );
+    }
+
+    public function getDefaultStateCasts(): array
+    {
+        if ($this->hasCustomStateCasts()) {
+            return parent::getDefaultStateCasts();
+        }
+
+        return [app(OptionStateCast::class)];
     }
 }
