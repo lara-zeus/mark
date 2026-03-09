@@ -2,7 +2,6 @@
     use Filament\Infolists\View\Components\IconEntryComponent\IconComponent;use Filament\Support\Enums\IconSize;use Filament\Support\Facades\FilamentColor;$colors = $getColors();
     $state = $getState();
     $icons = $getIcons();
-    $isBoolean = $getBoolean();
     $selectedIcons = $getSelectedIcons();
     $isSequential = $isSequential();
     $classes = __('filament-panels::layout.direction') === 'rtl' ? '-scale-x-100' : '';
@@ -19,7 +18,7 @@
         @foreach($icons as $value => $icon)
             @php
                 $size = IconSize::Large;
-                $icon = ($isBoolean ? (bool) $value : $value) === $state ? $selectedIcons[$value] : $icon;
+                $icon = $value === $state ? $selectedIcons[$value] : $icon;
                 if ($isSequential && $loop->index <= $stateIndex){
                     $icon = $selectedIcons[$value];
                 }

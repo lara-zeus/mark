@@ -124,10 +124,10 @@ class CommentResource extends Resource
                 ->state(2)
                 ->rating(),
             MarkEntry::make('ss2')
-                ->state(1)
+                ->state(0)
                 ->like(),
             MarkEntry::make('ss3')
-                ->state(true)
+                ->state(1)
                 ->bookmark(),
             //            MarkEntry::make('like')
             //                ->relationship(stateColumn: 'value')
