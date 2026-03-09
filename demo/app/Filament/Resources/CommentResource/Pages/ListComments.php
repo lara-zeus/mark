@@ -2,9 +2,8 @@
 
 namespace App\Filament\Resources\CommentResource\Pages;
 
-use Filament\Actions\CreateAction;
 use App\Filament\Resources\CommentResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
 class ListComments extends ListRecords

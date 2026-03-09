@@ -2,10 +2,6 @@
 
 namespace LaraZeus\Mark;
 
-use Filament\Facades\Filament;
-use Filament\Panel;
-use Filament\Support\Assets\Css;
-use Filament\Support\Facades\FilamentAsset;
 use LaraZeus\Mark\Facades\Mark;
 use LaraZeus\Mark\Models\MarkBookmark;
 use LaraZeus\Mark\Models\MarkLike;
