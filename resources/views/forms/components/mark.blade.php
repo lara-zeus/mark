@@ -28,11 +28,12 @@
             @php
                 $value = $isBoolean ? (bool) $value : (string) $value;
                 $onClick = 'state = (state === ' . Js::from($value) . ' ? null : ' . Js::from($value) . ')';
-                $show = 'isSelected('. Js::from($value) .')'
+                $show = 'isSelected('. Js::from($value) .')';
+                $size = 'xl';
             @endphp
             <div>
                 <x-filament::icon-button
-                    size="xl"
+                    :size="$size"
                     :x-show="$show"
                     :x-on:click="$onClick"
                     :color="$getColor($value)"
@@ -41,7 +42,7 @@
                     :disabled="$disabled"
                 />
                 <x-filament::icon-button
-                    size="xl"
+                    :size="$size"
                     :x-show="'!' . $show"
                     :x-on:click="$onClick"
                     :color="$getColor($value)"
