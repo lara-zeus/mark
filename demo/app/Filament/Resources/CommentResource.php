@@ -16,6 +16,7 @@ use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
+use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -106,22 +107,32 @@ class CommentResource extends Resource
         ];
     }
 
-//    public static function infolist(Schema $schema): Schema
-//    {
-//        return $schema->components([
-//            TextEntry::make('text'),
-//            //            MarkEntry::make('like')
-//            //                ->relationship(stateColumn: 'value')
-//            //                ->like(),
-//            //            MarkEntry::make('rating')
-//            //                ->relationship(stateColumn: 'value')
-//            //                ->rating(),
-//            //            MarkEntry::make('bookmark')
-//            //                ->relationship()
-//            //                ->bookmark(),
-//
-//        ]);
-//    }
+    public static function infolist(Schema $schema): Schema
+    {
+        return $schema->components([
+            IconEntry::make('text')
+            ->boolean(),
+            MarkEntry::make('ss')
+                ->state(2)
+                ->rating(),
+            MarkEntry::make('ss2')
+                ->state(1)
+                ->like(),
+            MarkEntry::make('ss3')
+                ->state(true)
+                ->bookmark()
+            //            MarkEntry::make('like')
+            //                ->relationship(stateColumn: 'value')
+            //                ->like(),
+            //            MarkEntry::make('rating')
+            //                ->relationship(stateColumn: 'value')
+            //                ->rating(),
+            //            MarkEntry::make('bookmark')
+            //                ->relationship()
+            //                ->bookmark(),
+
+        ]);
+    }
 
     public static function getPages(): array
     {

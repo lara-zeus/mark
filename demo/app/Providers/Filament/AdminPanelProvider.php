@@ -19,6 +19,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use LaraZeus\Mark\Forms\Components\Mark;
+use LaraZeus\Mark\Infolists\Components\MarkEntry;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -62,5 +63,6 @@ class AdminPanelProvider extends PanelProvider
     public function boot()
     {
         Mark::configureUsing(fn (Mark $component) => $component->configureDefaults());
+        MarkEntry::configureUsing(fn (MarkEntry $component) => $component->configureDefaults());
     }
 }
