@@ -22,7 +22,7 @@ class Comment extends Model
     use Rateable;
 
     protected $casts = [
-      'text' => 'integer'
+        'text' => 'integer',
     ];
 
     public function post(): BelongsTo
