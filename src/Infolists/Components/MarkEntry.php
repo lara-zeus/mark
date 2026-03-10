@@ -13,6 +13,8 @@ class MarkEntry extends Entry
 
     protected string $view = 'lara-zeus-mark::infolists.components.mark-entry';
 
+    protected bool $boolean = false;
+
     public function configureDefaults(): static
     {
         static::macro('rating', function () {
@@ -37,9 +39,29 @@ class MarkEntry extends Entry
         static::macro('bookmark', function () {
             return $this
                 ->icons([1 => 'heroicon-o-bookmark'])
-                ->selectedIcons([1 => 'heroicon-s-bookmark']);
+                ->selectedIcons([1 => 'heroicon-s-bookmark'])
+                ->boolean();
         });
 
         return $this;
+    }
+
+    public function boolean()
+    {
+        $this->boolean = true;
+
+        return $this;
+    }
+
+    public function getBoolean(): bool
+    {
+        return $this->boolean;
+    }
+
+    public function getState(): mixed
+    {
+        $state = parent::getState();
+
+        return $this->getBoolean() ? (bool) $state : $state;
     }
 }

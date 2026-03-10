@@ -4,12 +4,13 @@
     $colors = $getColors();
     $state = $getState();
     $icons = $getIcons();
+    $isBoolean = $getBoolean();
     $selectedIcons = $getSelectedIcons();
     $isSequential = $isSequential();
     $classes = __('filament-panels::layout.direction') === 'rtl' ? '-scale-x-100' : '';
 
     if ($isSequential){
-        $stateIndex = array_search($state, array_keys($icons));
+        $stateIndex = array_search($state, array_map(fn($value) => $isBoolean ? (bool) $value : $value, array_keys($icons)));
     }
 @endphp
 <x-dynamic-component
@@ -20,7 +21,7 @@
         @foreach($icons as $value => $icon)
             @php
                 $size = IconSize::Large;
-                $icon = $value === $state ? $selectedIcons[$value] : $icon;
+                $icon = ($isBoolean ? (bool) $value : $value) === $state ? $selectedIcons[$value] : $icon;
                 if ($isSequential && $loop->index <= $stateIndex){
                     $icon = $selectedIcons[$value];
                 }
