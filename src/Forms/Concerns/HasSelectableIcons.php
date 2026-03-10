@@ -3,7 +3,6 @@
 namespace LaraZeus\Mark\Forms\Concerns;
 
 use Closure;
-use Illuminate\Support\Arr;
 
 trait HasSelectableIcons
 {

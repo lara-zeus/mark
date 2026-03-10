@@ -1,9 +1,10 @@
 @php
-    use Filament\Support\Facades\FilamentAsset;use Illuminate\Support\Js;use LaraZeus\Mark\MarkServiceProvider;$colors = $getColors();
+    use Filament\Support\Facades\FilamentAsset;use Illuminate\Support\Js;use LaraZeus\Mark\MarkServiceProvider;
+
+    $colors = $getColors();
     $state = $getState();
     $name = $getName();
     $icons = $getIcons();
-    $isBoolean = $getBoolean();
     $selectedIcons = $getSelectedIcons();
     $isSequential = $isSequential();
     $disabled = $isDisabled();
@@ -15,9 +16,9 @@
         x-load
         x-load-src="{{ FilamentAsset::getAlpineComponentSrc('mark', MarkServiceProvider::$name) }}"
         x-data="zeusMark({
-            state: @js($isBoolean ? (bool) $state : $state),
+            state: @js($state),
             isSequential: @js($isSequential),
-            icons: @js(array_map(fn($value) => $isBoolean ? (bool) $value : $value, array_keys($icons)))
+            icons: @js(array_keys($icons))
         })"
         x-init="
             $watch('state', () => {
@@ -32,7 +33,6 @@
     >
         @foreach($icons as $value => $icon)
             @php
-                $value = $isBoolean ? (bool) $value : $value;
                 $onClick = 'state = (state === ' . Js::from($value) . ' ? null : ' . Js::from($value) . ')';
                 $show = 'isSelected('. Js::from($value) .')';
                 $size = 'xl';

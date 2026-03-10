@@ -1,5 +1,7 @@
 @php
-    use Filament\Infolists\View\Components\IconEntryComponent\IconComponent;use Filament\Support\Enums\IconSize;use Filament\Support\Facades\FilamentColor;$colors = $getColors();
+    use Filament\Infolists\View\Components\IconEntryComponent\IconComponent;use Filament\Support\Enums\IconSize;use Filament\Support\Facades\FilamentColor;
+
+    $colors = $getColors();
     $state = $getState();
     $icons = $getIcons();
     $selectedIcons = $getSelectedIcons();
