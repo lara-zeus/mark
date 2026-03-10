@@ -6,6 +6,7 @@
     $icons = $getIcons();
     $selectedIcons = $getSelectedIcons();
     $isSequential = $isSequential();
+    $isBoolean = $getBoolean();
     $disabled = $isDisabled();
     $classes = __('filament-panels::layout.direction') === 'rtl' ? '-scale-x-100' : '';
 @endphp
@@ -26,8 +27,9 @@
     >
         @foreach($icons as $value => $icon)
             @php
-                $jsValue = Js::from($value);
-                $onClick = "state = (state === $jsValue ? null : $jsValue)";
+                $jsValue = Js::from($isBoolean ? (bool) $value : $value);
+                $unSelectValue = Js::from($isBoolean ? false : null);
+                $onClick = "state = (state === $jsValue ? $unSelectValue : $jsValue)";
                 $show = "isSelected($jsValue)";
                 $size = 'xl';
             @endphp

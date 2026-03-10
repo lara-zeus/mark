@@ -3,6 +3,8 @@
 namespace LaraZeus\Mark\Forms\Components;
 
 use Filament\Forms\Components\Field;
+use Filament\Schemas\Components\StateCasts\BooleanStateCast;
+use Filament\Schemas\Components\StateCasts\OptionStateCast;
 use LaraZeus\Mark\Forms\Concerns\HasColors;
 use LaraZeus\Mark\Forms\Concerns\HasMarkRelations;
 use LaraZeus\Mark\Forms\Concerns\HasSelectableIcons;
@@ -14,6 +16,8 @@ class Mark extends Field
     use HasSelectableIcons;
 
     protected string $view = 'lara-zeus-mark::forms.components.mark';
+
+    protected bool $boolean = false;
 
     public function configureDefaults(): static
     {
@@ -42,9 +46,25 @@ class Mark extends Field
             return $this
                 ->icons([1 => 'heroicon-o-bookmark'])
                 ->selectedIcons([1 => 'heroicon-s-bookmark'])
+                ->boolean()
                 ->rule('boolean');
         });
 
         return $this;
+    }
+
+    public function boolean(): static
+    {
+        $this->boolean = true;
+
+        return $this
+            ->stateCast(
+                app(BooleanStateCast::class, ['isNullable' => false, 'isStoredAsInt' => false])
+            );
+    }
+
+    public function getBoolean(): bool
+    {
+        return $this->boolean;
     }
 }
