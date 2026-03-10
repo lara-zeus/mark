@@ -46,7 +46,7 @@ class MarkEntry extends Entry
         return $this;
     }
 
-    public function boolean()
+    public function boolean(): static
     {
         $this->boolean = true;
 
