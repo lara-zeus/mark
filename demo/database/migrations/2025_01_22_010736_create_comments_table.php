@@ -18,6 +18,9 @@ return new class extends Migration
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Post::class);
             $table->text('text');
+            $table->integer('like')->nullable();
+            $table->integer('rating')->nullable();
+            $table->boolean('bookmark')->default(false);
             $table->timestamps();
         });
     }

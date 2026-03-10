@@ -12,7 +12,6 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -42,11 +41,6 @@ class CommentResource extends Resource
                 Select::make('user_id')
                     ->relationship('user', 'email')
                     ->required(),
-                CheckboxList::make('aa')
-                    ->options([
-                        'a',
-                        'b',
-                    ]),
                 Textarea::make('text')
                     ->required()
                     ->columnSpanFull(),
@@ -64,7 +58,8 @@ class CommentResource extends Resource
                     ->label('Like this post ?')
                     ->boolean()
                     ->inline()
-                    ->inlineLabel(false),
+                    ->inlineLabel(false)
+                    ->saved(false),
             ]);
     }
 
@@ -75,14 +70,11 @@ class CommentResource extends Resource
                 TextColumn::make('user.name'),
                 TextColumn::make('post.title')
                     ->wrap(),
-                MarkColumn::make('aa1')
-                    ->state(fn () => 3)
+                MarkColumn::make('rating')
                     ->rating(),
-                MarkColumn::make('aa2')
-                    ->state(fn () => 0)
+                MarkColumn::make('like')
                     ->like(),
-                MarkColumn::make('aa3')
-                    ->state(fn () => 1)
+                MarkColumn::make('bookmark')
                     ->bookmark(),
                 //                MarkColumn::make('like')
                 //                    ->relationship(stateColumn: 'value')
@@ -120,14 +112,11 @@ class CommentResource extends Resource
         return $schema->components([
             IconEntry::make('text')
                 ->boolean(),
-            MarkEntry::make('ss')
-                ->state(2)
+            MarkEntry::make('rating')
                 ->rating(),
-            MarkEntry::make('ss2')
-                ->state(0)
+            MarkEntry::make('like')
                 ->like(),
-            MarkEntry::make('ss3')
-                ->state(1)
+            MarkEntry::make('bookmark')
                 ->bookmark(),
             //            MarkEntry::make('like')
             //                ->relationship(stateColumn: 'value')
