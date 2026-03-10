@@ -13,11 +13,15 @@ use LaraZeus\Mark\Forms\Concerns\HasSelectableIcons;
 class MarkColumn extends Column implements Editable
 {
     use CanBeValidated;
-    use CanUpdateState;
+    use CanUpdateState {
+        updateState as updateBaseState;
+    }
     use HasColors;
     use HasSelectableIcons;
 
     protected string $view = 'lara-zeus-mark::tables.columns.mark-column';
+
+    protected bool $boolean = false;
 
     protected function setUp(): void
     {
@@ -53,9 +57,36 @@ class MarkColumn extends Column implements Editable
             return $this
                 ->icons([1 => 'heroicon-o-bookmark'])
                 ->selectedIcons([1 => 'heroicon-s-bookmark'])
+                ->boolean()
                 ->rules(['boolean']);
         });
 
         return $this;
+    }
+
+    public function boolean(): static
+    {
+        $this->boolean = true;
+
+        return $this;
+    }
+
+    public function getBoolean(): bool
+    {
+        return $this->boolean;
+    }
+
+    public function updateState(mixed $state): mixed
+    {
+        $state = $this->getBoolean() ? (bool) $state : $state;
+
+        return $this->updateBaseState($state);
+    }
+
+    public function getState(): mixed
+    {
+        $state = parent::getState();
+
+        return $this->getBoolean() ? (bool) $state : $state;
     }
 }

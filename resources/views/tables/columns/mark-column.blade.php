@@ -4,6 +4,8 @@
     $colors = $getColors();
     $state = $getState();
     $name = $getName();
+    $recordKey = $getRecordKey();
+    $isBoolean = $getBoolean();
     $icons = $getIcons();
     $selectedIcons = $getSelectedIcons();
     $isSequential = $isSequential();
@@ -34,8 +36,10 @@
     >
         @foreach($icons as $value => $icon)
             @php
+                $value = $isBoolean ? (bool) $value : $value;
+                $unSelectValue = Js::from($isBoolean ? false : null);
                 $jsValue = Js::from($value);
-                $onClick = "state = (state === $jsValue ? null : $jsValue)";
+                $onClick = "state = (state === $jsValue ? $unSelectValue : $jsValue)";
                 $show = "isSelected($jsValue)";
                 $size = 'xl';
             @endphp
