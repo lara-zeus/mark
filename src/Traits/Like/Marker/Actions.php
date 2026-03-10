@@ -7,7 +7,7 @@ use LaraZeus\Mark\NotPassed;
 
 trait Actions
 {
-    public function markLike(Model $markable, bool $value, array | null | NotPassed $metaData = new NotPassed)
+    protected function markLike(Model $markable, bool $value, array | null | NotPassed $metadata = new NotPassed): Model
     {
         $attributes = [
             'markable_type' => $markable->getMorphClass(),
@@ -18,14 +18,14 @@ trait Actions
             'value' => $value,
         ];
 
-        if (! $metaData instanceof NotPassed) {
-            $values['metadata'] = $metaData;
+        if (! $metadata instanceof NotPassed) {
+            $values['metadata'] = $metadata;
         }
 
         return $this->likes()->updateOrCreate($attributes, $values);
     }
 
-    public function unmarkLike(Model $markable)
+    public function unlike(Model $markable)
     {
         return $this->likes()
             ->whereMorphedTo('markable', $markable)
@@ -33,12 +33,12 @@ trait Actions
             ?->delete();
     }
 
-    public function like(Model $markable, array | null | NotPassed $metaData = new NotPassed)
+    public function like(Model $markable, array | null | NotPassed $metaData = new NotPassed): Model
     {
         return $this->markLike($markable, true, $metaData);
     }
 
-    public function dislike(Model $markable, array | null | NotPassed $metaData = new NotPassed)
+    public function dislike(Model $markable, array | null | NotPassed $metaData = new NotPassed): Model
     {
         return $this->markLike($markable, false, $metaData);
     }

@@ -7,24 +7,7 @@ use LaraZeus\Mark\NotPassed;
 
 trait Actions
 {
-    protected function markBookmark(Model $marker, bool $value, array | null | NotPassed $metaData = new NotPassed)
-    {
-        $attributes = [
-            'marker_id' => $marker->getKey(),
-        ];
-
-        $values = [
-            'value' => $value,
-        ];
-
-        if (! $metaData instanceof NotPassed) {
-            $values['metadata'] = $metaData;
-        }
-
-        return $this->bookmarks()->updateOrCreate($attributes, $values);
-    }
-
-    public function unmarkBookmark(Model $marker)
+    public function unbookmarkBy(Model $marker)
     {
         return $this->bookmarks()
             ->whereBelongsTo($marker, 'marker')
@@ -32,8 +15,18 @@ trait Actions
             ?->delete();
     }
 
-    public function bookmarkBy(Model $marker, $metadata = null): array
+    public function bookmarkBy(Model $marker, array | null | NotPassed $metadata = new NotPassed): Model
     {
-        return $this->markBookmark($marker, true, $metadata);
+        $attributes = [
+            'marker_id' => $marker->getKey(),
+        ];
+
+        $values = [];
+
+        if (! $metadata instanceof NotPassed) {
+            $values['metadata'] = $metadata;
+        }
+
+        return $this->bookmarks()->updateOrCreate($attributes, $values);
     }
 }

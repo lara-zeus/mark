@@ -7,7 +7,15 @@ use LaraZeus\Mark\NotPassed;
 
 trait Actions
 {
-    public function markRating(Model $markable, int $value, array | null | NotPassed $metaData = new NotPassed)
+    public function unrate(Model $markable)
+    {
+        return $this->ratings()
+            ->whereMorphedTo('markable', $markable)
+            ->first()
+            ?->delete();
+    }
+
+    public function rate(Model $markable, int $value, array | null | NotPassed $metadata = new NotPassed): Model
     {
         $attributes = [
             'markable_type' => $markable->getMorphClass(),
@@ -18,23 +26,10 @@ trait Actions
             'value' => $value,
         ];
 
-        if (! $metaData instanceof NotPassed) {
-            $values['metadata'] = $metaData;
+        if (! $metadata instanceof NotPassed) {
+            $values['metadata'] = $metadata;
         }
 
         return $this->ratings()->updateOrCreate($attributes, $values);
-    }
-
-    public function unmarkRating(Model $markable)
-    {
-        return $this->ratings()
-            ->whereMorphedTo('markable', $markable)
-            ->first()
-            ?->delete();
-    }
-
-    public function rate(Model $markable, int $value, array | null | NotPassed $metaData = new NotPassed)
-    {
-        return $this->markRating($markable, $value, $metaData);
     }
 }

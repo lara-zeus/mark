@@ -7,7 +7,15 @@ use LaraZeus\Mark\NotPassed;
 
 trait Actions
 {
-    protected function markRating(Model $marker, int $value, array | null | NotPassed $metaData = new NotPassed)
+    public function unrateBy(Model $marker)
+    {
+        return $this->ratings()
+            ->whereBelongsTo($marker, 'marker')
+            ->first()
+            ?->delete();
+    }
+
+    public function rateBy(Model $marker, int $value, array | null | NotPassed $metadata = new NotPassed): Model
     {
         $attributes = [
             'marker_id' => $marker->getKey(),
@@ -17,23 +25,10 @@ trait Actions
             'value' => $value,
         ];
 
-        if (! $metaData instanceof NotPassed) {
-            $values['metadata'] = $metaData;
+        if (! $metadata instanceof NotPassed) {
+            $values['metadata'] = $metadata;
         }
 
         return $this->ratings()->updateOrCreate($attributes, $values);
-    }
-
-    public function unmarkRating(Model $marker)
-    {
-        return $this->ratings()
-            ->whereBelongsTo($marker, 'marker')
-            ->first()
-            ?->delete();
-    }
-
-    public function rateBy(Model $marker, int $value, $metadata = null): array
-    {
-        return $this->markRating($marker, $value, $metadata);
     }
 }

@@ -3,12 +3,11 @@
 namespace LaraZeus\Mark\Traits\Like\Markable;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 use LaraZeus\Mark\Facades\Mark;
 
 trait Relations
 {
-    public function likedBy()
+    public function likers()
     {
         return $this->morphToMany(
             related: Mark::getMarkerModel(),
@@ -24,10 +23,5 @@ trait Relations
     public function likes(): MorphMany
     {
         return $this->morphMany(Mark::getLikeMorphPivotModel(), 'markable');
-    }
-
-    public function like(): MorphOne
-    {
-        return $this->morphOne(Mark::getLikeMorphPivotModel(), 'markable');
     }
 }
