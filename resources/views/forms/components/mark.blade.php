@@ -16,6 +16,7 @@
     <div
         x-load
         x-load-src="{{ FilamentAsset::getAlpineComponentSrc('mark', MarkServiceProvider::$name) }}"
+        x-cloak
         x-data="zeusMark({
             state: $wire.{{ $applyStateBindingModifiers("\$entangle('{$statePath}')") }},
             isSequential: @js($isSequential),
@@ -25,8 +26,9 @@
     >
         @foreach($icons as $value => $icon)
             @php
-                $onClick = 'state = (state === ' . Js::from($value) . ' ? null : ' . Js::from($value) . ')';
-                $show = 'isSelected('. Js::from($value) .')';
+                $jsValue = Js::from($value);
+                $onClick = "state = (state === $jsValue ? null : $jsValue)";
+                $show = "isSelected($jsValue)";
                 $size = 'xl';
             @endphp
             <div>
