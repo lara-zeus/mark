@@ -21,6 +21,10 @@ class Comment extends Model
     use Likeable;
     use Rateable;
 
+    protected $casts = [
+      'text' => 'integer'
+    ];
+
     public function post(): BelongsTo
     {
         return $this->belongsTo(Post::class);
