@@ -3,7 +3,6 @@
 .phpunit.result.cache
 .phpunit.cache
 .vscode
-composer.lock
 build
 coverage
 node_modules
