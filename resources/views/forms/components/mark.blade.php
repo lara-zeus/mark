@@ -23,7 +23,7 @@
         x-data="{
             state: $wire.{{ $applyStateBindingModifiers("\$entangle('{$statePath}')") }}
         }"
-        class="flex flex-wrap gap-5"
+        class="flex flex-wrap gap-1 sm:gap-2"
     >
         @foreach($icons as $key => $icon)
             @php
