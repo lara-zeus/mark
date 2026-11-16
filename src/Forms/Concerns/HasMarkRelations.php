@@ -3,8 +3,8 @@
 namespace LaraZeus\Mark\Forms\Concerns;
 
 use Closure;
-use Filament\Forms\Components\Concerns\EntanglesStateWithSingularRelationship;
 use Filament\Forms\Components\Field;
+use Filament\Schemas\Components\Concerns\EntanglesStateWithSingularRelationship;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
