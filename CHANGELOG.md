@@ -2,6 +2,16 @@
 
 All notable changes to `mark` will be documented in this file.
 
+## 3.0 - 2026-11-22
+
+### What's Changed
+
+* doc: add other indicators by @Abdulmajeed-Jamaan in https://github.com/lara-zeus/mark/pull/44
+* chore(deps): bump stefanzweifel/git-auto-commit-action from 5 to 6 by @dependabot[bot] in https://github.com/lara-zeus/mark/pull/48
+* fix: Filament v5 form component, docs, and CI updates by @atmonshi in https://github.com/lara-zeus/mark/pull/59
+
+**Full Changelog**: https://github.com/lara-zeus/mark/compare/1.2.0...3.0
+
 ## 1.2.0 - 2025-05-19
 
 ### What's Changed
