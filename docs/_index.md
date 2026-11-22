@@ -1,7 +1,6 @@
 ---
-title: v1
+title: v3
 slogan: Ready to use application marks feature
 githubUrl: https://github.com/lara-zeus/mark
-branch: v1.x
-icon: tabler-star-half-filled
+branch: 3.x
 ---

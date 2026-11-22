@@ -2,11 +2,11 @@ name: run-tests
 
 on:
   push:
-    branches: [1.x]
+    branches: [3.x]
     paths:
       - '**.php'
   pull_request:
-    branches: [1.x]
+    branches: [3.x]
     paths:
       - '**.php'
   workflow_dispatch:
@@ -18,7 +18,7 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest, windows-latest]
-        php: [8.2,8.3,8.4]
+        php: [8.4]
         laravel: [11.*,12.*]
         stability: [prefer-lowest, prefer-stable]
         include:

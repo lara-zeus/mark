@@ -1,9 +1,9 @@
 @php
-    $colors = $getColors();
     $statePath = $getStatePath();
     $icons = $getIcons();
     $selectedIcons = $getSelectedIcons();
     $isSequential = $isSequential();
+    $isDisabled = $isDisabled();
     $keys = array_keys($icons);
     $showSelectedValues = function($key) use ($isSequential, $keys) {
         if(!$isSequential){
@@ -34,21 +34,28 @@
                     type="{{ count($icons) > 1 ? 'radio' : 'checkbox' }}"
                     name="{{ $statePath }}"
                     x-model="state"
-                   :value="'{{ $key }}'"
+                    :value="'{{ $key }}'"
+                    @disabled($isDisabled)
                     class="hidden"
                 >
                 <x-filament::icon-button
                     :color="$getColor($key) ?? 'primary'"
-                    x-on:click="state = state === '{{ $key }}' ? null : '{{ $key }}'"
-                    x-show="{{ $values }}.includes(state)"
+                    :disabled="$isDisabled"
+                    @if (! $isDisabled)
+                        x-on:click="state = String(state) === '{{ $key }}' ? null : '{{ $key }}'"
+                    @endif
+                    x-show="state !== null && state !== undefined && {{ $values }}.includes(String(state))"
                     icon="{{ $selectedIcons[$key] }}"
                     size="xl"
                     :class="__('filament-panels::layout.direction') === 'rtl' ? '-scale-x-100' : ''"
                 />
                 <x-filament::icon-button
                     :color="$getColor($key) ?? 'primary'"
-                    x-on:click="state = state === '{{ $key }}' ? null : '{{ $key }}'"
-                    x-show="!{{ $values }}.includes(state)"
+                    :disabled="$isDisabled"
+                    @if (! $isDisabled)
+                        x-on:click="state = String(state) === '{{ $key }}' ? null : '{{ $key }}'"
+                    @endif
+                    x-show="state === null || state === undefined || !{{ $values }}.includes(String(state))"
                     icon="{{ $icon }}"
                     size="xl"
                     :class="__('filament-panels::layout.direction') === 'rtl' ? '-scale-x-100' : ''"

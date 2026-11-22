@@ -9,6 +9,7 @@ use Filament\FilamentServiceProvider;
 use Filament\Forms\FormsServiceProvider;
 use Filament\Infolists\InfolistsServiceProvider;
 use Filament\Notifications\NotificationsServiceProvider;
+use Filament\Schemas\SchemasServiceProvider;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
@@ -20,6 +21,7 @@ use LaraZeus\Mark\MarkServiceProvider;
 use LaraZeus\Mark\Tests\Models\Markable;
 use LaraZeus\Mark\Tests\Models\Marker;
 use Livewire\LivewireServiceProvider;
+use Livewire\Mechanisms\DataStore;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 use Schema;
@@ -31,6 +33,10 @@ class TestCase extends Orchestra
     protected function setUp(): void
     {
         parent::setUp();
+
+        if (! $this->app->isShared(DataStore::class)) {
+            $this->app->singleton(DataStore::class);
+        }
 
         Factory::guessFactoryNamesUsing(
             fn (string $modelName) => 'LaraZeus\\Mark\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
@@ -49,6 +55,7 @@ class TestCase extends Orchestra
             InfolistsServiceProvider::class,
             LivewireServiceProvider::class,
             NotificationsServiceProvider::class,
+            SchemasServiceProvider::class,
             SupportServiceProvider::class,
             TablesServiceProvider::class,
             WidgetsServiceProvider::class,
@@ -59,6 +66,7 @@ class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
+        config()->set('app.key', 'base64:' . base64_encode(random_bytes(32)));
     }
 
     protected function defineDatabaseMigrations()

@@ -7,9 +7,9 @@ weight: 2
 
 Mark requires the following to run:
 
-- PHP 8.2+
-- Laravel v11.40+
-- Filament v3.0+
+- PHP 8.4+
+- Laravel 11.28+ / 12.x
+- Filament v5.0+
 
 ## Installation
 
@@ -20,10 +20,10 @@ composer require lara-zeus/mark
 ```
 
 ## Filament Theme
-Then, set up a [Filament Custom Theme](https://filamentphp.com/docs/3.x/panels/themes#creating-a-custom-theme) and add the following path to the Tailwind configuration:
+Then, set up a [Filament Custom Theme](https://filamentphp.com/docs/5.x/styling/overview#creating-a-custom-theme) and add the following `@source` directive to your theme CSS file:
 
-```js
-'./vendor/lara-zeus/mark/resources/**/*.blade.php'
+```css
+@source '../../../../vendor/lara-zeus/mark/resources/views/**/*.blade.php';
 ```
 
 ## Setup the Marker
@@ -60,5 +60,5 @@ add the related traits to the marker and markable models, the following table li
 | Mark     | Marker (user) | Markable (post) |
 |----------|---------------|-----------------|
 | Like     | HasLikes      | Likeable        |
-| Rating   | HasRatings    | Ratable         |
-| Bookmark | HasBookMarks  | Bookmarkable    |
+| Rating   | HasRatings    | Rateable        |
+| Bookmark | HasBookmarks  | Bookmarkable    |

@@ -1,6 +1,8 @@
 ---
 title: Changelog
-weight: 100
+weight: 98
 ---
 
-All changes to @zeus `Mark` are  auto updated documented on GitHub [changelog](https://github.com/lara-zeus/mark/blob/1.x/CHANGELOG.md) 
+## Changelog
+
+All changes to @zeus `Mark` are auto-updated and documented on GitHub [changelog](https://github.com/lara-zeus/mark/blob/3.x/CHANGELOG.md).
