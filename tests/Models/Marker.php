@@ -3,13 +3,13 @@
 namespace LaraZeus\Mark\Tests\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use LaraZeus\Mark\Tests\Factories\MarkerFactory;
 use LaraZeus\Mark\Traits\Bookmark\HasBookmarks;
 use LaraZeus\Mark\Traits\Like\HasLikes;
 use LaraZeus\Mark\Traits\Rating\HasRatings;
 
-class Marker extends Model
+class Marker extends Authenticatable
 {
     use HasBookmarks;
     use HasFactory;

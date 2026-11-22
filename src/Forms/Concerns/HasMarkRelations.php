@@ -70,7 +70,7 @@ trait HasMarkRelations
             return $relation;
         }
 
-        throw new RuntimeException('Relation "' . $name . '" must be instance of ("' . MorphOne::class . '" || "' . MorphOne::class . '").');
+        throw new RuntimeException('Relation "' . $name . '" must be instance of ("' . MorphOne::class . '" || "' . MorphMany::class . '").');
     }
 
     protected function getMarker(): Model
