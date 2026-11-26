@@ -2,6 +2,14 @@
 
 All notable changes to `mark` will be documented in this file.
 
+## 3.1.1 - 2026-11-26
+
+### What's Changed
+
+* chore: improve Plumb score checks by @atmonshi in https://github.com/lara-zeus/mark/pull/61
+
+**Full Changelog**: https://github.com/lara-zeus/mark/compare/3.1.0...3.1.1
+
 ## 3.1.0 - 2026-11-26
 
 ### What's Changed
