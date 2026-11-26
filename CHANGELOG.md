@@ -2,6 +2,14 @@
 
 All notable changes to `mark` will be documented in this file.
 
+## 3.1.0 - 2026-11-26
+
+### What's Changed
+
+* feat: add Laravel Boost guidelines and agent skill by @atmonshi in https://github.com/lara-zeus/mark/pull/60
+
+**Full Changelog**: https://github.com/lara-zeus/mark/compare/3.0...3.1.0
+
 ## 3.0 - 2026-11-22
 
 ### What's Changed
